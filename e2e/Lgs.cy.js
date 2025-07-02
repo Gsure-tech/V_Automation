@@ -188,4 +188,33 @@ describe('LGS Business Name Registration Flow', () => {
         cy.get('button[class$="ng-star-inserted"]').contains("Send passcode").click();
         cy.get('div[class$="success-background"] div').should('contain.text', 'Passcode has been sent to your email');
     });
+
+    it('shows application status modal on correct transaction reference or passcode', () => {
+        cy.log('Navigating to registration status page');
+        cy.visit('http://lgs.oasisproducts.ng/status');
+
+        cy.log('Entering valid transaction reference and passcode');
+        cy.get('input[formcontrolname="transactionReference"]').type('LGS250623143513003');
+        cy.get('input[formcontrolname="passcode"]').type('35135639');
+
+        cy.log('Clicking "Check Status" button');
+        cy.get('button.status-button').click();
+
+        cy.log('Waiting for status modal to appear and validating its content');
+        cy.get('h3.words')
+            .should('be.visible')
+            .and('contain.text', 'Application Status Check');
+
+        cy.get('p')
+            .should('be.visible')
+            .and('contain.text', 'Your application');
+
+        //validate specific statuses like "PENDING", "APPROVED", etc.
+        cy.get('p').invoke('text').then((text) => {
+            expect(text).to.match(/Your application is (PENDING|APPROVED|QUERIED)/i);
+        });
+
+    });
+
+
 });
