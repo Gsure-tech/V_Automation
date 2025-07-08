@@ -66,4 +66,99 @@ describe("Bulk Service Approval", () => {
     cy.url({ timeout: 15000 }).should("include", "/Registration");
     cy.contains("BUSINESS REGISTRATION").should("be.visible");
   });
+
+  // end checks here to get more control values
+it("Validates dashboard and sidebar controls after login", () => {
+  // Login
+  cy.get(":nth-child(4) > .login-input").clear().type("vas_admin");
+  cy.get('[style="margin-bottom: 0;"] > .login-input').clear().type("password");
+  cy.get(".signIn-btn").click();
+
+  // Wait for dashboard to load
+  cy.url({ timeout: 15000 }).should("include", "/Registration");
+  cy.get(".welcomeMessage").should("contain.text", "BUSINESS REGISTRATION");
+
+  // Dashboard stat boxes
+  cy.get(".active-button > aside > .p-tags").should(
+    "contain.text",
+    "Open Request"
+  );
+  cy.get(".active-button > aside > .countNumber")
+    .invoke("text")
+    .should((text) => {
+      expect(Number(text.trim())).to.be.a("number");
+    });
+
+  cy.get(":nth-child(2) > aside > .p-tags").should(
+    "contain.text",
+    "My Pending Request"
+  );
+  cy.get(":nth-child(2) > aside > .countNumber")
+    .invoke("text")
+    .should((text) => {
+      expect(Number(text.trim())).to.be.a("number");
+    });
+
+  cy.get(":nth-child(3) > aside > .p-tags").should(
+    "contain.text",
+    "Queried Applications"
+  );
+  cy.get(":nth-child(3) > aside > .countNumber")
+    .invoke("text")
+    .should((text) => {
+      expect(Number(text.trim())).to.be.a("number");
+    });
+
+  cy.get(":nth-child(4) > aside > .p-tags").should(
+    "contain.text",
+    "Quarantined Applications"
+  );
+  cy.get(":nth-child(4) > aside > .countNumber")
+    .invoke("text")
+    .should((text) => {
+      expect(Number(text.trim())).to.be.a("number");
+    });
+
+  cy.get(":nth-child(5) > aside > .p-tags").should(
+    "contain.text",
+    "Approved Applications"
+  );
+  cy.get(":nth-child(5) > aside > .countNumber")
+    .invoke("text")
+    .should((text) => {
+      expect(Number(text.trim())).to.be.a("number");
+    });
+
+  // Sidebar items
+  cy.get(".head-title").should("contain.text", "SPECIAL PROJECT");
+
+  cy.get(":nth-child(1) > .sidebar-link > p").should(
+    "contain.text",
+    "Business Name"
+  );
+  cy.get(":nth-child(1) > .sidebar-link > .fa-angle-down").click();
+
+  cy.get(":nth-child(3) > .sidebar-link").should("contain.text", "LLC");
+  cy.get(":nth-child(3) > .sidebar-link > .fa-angle-down").click();
+
+  // Expand Business Name section
+  cy.get(":nth-child(1) > .sidebar-link > .fa-angle-down").click();
+
+  // Verify Business Name dropdown items
+  cy.contains("span", "Business Registration").should("be.visible");
+  cy.contains("span", "Report").should("be.visible");
+  cy.contains("span", "Post Incorporation").should("be.visible");
+  cy.contains("span", "Assisted Approval").should("be.visible");
+
+  // Expand LLC section
+  cy.get(":nth-child(3) > .sidebar-link > .fa-angle-down").click();
+
+  // Verify LLC dropdown items
+  cy.contains("span", "LLC Registration").should("be.visible");
+  cy.contains("span", "Report").should("be.visible");
+  cy.contains("span", "Post Incorporation").should("be.visible");
+  cy.contains("span", "Assisted Approval").should("be.visible");
+  
+});
+
 });
