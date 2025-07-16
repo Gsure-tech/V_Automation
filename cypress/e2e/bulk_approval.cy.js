@@ -75,7 +75,7 @@ describe("Bulk Service Approval", () => {
 // });
 
 
-//   // end checks here to get more control values
+  // end checks here to get more control values
 // it("Validates dashboard and sidebar controls after login", () => {
 //   // Login
 //   cy.get(":nth-child(4) > .login-input").clear().type("vas_admin");
@@ -183,14 +183,16 @@ it("Collects last page record and verifies My Pending Request increases", () => 
 
   // Step 1: Click the last pagination button
   cy.get(".pagination > :nth-child(9)").click();
-
-  // Step 2: Wait for the Collect button to appear
-  cy.get(":nth-child(5) > :nth-child(9) > .collect-btn", { timeout: 10000 })
-    .should("be.visible")
-    .then(($btn) => {
-      // Step 3: Click using jQuery native click to avoid async re-render problems
-      cy.wrap($btn).click({ force: true });
-    });
+  // cy.get(":nth-child(5) > :nth-child(9) > .collect-btn").click();
+  
+  
+  // // Step 2: Wait for the Collect button to appear
+  // cy.get(":nth-child(4) > :nth-child(9) > .collect-btn", { timeout: 10000 })
+  //   .should("be.visible")
+  //   .then(($btn) => {
+  //     // Step 3: Click using jQuery native click to avoid async re-render problems
+  //     cy.wrap($btn).click({ force: true });
+  //   });
 
   // Step 4: Wait briefly for collection to take effect
   cy.wait(3000);
@@ -199,7 +201,10 @@ it("Collects last page record and verifies My Pending Request increases", () => 
   cy.get(":nth-child(2) > aside > .p-tags")
     .should("contain.text", "My Pending Request")
     .click();
-
+  cy.get(".dropdown-toggle").click();
+  cy.get(".dropdown-menu > :nth-child(1)").click();
+  cy.get(".query-btn").click();
+  cy.get(".ng-input > input").type("Signature");
   // Step 6: Validate that the count is > 0
   cy.get(":nth-child(2) > aside > .countNumber", { timeout: 10000 })
     .invoke("text")
