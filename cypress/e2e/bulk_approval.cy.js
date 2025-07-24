@@ -75,7 +75,7 @@ describe("Bulk Service Approval", () => {
 // });
 
 
-  // end checks here to get more control values
+//   // end checks here to get more control values
 // it("Validates dashboard and sidebar controls after login", () => {
 //   // Login
 //   cy.get(":nth-child(4) > .login-input").clear().type("vas_admin");
@@ -171,49 +171,106 @@ describe("Bulk Service Approval", () => {
 
 // });
 
-it("Collects last page record and verifies My Pending Request increases", () => {
+
+
+
+it("Searches for a transaction reference, collects it if found, and submits a query for Signature", () => {
   // Login
   cy.get(":nth-child(4) > .login-input").clear().type("vas_admin");
   cy.get('[style="margin-bottom: 0;"] > .login-input').clear().type("password");
   cy.get(".signIn-btn").click();
+  cy.log("Logged in as vas_admin");
+
+  cy.wait(2000); // Wait for navigation and dashboard load
 
   // Ensure dashboard is loaded
   cy.url({ timeout: 15000 }).should("include", "/Registration");
   cy.contains("BUSINESS REGISTRATION").should("be.visible");
+  cy.log("Dashboard loaded successfully");
 
-  // Step 1: Click the last pagination button
-  cy.get(".pagination > :nth-child(9)").click();
-  // cy.get(":nth-child(5) > :nth-child(9) > .collect-btn").click();
-  
-  
-  // // Step 2: Wait for the Collect button to appear
-  // cy.get(":nth-child(4) > :nth-child(9) > .collect-btn", { timeout: 10000 })
-  //   .should("be.visible")
-  //   .then(($btn) => {
-  //     // Step 3: Click using jQuery native click to avoid async re-render problems
-  //     cy.wrap($btn).click({ force: true });
-  //   });
-
-  // Step 4: Wait briefly for collection to take effect
-  cy.wait(3000);
-
-  // Step 5: Click "My Pending Request" tab
-  cy.get(":nth-child(2) > aside > .p-tags")
-    .should("contain.text", "My Pending Request")
+  // Go to last pagination page
+  cy.get(".pagination > :nth-child(9)", { timeout: 10000 })
+    .should("be.visible")
     .click();
-  cy.get(".dropdown-toggle").click();
-  cy.get(".dropdown-menu > :nth-child(1)").click();
-  cy.get(".query-btn").click();
-  cy.get(".ng-input > input").type("Signature");
-  // Step 6: Validate that the count is > 0
-  cy.get(":nth-child(2) > aside > .countNumber", { timeout: 10000 })
-    .invoke("text")
-    .then((text) => {
-      const count = Number(text.trim());
-      expect(count).to.be.greaterThan(0);
-    });
-});
+  cy.wait(2000); // Wait for table to reload
+  cy.log("Navigated to last page of pagination");
 
+  const transactionRef = "VAS20250722142938523";
+
+  // Search for the transaction ref
+  cy.get(".search-text").clear().type(transactionRef);
+  cy.get(".search-btn", { timeout: 10000 }).click();
+  cy.wait(2000); // Wait for search results to load
+  cy.log(`Searching for transactionRef: ${transactionRef}`);
+
+  // Check for message or record
+  cy.document().then((doc) => {
+    const message = Cypress.$(doc).find(".fs-18").text().trim();
+
+    if (message.includes("No application pending/No application found")) {
+      cy.log(`'${transactionRef}' not found — skipping collect.`);
+      return;
+    }
+
+    // Record exists
+    const row = Cypress.$(doc)
+      .find(`td:contains(${transactionRef})`)
+      .closest("tr");
+
+    if (row.length) {
+      cy.wrap(row).find(".collect-btn").click({ force: true });
+      cy.wait(3000); // Wait for modal or action to complete
+      cy.log(`Collected transactionRef: ${transactionRef}`);
+    } else {
+      cy.log(`Transaction row for '${transactionRef}' not found in table.`);
+      return;
+    }
+
+    // Go to "My Pending Request"
+    cy.get(":nth-child(2) > aside > .p-tags", { timeout: 10000 })
+      .should("contain.text", "My Pending Request")
+      .click();
+    cy.wait(2000); // Wait for content to load
+    cy.log("Navigated to 'My Pending Request' tab");
+
+    // Confirm that pending request contains a record
+    cy.get(".active-button > aside > .countNumber", { timeout: 10000 })
+      .invoke("text")
+      .then((text) => {
+        const count = Number(text.trim());
+        cy.log(`Pending Request Count: ${count}`);
+        expect(count).to.be.greaterThan(0);
+
+        cy.get(
+          ":nth-child(1) > :nth-child(9) > .d-inline-block > .dropdown-toggle"
+        ).click();
+        cy.wait(1000);
+
+        cy.get(
+          ":nth-child(1) > :nth-child(9) > .d-inline-block > .dropdown-menu > :nth-child(1)"
+        ).click();
+        cy.wait(1000);
+        cy.log("Clicked dropdown and selected 'Query' option");
+
+        cy.get(".query-btn").click();
+        cy.wait(1000);
+        cy.log("Query form opened");
+
+        cy.get(".ng-input > input").type("i").clear();
+        cy.contains(".ng-dropdown-panel-items .ng-option", "Signature").click();
+        cy.wait(500);
+        cy.log("Selected query reason: Signature");
+
+        cy.get(".query-textarea").clear().type("upload a clearer signature");
+        cy.wait(500);
+        cy.get(".query-add").click();
+        cy.wait(1000);
+        cy.get(".submit-query").click();
+        cy.wait(2000);
+        cy.log("Submitted query for Signature");
+      });
+  });
+});
 
 
 });
