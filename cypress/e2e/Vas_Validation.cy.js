@@ -1308,7 +1308,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
       headers: HEADERS.VALID_API_KEY,
       body: {
         proposedName: "Cinical concepts",
-        lineOfBusiness: "Hospital",
+        lineOfBusiness: "Medical practice and Consultancy",
       },
       failOnStatusCode: false,
     }).then((response) => {
