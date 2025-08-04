@@ -456,4 +456,15 @@ describe("LGS Business Name Registration Flow", () => {
     // Validate redirect or welcome
     cy.url().should("not.include", "/create-account");
   });
+
+  it('should login successfully with valid email and correct password and redirect to dashboard page', () => {
+    cy.visit(`${baseUrl}`);
+    cy.get(".becomeAnAgentBtn").contains("Signup for Free").click();
+
+    cy.get("#agentEmail").type("peaceoasis9023@gmail.com");
+    cy.get("#agentLogin").type("Gsure9023@2025");
+    cy.get(".button-submit").click();
+    // Validate redirect or welcome
+    cy.url().should("include", "/overview");
+  });
 });
