@@ -467,6 +467,39 @@ describe("LGS Business Name Registration Flow", () => {
     // Validate redirect or welcome
     cy.url().should("include", "/overview");
 
+    cy.get(":nth-child(1) > aside > .payment-header")
+      .should("contain.text", "Total Pending Registrations")
+      .should("be.visible");
+
+   cy.get(":nth-child(1) > aside > .payment-total")
+     .invoke("text")
+     .then((text) => {
+       const value = Number(text.trim());
+       expect(value).to.be.a("number").and.not.to.be.NaN;
+     });
+
+    cy.get(":nth-child(3) > aside > .payment-header")
+      .should("contain.text", "Total Queried Registrations")
+      .should("be.visible");
+
+    cy.get(":nth-child(1) > aside > .payment-total")
+      .invoke("text")
+      .then((text) => {
+        const value = Number(text.trim());
+        expect(value).to.be.a("number").and.not.to.be.NaN;
+      });
+
+    cy.get(":nth-child(5) > aside > .payment-header")
+      .should("contain.text", "Total Approved Registrations")
+      .should("be.visible");
+
+      
+    cy.get(":nth-child(1) > aside > .payment-total")
+      .invoke("text")
+      .then((text) => {
+        const value = Number(text.trim());
+        expect(value).to.be.a("number").and.not.to.be.NaN;
+      });
 
     cy.get("button.overview-btn");
 
@@ -487,9 +520,8 @@ describe("LGS Business Name Registration Flow", () => {
       .should("contain.text", "KYC")
       .should("be.visible");
 
-   cy.get(".profile-name > p").invoke("text").should("not.be.empty");
-  //  cy.get(".logout").click();
-  //   cy.url().should("include", "/agents");
-
+    cy.get(".profile-name > p").invoke("text").should("not.be.empty");
+    //  cy.get(".logout").click();
+    //   cy.url().should("include", "/agents");
   });
 });
