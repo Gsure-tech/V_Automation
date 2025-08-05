@@ -467,6 +467,16 @@ describe("LGS Business Name Registration Flow", () => {
     // Validate redirect or welcome
     cy.url().should("include", "/overview");
 
+cy.get(":nth-child(1) > aside > .payment-header");
+cy.get(":nth-child(1) > aside > .payment-total");
+
+cy.get(":nth-child(3) > aside > .payment-header");
+cy.get(":nth-child(3) > aside > .payment-total");
+
+cy.get(":nth-child(5) > aside > .payment-header");
+cy.get(":nth-child(5) > aside > .payment-total");
+
+
 
     cy.get("button.overview-btn");
 
