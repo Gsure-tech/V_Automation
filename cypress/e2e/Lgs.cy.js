@@ -587,6 +587,7 @@ describe("LGS Business Name Registration Flow", () => {
    );
 
    cy.get("#storefrontName").clear().type("testerstorefront");
+   cy.get("#storefrontLink").clear().type("testerstore");
  });
 
 });
