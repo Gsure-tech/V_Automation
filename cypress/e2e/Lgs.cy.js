@@ -560,48 +560,94 @@ describe("LGS Business Name Registration Flow", () => {
 //    cy.log("Successfully logged out and redirected to agents page");
 //  });
 
- it("should be able to create a storefront", () => {
-   cy.visit(`${baseUrl}`);
-   cy.log('Visiting the base URL and clicking the "Signup for Free" button');
-   cy.get(".becomeAnAgentBtn").contains("Signup for Free").click();
 
-   // Enter login credentials and submit
-   cy.log("Entering valid agent email and password");
-   cy.get("#agentEmail").type("joyoasis9023+3@gmail.com");
-   cy.get("#agentLogin").type("Gsure9023@2025");
-   cy.get(".button-submit").click();
+ it("should show errors for invalid inputs in storefront creation", () => {
+    cy.visit(`${baseUrl}`);
+    cy.log('Visiting the base URL and clicking the "Signup for Free" button');
+    cy.get(".becomeAnAgentBtn").contains("Signup for Free").click();
 
-   // Wait for the dashboard to load and validate redirection
-   cy.log("Validating successful login and redirecting to the dashboard");
-   cy.url().should("include", "/overview");
-   cy.log("Successfully navigated to the dashboard");
+    // Enter login credentials and submit
+    cy.log("Entering valid agent email and password");
+    cy.get("#agentEmail").type("joyoasis9023+3@gmail.com");
+    cy.get("#agentLogin").type("Gsure9023@2025");
+    cy.get(".button-submit").click();
 
-   cy.get("a.overview-btn").should("contain.text", "Create Storefront")
-   .should("be.visible").click();
+    // Wait for the dashboard to load and validate redirection
+    cy.log("Validating successful login and redirecting to the dashboard");
+    cy.url().should("include", "/overview");
+    cy.log("Successfully navigated to the dashboard");
 
-   cy.get("#storefrontName").clear().type("testers_storefront");
+    cy.get("a.overview-btn").should("contain.text", "Create Storefront")
+      .should("be.visible").click();
+    cy.log("Navigating to the 'Create Storefront' page");
+    
+    // ===================== Negative Test - Storefront Name =====================
+    
+    cy.log("Entering invalid storefront name with spaces and special characters");
+    cy.get("#storefrontName").clear().type("testers_storefront");
    cy.get(".text-danger").should(
      "contain.text",
      "Only letters, numbers, and " &
        " are allowed! Spaces are not allowed. Maximum length is 50 characters."
    );
+    cy.log("Storefront name validation message displayed correctly");
 
-   cy.get("#storefrontName").clear().type("testerstorefront");
-
-   cy.get("#storefrontLink").clear().type("testerstore_");
+    // ===================== Negative Test - Storefront Link =====================
+    
+    cy.log("Entering invalid storefront link with special character");
+     cy.get("#storefrontLink").clear().type("testerstore_");
    cy.get('.text-danger').should(
      "contain.text",
      "Only letters, numbers, and " &
        " are allowed! Spaces are not allowed. Maximum length is 20 characters."
    );
+    cy.log("Storefront link validation message displayed correctly");
 
-    cy.get("#storefrontLink").clear().type("testerstore");
+    // ===================== Negative Test - Storefront Price =====================
 
-    cy.get('#setPrice').clear().type("Fiftykay")
+    cy.log("Entering invalid price (non-numeric value)");
+     cy.get('#setPrice').clear().type("Fiftykay")
     cy.get('.creation-container > :nth-child(3) > span').should("contain.text", "NaN")
      .should("be.visible");
+    cy.log("Invalid price validation displayed correctly");
 
-      cy.get('#setPrice').clear().type("3000")
- });
+  });
+
+
+it("should be able to create a storefront", () => {
+    cy.visit(`${baseUrl}`);
+    cy.log('Visiting the base URL and clicking the "Signup for Free" button');
+    cy.get(".becomeAnAgentBtn").contains("Signup for Free").click();
+
+    // Enter login credentials and submit
+    cy.log("Entering valid agent email and password");
+    cy.get("#agentEmail").type("joyoasis9023+3@gmail.com");
+    cy.get("#agentLogin").type("Gsure9023@2025");
+    cy.get(".button-submit").click();
+
+    // Wait for the dashboard to load and validate redirection
+    cy.log("Validating successful login and redirecting to the dashboard");
+    cy.url().should("include", "/overview");
+    cy.log("Successfully navigated to the dashboard");
+
+    cy.get("a.overview-btn").should("contain.text", "Create Storefront")
+      .should("be.visible").click();
+    cy.log("Navigating to the 'Create Storefront' page");
+
+    // Enter valid values for name, link, and price
+    cy.get("#storefrontName").clear().type("testerstorefront");
+    cy.log("Valid storefront name entered");
+
+    cy.get("#storefrontLink").clear().type("testerstore");
+    cy.log("Valid storefront link entered");
+
+    cy.get('#setPrice').clear().type("3000");
+    cy.log("Valid price entered");
+    
+    // Add any other steps to complete the storefront creation, like submitting the form
+  });
+
+  
+
 
 });
