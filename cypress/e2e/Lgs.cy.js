@@ -587,7 +587,21 @@ describe("LGS Business Name Registration Flow", () => {
    );
 
    cy.get("#storefrontName").clear().type("testerstorefront");
-   cy.get("#storefrontLink").clear().type("testerstore");
+
+   cy.get("#storefrontLink").clear().type("testerstore_");
+   cy.get('.text-danger').should(
+     "contain.text",
+     "Only letters, numbers, and " &
+       " are allowed! Spaces are not allowed. Maximum length is 20 characters."
+   );
+
+    cy.get("#storefrontLink").clear().type("testerstore");
+
+    cy.get('#setPrice').clear().type("Fiftykay")
+    cy.get('.creation-container > :nth-child(3) > span').should("contain.text", "NaN")
+     .should("be.visible");
+
+      cy.get('#setPrice').clear().type("3000")
  });
 
 });
