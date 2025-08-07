@@ -644,7 +644,7 @@ it("should be able to create a storefront", () => {
     cy.get('#setPrice').clear().type("3000");
     cy.log("Valid price entered");
     
-    // Add any other steps to complete the storefront creation, like submitting the form
+    cy.get('.save-btn').click();
   });
 
   
