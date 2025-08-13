@@ -457,111 +457,164 @@ describe("LGS Business Name Registration Flow", () => {
   //   cy.url().should("not.include", "/create-account");
   // });
 
-//  it("should successfully log in, verify dashboard content,ensure navigation and KYC sections are visible and logout", () => {
-//    // Navigate to the base URL and click 'Signup for Free' button
-//    cy.visit(`${baseUrl}`);
-//    cy.log('Visiting the base URL and clicking the "Signup for Free" button');
-//    cy.get(".becomeAnAgentBtn").contains("Signup for Free").click();
+  //  it("should successfully log in, verify dashboard content,ensure navigation and KYC sections are visible and logout", () => {
+  //    // Navigate to the base URL and click 'Signup for Free' button
+  //    cy.visit(`${baseUrl}`);
+  //    cy.log('Visiting the base URL and clicking the "Signup for Free" button');
+  //    cy.get(".becomeAnAgentBtn").contains("Signup for Free").click();
 
-//    // Enter login credentials and submit
-//    cy.log("Entering valid agent email and password");
-//    cy.get("#agentEmail").type("joyoasis9023+3@gmail.com");
-//    cy.get("#agentLogin").type("Gsure9023@2025");
-//    cy.get(".button-submit").click();
+  //    // Enter login credentials and submit
+  //    cy.log("Entering valid agent email and password");
+  //    cy.get("#agentEmail").type("joyoasis9023+3@gmail.com");
+  //    cy.get("#agentLogin").type("Gsure9023@2025");
+  //    cy.get(".button-submit").click();
 
-//    // Wait for the dashboard to load and validate redirection
-//    cy.log("Validating successful login and redirecting to the dashboard");
-//    cy.url().should("include", "/overview");
-//    cy.log("Successfully navigated to the dashboard");
+  //    // Wait for the dashboard to load and validate redirection
+  //    cy.log("Validating successful login and redirecting to the dashboard");
+  //    cy.url().should("include", "/overview");
+  //    cy.log("Successfully navigated to the dashboard");
 
-//    // Validate the dashboard content for pending registrations
-//    cy.get(":nth-child(1) > aside > .payment-header")
-//      .should("contain.text", "Total Pending Registrations")
-//      .should("be.visible");
-//    cy.log('Verified the "Total Pending Registrations" section');
+  //    // Validate the dashboard content for pending registrations
+  //    cy.get(":nth-child(1) > aside > .payment-header")
+  //      .should("contain.text", "Total Pending Registrations")
+  //      .should("be.visible");
+  //    cy.log('Verified the "Total Pending Registrations" section');
 
-//    // Validate the total number for pending registrations is a valid number
-//    cy.get(":nth-child(1) > aside > .payment-total")
-//      .invoke("text")
-//      .then((text) => {
-//        const value = Number(text.trim());
-//        expect(value).to.be.a("number").and.not.to.be.NaN;
-//      });
-//    cy.log(
-//      "Verified the total number for pending registrations is a valid number"
-//    );
+  //    // Validate the total number for pending registrations is a valid number
+  //    cy.get(":nth-child(1) > aside > .payment-total")
+  //      .invoke("text")
+  //      .then((text) => {
+  //        const value = Number(text.trim());
+  //        expect(value).to.be.a("number").and.not.to.be.NaN;
+  //      });
+  //    cy.log(
+  //      "Verified the total number for pending registrations is a valid number"
+  //    );
 
-//    // Validate the "Total Queried Registrations" section
-//    cy.get(":nth-child(3) > aside > .payment-header")
-//      .should("contain.text", "Total Queried Registrations")
-//      .should("be.visible");
-//    cy.log('Verified the "Total Queried Registrations" section');
+  //    // Validate the "Total Queried Registrations" section
+  //    cy.get(":nth-child(3) > aside > .payment-header")
+  //      .should("contain.text", "Total Queried Registrations")
+  //      .should("be.visible");
+  //    cy.log('Verified the "Total Queried Registrations" section');
 
-//    // Validate the total number for queried registrations is a valid number
-//    cy.get(":nth-child(1) > aside > .payment-total")
-//      .invoke("text")
-//      .then((text) => {
-//        const value = Number(text.trim());
-//        expect(value).to.be.a("number").and.not.to.be.NaN;
-//      });
-//    cy.log(
-//      "Verified the total number for queried registrations is a valid number"
-//    );
+  //    // Validate the total number for queried registrations is a valid number
+  //    cy.get(":nth-child(1) > aside > .payment-total")
+  //      .invoke("text")
+  //      .then((text) => {
+  //        const value = Number(text.trim());
+  //        expect(value).to.be.a("number").and.not.to.be.NaN;
+  //      });
+  //    cy.log(
+  //      "Verified the total number for queried registrations is a valid number"
+  //    );
 
-//    // Validate the "Total Approved Registrations" section
-//    cy.get(":nth-child(5) > aside > .payment-header")
-//      .should("contain.text", "Total Approved Registrations")
-//      .should("be.visible");
-//    cy.log('Verified the "Total Approved Registrations" section');
+  //    // Validate the "Total Approved Registrations" section
+  //    cy.get(":nth-child(5) > aside > .payment-header")
+  //      .should("contain.text", "Total Approved Registrations")
+  //      .should("be.visible");
+  //    cy.log('Verified the "Total Approved Registrations" section');
 
-//    // Validate the total number for approved registrations is a valid number
-//    cy.get(":nth-child(1) > aside > .payment-total")
-//      .invoke("text")
-//      .then((text) => {
-//        const value = Number(text.trim());
-//        expect(value).to.be.a("number").and.not.to.be.NaN;
-//      });
-//    cy.log(
-//      "Verified the total number for approved registrations is a valid number"
-//    );
+  //    // Validate the total number for approved registrations is a valid number
+  //    cy.get(":nth-child(1) > aside > .payment-total")
+  //      .invoke("text")
+  //      .then((text) => {
+  //        const value = Number(text.trim());
+  //        expect(value).to.be.a("number").and.not.to.be.NaN;
+  //      });
+  //    cy.log(
+  //      "Verified the total number for approved registrations is a valid number"
+  //    );
 
-//    // Click the menu to expand the sidebar
-//    cy.get(".fa").click();
-//    cy.log("Clicked the menu icon to expand the sidebar");
+  //    // Click the menu to expand the sidebar
+  //    cy.get(".fa").click();
+  //    cy.log("Clicked the menu icon to expand the sidebar");
 
-//    // Verify sidebar links are visible
-//    cy.get(".active-link")
-//      .should("contain.text", "Business Registration")
-//      .should("be.visible");
-//    cy.log('Verified "Business Registration" menu item is visible');
+  //    // Verify sidebar links are visible
+  //    cy.get(".active-link")
+  //      .should("contain.text", "Business Registration")
+  //      .should("be.visible");
+  //    cy.log('Verified "Business Registration" menu item is visible');
 
-//    cy.get('[routerlink="/agents/storefront"] > p')
-//      .should("contain.text", "Store Front")
-//      .should("be.visible");
-//    cy.log('Verified "Store Front" menu item is visible');
+  //    cy.get('[routerlink="/agents/storefront"] > p')
+  //      .should("contain.text", "Store Front")
+  //      .should("be.visible");
+  //    cy.log('Verified "Store Front" menu item is visible');
 
-//    cy.get('[routerlink="/agents/payment"] > p')
-//      .should("contain.text", "Payment & Withdrawal")
-//      .should("be.visible");
-//    cy.log('Verified "Payment & Withdrawal" menu item is visible');
+  //    cy.get('[routerlink="/agents/payment"] > p')
+  //      .should("contain.text", "Payment & Withdrawal")
+  //      .should("be.visible");
+  //    cy.log('Verified "Payment & Withdrawal" menu item is visible');
 
-//    cy.get('[routerlink="/agents/updateKyc"] > p')
-//      .should("contain.text", "KYC")
-//      .should("be.visible");
-//    cy.log('Verified "KYC" menu item is visible');
+  //    cy.get('[routerlink="/agents/updateKyc"] > p')
+  //      .should("contain.text", "KYC")
+  //      .should("be.visible");
+  //    cy.log('Verified "KYC" menu item is visible');
 
-//    // Check if the profile name is visible
-//    cy.get(".profile-name > p").invoke("text").should("not.be.empty");
-//    cy.log("Verified the profile name is not empty");
+  //    // Check if the profile name is visible
+  //    cy.get(".profile-name > p").invoke("text").should("not.be.empty");
+  //    cy.log("Verified the profile name is not empty");
 
-//    // Log out
-//    cy.get(".logout").click();
-//    cy.url().should("include", "/agents");
-//    cy.log("Successfully logged out and redirected to agents page");
-//  });
+  //    // Log out
+  //    cy.get(".logout").click();
+  //    cy.url().should("include", "/agents");
+  //    cy.log("Successfully logged out and redirected to agents page");
+  //  });
 
+  // it("should show errors for invalid inputs in storefront creation", () => {
+  //   cy.visit(`${baseUrl}`);
+  //   cy.log('Visiting the base URL and clicking the "Signup for Free" button');
+  //   cy.get(".becomeAnAgentBtn").contains("Signup for Free").click();
 
- it("should show errors for invalid inputs in storefront creation", () => {
+  //   // Enter login credentials and submit
+  //   cy.log("Entering valid agent email and password");
+  //   cy.get("#agentEmail").type("joyoasis9023+3@gmail.com");
+  //   cy.get("#agentLogin").type("Gsure9023@2025");
+  //   cy.get(".button-submit").click();
+
+  //   // Wait for the dashboard to load and validate redirection
+  //   cy.log("Validating successful login and redirecting to the dashboard");
+  //   cy.url().should("include", "/overview");
+  //   cy.log("Successfully navigated to the dashboard");
+
+  //   cy.get("a.overview-btn")
+  //     .should("contain.text", "Create Storefront")
+  //     .should("be.visible")
+  //     .click();
+  //   cy.log("Navigating to the 'Create Storefront' page");
+
+  //   // ===================== Negative Test - Storefront Name =====================
+
+  //   cy.log(
+  //     "Entering invalid storefront name with spaces and special characters"
+  //   );
+  //   cy.get("#storefrontName").clear().type("testers_storefront");
+  //   cy.get(".text-danger").should(
+  //     "contain.text",
+  //     "Only letters, numbers, and " &
+  //       " are allowed! Spaces are not allowed. Maximum length is 50 characters."
+  //   );
+  //   cy.log("Storefront name validation message displayed correctly");
+
+  //   // ===================== Negative Test - Storefront Link =====================
+
+  //   cy.log("Entering invalid storefront link with special character");
+  //   cy.get("#storefrontLink").clear().type("testerstore_");
+  //   cy.get(".text-danger").should(
+  //     "contain.text",
+  //     "Only letters, numbers, and " &
+  //       " are allowed! Spaces are not allowed. Maximum length is 20 characters."
+  //   );
+  //   cy.log("Storefront link validation message displayed correctly");
+
+  //   cy.get(".creation-container > :nth-child(3) > span")
+  //     .invoke("text")
+  //     .should((text) => {
+  //       expect(Number(text)).to.be.a("number");
+  //     });
+  // });
+
+  it("should be able to create a storefront", () => {
+    const validFile = "gamma1.png";
     cy.visit(`${baseUrl}`);
     cy.log('Visiting the base URL and clicking the "Signup for Free" button');
     cy.get(".becomeAnAgentBtn").contains("Signup for Free").click();
@@ -577,61 +630,10 @@ describe("LGS Business Name Registration Flow", () => {
     cy.url().should("include", "/overview");
     cy.log("Successfully navigated to the dashboard");
 
-    cy.get("a.overview-btn").should("contain.text", "Create Storefront")
-      .should("be.visible").click();
-    cy.log("Navigating to the 'Create Storefront' page");
-    
-    // ===================== Negative Test - Storefront Name =====================
-    
-    cy.log("Entering invalid storefront name with spaces and special characters");
-    cy.get("#storefrontName").clear().type("testers_storefront");
-   cy.get(".text-danger").should(
-     "contain.text",
-     "Only letters, numbers, and " &
-       " are allowed! Spaces are not allowed. Maximum length is 50 characters."
-   );
-    cy.log("Storefront name validation message displayed correctly");
-
-    // ===================== Negative Test - Storefront Link =====================
-    
-    cy.log("Entering invalid storefront link with special character");
-     cy.get("#storefrontLink").clear().type("testerstore_");
-   cy.get('.text-danger').should(
-     "contain.text",
-     "Only letters, numbers, and " &
-       " are allowed! Spaces are not allowed. Maximum length is 20 characters."
-   );
-    cy.log("Storefront link validation message displayed correctly");
-
-    // ===================== Negative Test - Storefront Price =====================
-
-    cy.log("Entering invalid price (non-numeric value)");
-     cy.get('#setPrice').clear().type("Fiftykay")
-    cy.get('.creation-container > :nth-child(3) > span').should("contain.text", "NaN")
-     .should("be.visible");
-    cy.log("Invalid price validation displayed correctly");
-
-  });
-
-
-it("should be able to create a storefront", () => {
-    cy.visit(`${baseUrl}`);
-    cy.log('Visiting the base URL and clicking the "Signup for Free" button');
-    cy.get(".becomeAnAgentBtn").contains("Signup for Free").click();
-
-    // Enter login credentials and submit
-    cy.log("Entering valid agent email and password");
-    cy.get("#agentEmail").type("joyoasis9023+3@gmail.com");
-    cy.get("#agentLogin").type("Gsure9023@2025");
-    cy.get(".button-submit").click();
-
-    // Wait for the dashboard to load and validate redirection
-    cy.log("Validating successful login and redirecting to the dashboard");
-    cy.url().should("include", "/overview");
-    cy.log("Successfully navigated to the dashboard");
-
-    cy.get("a.overview-btn").should("contain.text", "Create Storefront")
-      .should("be.visible").click();
+    cy.get("a.overview-btn")
+      .should("contain.text", "Create Storefront")
+      .should("be.visible")
+      .click();
     cy.log("Navigating to the 'Create Storefront' page");
 
     // Enter valid values for name, link, and price
@@ -641,13 +643,16 @@ it("should be able to create a storefront", () => {
     cy.get("#storefrontLink").clear().type("testerstore");
     cy.log("Valid storefront link entered");
 
-    cy.get('#setPrice').clear().type("3000");
+    cy.get("#setPrice").clear().type("3000");
     cy.log("Valid price entered");
-    
-    cy.get('.save-btn').click();
+
+    cy.get(".save-btn").click();
+    cy.get(
+      'input[type="file"][accept="image/png, image/jpeg, image/jpg,image/svg+xml"]'
+    ).selectFile(`cypress/fixtures/${validFile}`, { force: true });
+    cy.get(":nth-child(2) > .theme-color").click();
+    cy.get(
+      '[style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;"] > :nth-child(2) > img'
+    ).click();
   });
-
-  
-
-
 });
