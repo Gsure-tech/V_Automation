@@ -481,8 +481,8 @@ describe('API Validation for VAS Validation Endpoints', () => {
             url: 'http://vasapp.oasisproducts.ng/api/vas/validation/tin/generate',
           headers: HEADERS.VALID_API_KEY,
             body: {
-                "rc_number": "35147935",
-                "entity_type":"INCORPORATED_TRUSTEE"
+                "rc_number": "27782342",
+                "entity_type":"LIMITED_LIABILITY_PARTNERSHIP"
             }
         }).then((response) => {
             expect(response.status).to.eq(200);
@@ -994,7 +994,67 @@ describe('API Validation for VAS Validation Endpoints', () => {
         });
     });
 
+       // OPEN SEARCH COMPANY SEARCH
 
+    it('should return 200 and valid company data when valid RC number and entity type is passed for COMPANY OPEN SEARCH', () => {
+        const requestBody = {
+            "company_name": "Hassan",
+            "filter_param": {
+            "search_type": "PREFIX",
+            "reg_start_date": "2025-08-05",
+            "reg_end_date": "2025-10-27",
+            "entity_type": "LIMITED_LIABILITY_PARTNERSHIP", 
+            "entity_email_address": "Peaceoasis9023@gmail.com",
+            "rc_number": "27782342"
+}
+        };
+
+        cy.request({
+            method: 'POST',
+            url: 'http://41.207.248.246:9000/api/vas/validation/open-search/company',
+            headers: HEADERS.VALID_API_KEY,
+            body: requestBody,
+            failOnStatusCode: false
+        }).then((response) => {
+            expect(response.status).to.eq(200);
+            expect(response.body.status).to.eq('OK');
+            expect(response.body.message).to.eq('Company data');
+            expect(response.body.success).to.be.true;
+             const company = response.body.data[0];
+            expect(company.rc_number).to.be.a('string').and.not.be.empty;
+            expect(company.entity_type).to.be.a('string').and.not.be.empty;
+            expect(company.entity_name).to.be.a('string').and.not.be.empty;
+
+        });
+    });
+
+
+    it('should return 401 Unauthorized for invalid API key', () => {
+        const requestBody = {
+            "company_name": "Hassan",
+            "filter_param": {
+            "search_type": "PREFIX",
+            "reg_start_date": "2025-08-05",
+            "reg_end_date": "2025-10-27",
+            "entity_type": "LIMITED_LIABILITY_PARTNERSHIP", 
+            "entity_email_address": "Peaceoasis9023@gmail.com",
+            "rc_number": "27782342",
+            "entity_address": "75687 Haag River, West Anh, AZ 12472"
+            }
+        };
+
+        cy.request({
+            method: 'POST',
+            url: 'http://41.207.248.246:9000/api/vas/validation/open-search/company',
+            headers: HEADERS.INVALID_API_KEY,
+            body: requestBody,
+            failOnStatusCode: false
+        }).then((response) => {
+            expect(response.status).to.eq(401);
+            expect(response.body.error).to.eq('Unauthorized');
+            cy.log(response.body);
+        });
+    });
 
 });
 
@@ -1011,8 +1071,8 @@ describe("API Validation for VAS Registration Endpoints", () => {
       encoding: "binary", //for non-text responses
       headers: HEADERS.VALID_API_KEY,
       body: {
-        rcNumber: "8002149",
-        transactionRef: "VAS20250427134638646",
+        rcNumber: "8904270",
+        transactionRef: "VAS20251020053243601",
       },
     }).then((response) => {
       expect(response.status).to.eq(200);
@@ -1070,8 +1130,8 @@ describe("API Validation for VAS Registration Endpoints", () => {
       encoding: "binary", //for non-text responses
       headers: HEADERS.VALID_API_KEY,
       body: {
-        rcNumber: "8002149",
-        transactionRef: "VAS20250427134638646",
+        rcNumber: "8904270",
+        transactionRef: "VAS20251020053243601",
       },
     }).then((response) => {
       expect(response.status).to.eq(200);

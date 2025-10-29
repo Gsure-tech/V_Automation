@@ -12,7 +12,7 @@ describe("LGS Business Name Registration Flow", () => {
     cy.get('[routerlink="/Bn-registration/application"]')
       .contains("Register New Business")
       .should("be.visible");
-    cy.get('button[routerlink="/status"]')
+    cy.get('button[routerlink="/status"]') 
       .contains("Check Registration Status")
       .should("be.visible");
     cy.get('button[routerlink="/agents"]')
@@ -465,7 +465,7 @@ describe("LGS Business Name Registration Flow", () => {
 
      // Enter login credentials and submit
      cy.log("Entering valid agent email and password");
-     cy.get("#agentEmail").type("joyoasis9023+3@gmail.com");
+     cy.get("#agentEmail").type("peaceoasis9023+4@gmail.com");
      cy.get("#agentLogin").type("Gsure9023@2025");
      cy.get(".button-submit").click();
 
@@ -567,7 +567,7 @@ describe("LGS Business Name Registration Flow", () => {
 
     // Enter login credentials and submit
     cy.log("Entering valid agent email and password");
-    cy.get("#agentEmail").type("joyoasis9023+3@gmail.com");
+    cy.get("#agentEmail").type("peaceoasis9023+4@gmail.com");
     cy.get("#agentLogin").type("Gsure9023@2025");
     cy.get(".button-submit").click();
 

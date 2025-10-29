@@ -1,0 +1,10 @@
+{
+  "elements":{
+    "textBox": "input#twotabsearchtextbox",
+    "searchButton": "#nav-search-submit-button",
+    "Ferrari": "Ferrari",
+    "SAMSUNG": "SAMSUNG",
+    "BREAD": "BREAD"
+
+  }
+}
