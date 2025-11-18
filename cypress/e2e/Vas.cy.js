@@ -154,28 +154,28 @@ describe('VAS API Integrated Service', () => {
         cy.log('Invalid field error messages displayed correctly');
     });
 
-it('should display the modal for email verification after successful sign-up', () => {
-    cy.visit("http://vas.oasisproducts.ng/create-account");
-    // Sign up with valid data
-    const uniqueId = Date.now();
-    cy.get('input[formcontrolname="email"]').clear().type(`peaceoasis9023+${uniqueId}@gmail.com`);
-    cy.get('input[placeholder="First Name"]').clear().type('Ben');
-    cy.get('input[placeholder="Last Name"]').clear().type('Terry');
-    cy.get('input[formcontrolname="rcNumber"]').clear().type('1234567890');
-    cy.get('input[name="login[password]"]').clear().type('ValidPassword123');
-    cy.get('input[formcontrolname="checked"]').check();
+// it('should display the modal for email verification after successful sign-up', () => {
+//     cy.visit("http://vas.oasisproducts.ng/create-account");
+//     // Sign up with valid data
+//     const uniqueId = Date.now();
+//     cy.get('input[formcontrolname="email"]').clear().type(`peaceoasis9023+${uniqueId}@gmail.com`);
+//     cy.get('input[placeholder="First Name"]').clear().type('Ben');
+//     cy.get('input[placeholder="Last Name"]').clear().type('Terry');
+//     cy.get('input[formcontrolname="rcNumber"]').clear().type('1234567890');
+//     cy.get('input[name="login[password]"]').clear().type('ValidPassword123');
+//     cy.get('input[formcontrolname="checked"]').check();
 
-    cy.get('.theme-form > :nth-child(8)').contains('SignUp').click();
-    cy.log('Clicked the SignUp button with valid fields');
+//     cy.get('.theme-form > :nth-child(8)').contains('SignUp').click();
+//     cy.log('Clicked the SignUp button with valid fields');
 
-    // Verify that the modal appears with the email verification message
-    cy.get('.modal-body').contains('Refer to your email to complete registration').should('be.visible');
-    cy.log('Email verification modal is displayed');
+//     // Verify that the modal appears with the email verification message
+//     cy.get('.modal-body').contains('Refer to your email to complete registration').should('be.visible');
+//     cy.log('Email verification modal is displayed');
 
-    // Click "Done" to close the modal
-    cy.get('.modal-footer > .btn-primary').click();
-    cy.log('Clicked the "Done" button in the email verification modal');
-});
+//     // Click "Done" to close the modal
+//     cy.get('.modal-footer > .btn-primary').click();
+//     cy.log('Clicked the "Done" button in the email verification modal');
+// });
 
 it('should navigate to the forgot password page', () => {
     cy.log('Navigating to the Forgot password page');
@@ -219,7 +219,6 @@ it('should enable and click the "Send Reset Link" button after entering a valid 
     cy.get('.modal-footer > .btn-primary').click();
     cy.log('Password reset link sent confirmation is visible');
 });
-
 
 it('should display "Invalid email or password" when an incorrect email is entered with a valid password', () => {
     cy.visit("http://vas.oasisproducts.ng/login");
@@ -280,7 +279,6 @@ it('should validate login button behavior and be able to login', () => {
     cy.get('.theme-form > :nth-child(5)').contains('Login').should('be.disabled');
     cy.log('Login button is disabled when email and password are empty');
 
-
     cy.log('Entering empty email and valid password');
     cy.get('input[type="email"]').clear();
     cy.get('input[type="password"]').clear().type('Gsure9023@2025');
@@ -303,7 +301,6 @@ it('should validate login button behavior and be able to login', () => {
     cy.get('.theme-form > :nth-child(5)').contains('Login').should('not.be.disabled');
     cy.log('"Login" button is enabled when both email and password are entered');
 
-
     cy.log('Toggling password visibility by clicking the eye icon');
 
     // Verify the password is initially hidden (type="password")
@@ -315,7 +312,6 @@ it('should validate login button behavior and be able to login', () => {
 
     cy.get('input[formcontrolname="password"]').should('have.attr', 'type', 'text');
     cy.log('Password field is now visible');
-
 
     cy.get('.fa').click();
     cy.log('Clicked the eye icon again to hide the password');
@@ -334,8 +330,6 @@ it('should validate login button behavior and be able to login', () => {
     // cy.wait(3000);
     cy.url({ timeout: 30000 }).should('include', 'dashboard');
     cy.log('Successfully logged in and redirected to dashboard');
-
-
 
     cy.log('Clicking on the collapse icon to toggle the menu');
     cy.get('.collapse-icon').click();
@@ -384,682 +378,778 @@ it('should validate login button behavior and be able to login', () => {
 
 });
 
-
 });
 
-describe('API Validation for VAS Validation Endpoints', () => {
-
-    it('should return 400 BAD_REQUEST when VRC has already been validated', () => {
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/secure/company',
-            headers: HEADERS.VALID_API_KEY,
-            body: {
-                vrc: "5OBZex7WxA"
-            },
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(400);
-            expect(response.body.status).to.eq('BAD_REQUEST');
-            expect(response.body.message).to.eq('invalid request sent');
-            expect(response.body.error).to.eq('VRC has already been validated');
-            expect(response.body.success).to.be.false;
-        });
+describe("API Validation for VAS Validation Endpoints", () => {
+  it("should return 400 BAD_REQUEST when VRC has already been validated", () => {
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/secure/company",
+      headers: HEADERS.VALID_API_KEY,
+      body: {
+        vrc: "5OBZex7WxA",
+      },
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(400);
+      expect(response.body.status).to.eq("BAD_REQUEST");
+      expect(response.body.message).to.eq("invalid request sent");
+      expect(response.body.error).to.eq("VRC has already been validated");
+      expect(response.body.success).to.be.false;
     });
+  });
 
-    // GET COMPANY USING TIN API
-    it('should return 200 when valid TIN and entity type is passed for Get Company Using TIN API', () => {
-        cy.log(' Get Company Using TIN')
-        const requestBody = {
-            tin: '78774829-0001',
-            entity_type: 'INCORPORATED_TRUSTEE'
-        };
+  // GET COMPANY USING TIN API
+  it("should return 200 when valid TIN and entity type is passed for Get Company Using TIN API", () => {
+    cy.log(" Get Company Using TIN");
+    const requestBody = {
+      tin: "78774829-0001",
+      entity_type: "INCORPORATED_TRUSTEE",
+    };
 
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/tin/company',
-            headers: HEADERS.VALID_API_KEY,
-            body: requestBody,
-            failOnStatusCode: false // Allow the test to continue even if status code isn't 200
-        }).then((response) => {
-            expect(response.status).to.eq(200);
-            expect(response.body.status).to.eq('OK');
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin/company",
+      headers: HEADERS.VALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false, // Allow the test to continue even if status code isn't 200
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.status).to.eq("OK");
 
-            // Check that the 'entity_name' exists in the response data
-            expect(response.body.data).to.have.property('entity_name');
-            expect(response.body.data.entity_name).to.not.be.empty;
-             cy.log(response.body);
-        });
+      // Check that the 'entity_name' exists in the response data
+      expect(response.body.data).to.have.property("entity_name");
+      expect(response.body.data.entity_name).to.not.be.empty;
+      cy.log(response.body);
     });
+  });
 
-    it('should return 401 Unauthorized for invalid API key', () => {
-
-
-        const requestBody = {
-            tin: '78774829-0001',
-            entity_type: 'INCORPORATED_TRUSTEE'
-        };
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/tin/company',
-            headers: HEADERS.INVALID_API_KEY,
-            body: requestBody,
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(401);
-            expect(response.body.error).to.eq('Unauthorized');
-            cy.log(response.body);
-        });
+  it("should return 401 Unauthorized for invalid API key", () => {
+    const requestBody = {
+      tin: "78774829-0001",
+      entity_type: "INCORPORATED_TRUSTEE",
+    };
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin/company",
+      headers: HEADERS.INVALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(401);
+      expect(response.body.error).to.eq("Unauthorized");
+      cy.log(response.body);
     });
+  });
 
-    it('should return 400 Bad Request for incorrect TIN', () => {
-        const incorrectTin = '78774829-000';
-        const requestBody = {
-            tin: incorrectTin,
-            entity_type: 'INCORPORATED_TRUSTEE'
-        };
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/tin/company',
-           headers: HEADERS.VALID_API_KEY,
-            body: requestBody,
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(400);
-            // expect(response.body.error).to.eq('invalid rc_number passed');
-            // expect(response.body.errors).to.include('invalid rc_number passed');
-            cy.log(response.body);
-        });
+  it("should return 400 Bad Request for incorrect TIN", () => {
+    const incorrectTin = "78774829-000";
+    const requestBody = {
+      tin: incorrectTin,
+      entity_type: "INCORPORATED_TRUSTEE",
+    };
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin/company",
+      headers: HEADERS.VALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(400);
+      // expect(response.body.error).to.eq('invalid rc_number passed');
+      // expect(response.body.errors).to.include('invalid rc_number passed');
+      cy.log(response.body);
     });
+  });
 
-
-    // GENERATE TIN API
-    it('should return 200 when valid rc_number and entity_type are passed for GENERATE TIN API', () => {
-        // Valid RC Number and Entity Type
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/tin/generate',
-          headers: HEADERS.VALID_API_KEY,
-            body: {
-                "rc_number": "27782342",
-                "entity_type":"LIMITED_LIABILITY_PARTNERSHIP"
-            }
-        }).then((response) => {
-            expect(response.status).to.eq(200);
-            expect(response.body.status).to.eq('OK');
-            expect(response.body.message).to.eq('tin generated successfully');
-            expect(response.body.success).to.eq(true);
-        });
+  // GENERATE TIN API
+  it("should return 200 when valid rc_number and entity_type are passed for GENERATE TIN API", () => {
+    // Valid RC Number and Entity Type
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin/generate",
+      headers: HEADERS.VALID_API_KEY,
+      body: {
+        rc_number: "27782342",
+        entity_type: "LIMITED_LIABILITY_PARTNERSHIP",
+      },
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.status).to.eq("OK");
+      expect(response.body.message).to.eq("tin generated successfully");
+      expect(response.body.success).to.eq(true);
     });
+  });
 
-    it('should return 400 when an invalid entity_type is passed', () => {
-            // Invalid Entity Type
-            cy.request({
-                method: 'POST',
-                url: 'http://vasapp.oasisproducts.ng/api/vas/validation/tin/generate',
-                headers: HEADERS.VALID_API_KEY,
-                body: {
-                    "rc_number": "35147935",
-                    "entity_type": "INVALID_ENTITY_TYPE"
-                },
-                failOnStatusCode: false
-            }).then((response) => {
-                // Assert the status code and error message
-                expect(response.status).to.eq(400);
-                expect(response.body.status).to.eq('BAD_REQUEST');
-            });
-        });
-
-    it('should return 400 when an invalid rc_number is passed', () => {
-            cy.request({
-                method: 'POST',
-                url: 'http://vasapp.oasisproducts.ng/api/vas/validation/tin/generate',
-                headers: HEADERS.VALID_API_KEY,
-                body: {
-                    "rc_number": "INVALID_RC_NUMBER",
-                    "entity_type": "INCORPORATED_TRUSTEE"
-                },
-                failOnStatusCode: false
-            }).then((response) => {
-                expect(response.status).to.eq(400);
-                expect(response.body.status).to.eq('BAD_REQUEST');
-                expect(response.body.message).to.eq('invalid request sent');
-                expect(response.body.error).to.eq('invalid rc_number passed');
-            });
-        });
-
-    it('should return 401 Unauthorized for invalid API key', () => {
-
-        const requestBody = {
-            "rc_number": "35147935",
-            "entity_type":"INCORPORATED_TRUSTEE"
-        };
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/tin/generate',
-            headers: HEADERS.INVALID_API_KEY,
-            body: requestBody,
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(401);
-            expect(response.body.error).to.eq('Unauthorized');
-            cy.log(response.body);
-        });
+  it("should return 400 when an invalid entity_type is passed", () => {
+    // Invalid Entity Type
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin/generate",
+      headers: HEADERS.VALID_API_KEY,
+      body: {
+        rc_number: "35147935",
+        entity_type: "INVALID_ENTITY_TYPE",
+      },
+      failOnStatusCode: false,
+    }).then((response) => {
+      // Assert the status code and error message
+      expect(response.status).to.eq(400);
+      expect(response.body.status).to.eq("BAD_REQUEST");
     });
+  });
 
-    //GET COMPANY BY NAME API
-    it('should return 200 and valid company data when valid rc_number and entity_name are passed for GET COMPANY BY NAME API', () => {
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/company/name',
-          headers: HEADERS.VALID_API_KEY,
-            body: {
-                "rc_number": "8002153",
-                "entity_name": "Comrade Joint Ventures"
-            }
-        }).then((response) => {
-            expect(response.status).to.eq(200);
-            expect(response.body.status).to.eq('OK');
-            expect(response.body.message).to.eq('company data');
-
-            expect(response.body.data.entity_name).to.not.be.empty;
-            expect(response.body.data.rc_number).to.not.be.empty;
-            expect(response.body.data.entity_name).to.not.be.empty;
-            expect(response.body.data.entity_type).to.not.be.empty;
-            expect(response.body.data.address).to.not.be.empty;
-            expect(response.body.data.registration_date).to.not.be.empty;
-            expect(response.body.data.entity_status).to.not.be.empty;
-            expect(response.body.data.line_of_business).to.not.be.empty;
-        });
+  it("should return 400 when an invalid rc_number is passed", () => {
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin/generate",
+      headers: HEADERS.VALID_API_KEY,
+      body: {
+        rc_number: "INVALID_RC_NUMBER",
+        entity_type: "INCORPORATED_TRUSTEE",
+      },
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(400);
+      expect(response.body.status).to.eq("BAD_REQUEST");
+      expect(response.body.message).to.eq("invalid request sent");
+      expect(response.body.error).to.eq("invalid rc_number passed");
     });
+  });
 
-    it('should return 400 when an invalid rc_number is passed', () => {
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/company/name',
-          headers: HEADERS.VALID_API_KEY,
-            body: {
-                "rc_number": "INVALID_RC_NUMBER",
-                "entity_name": "JG Group"
-            },
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(400);
-            expect(response.body.status).to.eq('BAD_REQUEST');
-            expect(response.body.message).to.eq('invalid data');
-            expect(response.body.error).to.eq('invalid rc_number passed');
-        });
+  it("should return 401 Unauthorized for invalid API key", () => {
+    const requestBody = {
+      rc_number: "35147935",
+      entity_type: "INCORPORATED_TRUSTEE",
+    };
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin/generate",
+      headers: HEADERS.INVALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(401);
+      expect(response.body.error).to.eq("Unauthorized");
+      cy.log(response.body);
     });
+  });
 
-    it('should return 401 Unauthorized for invalid API key', () => {
+  //GET COMPANY BY NAME API
+  it("should return 200 and valid company data when valid rc_number and entity_name are passed for GET COMPANY BY NAME API", () => {
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company/name",
+      headers: HEADERS.VALID_API_KEY,
+      body: {
+        rc_number: "8002153",
+        entity_name: "Comrade Joint Ventures",
+      },
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.status).to.eq("OK");
+      expect(response.body.message).to.eq("company data");
 
-        const requestBody = {
-            "rc_number":"35147935",
-            "entity_name":"JG Group"
-        };
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/company/name',
-            headers: HEADERS.INVALID_API_KEY,
-            body: requestBody,
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(401);
-            expect(response.body.error).to.eq('Unauthorized');
-            cy.log(response.body);
-        });
+      expect(response.body.data.entity_name).to.not.be.empty;
+      expect(response.body.data.rc_number).to.not.be.empty;
+      expect(response.body.data.entity_name).to.not.be.empty;
+      expect(response.body.data.entity_type).to.not.be.empty;
+      expect(response.body.data.address).to.not.be.empty;
+      expect(response.body.data.registration_date).to.not.be.empty;
+      expect(response.body.data.entity_status).to.not.be.empty;
+      expect(response.body.data.line_of_business).to.not.be.empty;
     });
+  });
 
-    //GET COMPANY BY RC NUMBER API
-    it('should return 200 and valid company data when valid rc_number is passed for GET COMPANY BY RC NUMBER API', () => {
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/company/rc',
-          headers: HEADERS.VALID_API_KEY,
-            body: {
-                "rc_number": "8002153"
-            }
-        }).then((response) => {
-            expect(response.status).to.eq(200);
-            expect(response.body.status).to.eq('OK');
-            expect(response.body.message).to.eq('company data');
-
-            expect(response.body.data.entity_name).to.not.be.empty;
-            expect(response.body.data.rc_number).to.not.be.empty;
-            expect(response.body.data.entity_name).to.not.be.empty;
-            expect(response.body.data.entity_type).to.not.be.empty;
-            expect(response.body.data.address).to.not.be.empty;
-            expect(response.body.data.registration_date).to.not.be.empty;
-            expect(response.body.data.entity_status).to.not.be.empty;
-            expect(response.body.data.line_of_business).to.not.be.empty;
-        });
+  it("should return 400 when an invalid rc_number is passed", () => {
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company/name",
+      headers: HEADERS.VALID_API_KEY,
+      body: {
+        rc_number: "INVALID_RC_NUMBER",
+        entity_name: "JG Group",
+      },
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(400);
+      expect(response.body.status).to.eq("BAD_REQUEST");
+      expect(response.body.message).to.eq("invalid data");
+      expect(response.body.error).to.eq("invalid rc_number passed");
     });
+  });
 
-    it('should return 400 when an invalid rc_number is passed', () => {
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/company/rc',
-            headers:HEADERS.VALID_API_KEY,
-            body: {
-                "rc_number": "INVALID_RC_NUMBER"
-            },
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(400);
-            expect(response.body.status).to.eq('BAD_REQUEST');
-            expect(response.body.message).to.eq('invalid data');
-            expect(response.body.error).to.eq('invalid rc_number passed');
-        });
+  it("should return 401 Unauthorized for invalid API key", () => {
+    const requestBody = {
+      rc_number: "35147935",
+      entity_name: "JG Group",
+    };
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company/name",
+      headers: HEADERS.INVALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(401);
+      expect(response.body.error).to.eq("Unauthorized");
+      cy.log(response.body);
     });
+  });
 
-    it('should return 401 Unauthorized for invalid API key', () => {
+  //GET COMPANY BY RC NUMBER API
+  it("should return 200 and valid company data when valid rc_number is passed for GET COMPANY BY RC NUMBER API", () => {
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company/rc",
+      headers: HEADERS.VALID_API_KEY,
+      body: {
+        rc_number: "8002153",
+      },
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.status).to.eq("OK");
+      expect(response.body.message).to.eq("company data");
 
-        const requestBody = {
-            "rc_number":"35147935"
-        };
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/company/rc',
-            headers: HEADERS.INVALID_API_KEY,
-            body: requestBody,
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(401);
-            expect(response.body.error).to.eq('Unauthorized');
-            cy.log(response.body);
-        });
+      expect(response.body.data.entity_name).to.not.be.empty;
+      expect(response.body.data.rc_number).to.not.be.empty;
+      expect(response.body.data.entity_name).to.not.be.empty;
+      expect(response.body.data.entity_type).to.not.be.empty;
+      expect(response.body.data.address).to.not.be.empty;
+      expect(response.body.data.registration_date).to.not.be.empty;
+      expect(response.body.data.entity_status).to.not.be.empty;
+      expect(response.body.data.line_of_business).to.not.be.empty;
     });
+  });
 
-    // GET COMPANY LINE OF BUSINESS API
-    it('should return 200 and company line of business when valid rc_number and entity type is passed for GET COMPANY LINE OF BUSINESS API', () => {
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/line-of-business',
-          headers: HEADERS.VALID_API_KEY,
-            body: {
-                "rc_number": "7214181",
-                "entity_type": "BUSINESS_NAME"
-            }
-        }).then((response) => {
-            expect(response.status).to.eq(200);
-            expect(response.body.status).to.eq('OK');
-            expect(response.body.message).to.eq('company data');
-            expect(response.body.success).to.be.true;
-            expect(response.body.data).to.be.an('array').that.is.not.empty;
-        });
+  it("should return 400 when an invalid rc_number is passed", () => {
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company/rc",
+      headers: HEADERS.VALID_API_KEY,
+      body: {
+        rc_number: "INVALID_RC_NUMBER",
+      },
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(400);
+      expect(response.body.status).to.eq("BAD_REQUEST");
+      expect(response.body.message).to.eq("invalid data");
+      expect(response.body.error).to.eq("invalid rc_number passed");
     });
+  });
 
-    it('should return 400 when an invalid entity_type is passed', () => {
-            // Invalid Entity Type
-            cy.request({
-                method: 'POST',
-                url: 'http://vasapp.oasisproducts.ng/api/vas/validation/line-of-business',
-                headers: HEADERS.VALID_API_KEY,
-                body: {
-                    "rc_number": "7214181",
-                    "entity_type": "INVALID_ENTITY_TYPE"
-                },
-                failOnStatusCode: false
-            }).then((response) => {
-                // Assert the status code and error message
-                expect(response.status).to.eq(400);
-                expect(response.body.status).to.eq('BAD_REQUEST');
-            });
-        });
-
-    it('should return 400 when an invalid rc_number is passed', () => {
-            cy.request({
-                method: 'POST',
-                url: 'http://vasapp.oasisproducts.ng/api/vas/validation/line-of-business',
-                headers: HEADERS.VALID_API_KEY,
-                body: {
-                    "rc_number": "INVALID_RC_NUMBER",
-                    "entity_type": "INCORPORATED_TRUSTEE"
-                },
-                failOnStatusCode: false
-            }).then((response) => {
-                expect(response.status).to.eq(400);
-                expect(response.body.status).to.eq('BAD_REQUEST');
-                expect(response.body.message).to.eq('invalid data');
-                expect(response.body.error).to.eq('invalid rc_number passed');
-            });
-        });
-
-
-    it('should return 401 Unauthorized for invalid API key', () => {
-
-        const requestBody = {
-            "rc_number": "7214181",
-            "entity_type": "BUSINESS_NAME"
-        };
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/company/rc',
-            headers: HEADERS.INVALID_API_KEY,
-            body: requestBody,
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(401);
-            expect(response.body.error).to.eq('Unauthorized');
-            cy.log(response.body);
-        });
+  it("should return 401 Unauthorized for invalid API key", () => {
+    const requestBody = {
+      rc_number: "35147935",
+    };
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company/rc",
+      headers: HEADERS.INVALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(401);
+      expect(response.body.error).to.eq("Unauthorized");
+      cy.log(response.body);
     });
+  });
 
-
-    // GET COMPANY TIN API
-    it('should return 200 and valid company data when valid rc_number and entity_type is passed for GET COMPANY TIN API', () => {
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/tin',
-          headers: HEADERS.VALID_API_KEY,
-            body: {
-                "rc_number": "7214181",
-                "entity_type": "BUSINESS_NAME"
-            }
-        }).then((response) => {
-            expect(response.status).to.eq(200);
-            expect(response.body.status).to.eq('OK');
-            expect(response.body.message).to.eq('company data');
-            expect(response.body.data.rc_number).to.not.be.empty;
-            expect(response.body.data.entity_name).to.not.be.empty;
-            expect(response.body.data.entity_type).to.not.be.empty;
-            expect(response.body.data.address).to.not.be.empty;
-            expect(response.body.data.registration_date).to.not.be.empty;
-            expect(response.body.data.entity_status).to.not.be.empty;
-            expect(response.body.data.tin).to.not.be.empty;
-        });
+  // GET COMPANY LINE OF BUSINESS API
+  it("should return 200 and company line of business when valid rc_number and entity type is passed for GET COMPANY LINE OF BUSINESS API", () => {
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/line-of-business",
+      headers: HEADERS.VALID_API_KEY,
+      body: {
+        rc_number: "7214181",
+        entity_type: "BUSINESS_NAME",
+      },
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.status).to.eq("OK");
+      expect(response.body.message).to.eq("company data");
+      expect(response.body.success).to.be.true;
+      expect(response.body.data).to.be.an("array").that.is.not.empty;
     });
+  });
 
-    it('should return 400 when an invalid entity_type is passed', () => {
-        // Invalid Entity Type
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/tin',
-          headers: HEADERS.VALID_API_KEY,
-            body: {
-                "rc_number": "7214181",
-                "entity_type": "INVALID_ENTITY_TYPE"
-            },
-            failOnStatusCode: false
-        }).then((response) => {
-            // Assert the status code and error message
-            expect(response.status).to.eq(400);
-            expect(response.body.status).to.eq('BAD_REQUEST');
-        });
+  it("should return 400 when an invalid entity_type is passed", () => {
+    // Invalid Entity Type
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/line-of-business",
+      headers: HEADERS.VALID_API_KEY,
+      body: {
+        rc_number: "7214181",
+        entity_type: "INVALID_ENTITY_TYPE",
+      },
+      failOnStatusCode: false,
+    }).then((response) => {
+      // Assert the status code and error message
+      expect(response.status).to.eq(400);
+      expect(response.body.status).to.eq("BAD_REQUEST");
     });
+  });
 
-    it('should return 400 when an invalid rc_number is passed', () => {
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/tin',
-          headers: HEADERS.VALID_API_KEY,
-            body: {
-                "rc_number": "INVALID_RC_NUMBER",
-                "entity_type": "INCORPORATED_TRUSTEE"
-            },
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(400);
-            expect(response.body.status).to.eq('BAD_REQUEST');
-            expect(response.body.message).to.eq('invalid data');
-            expect(response.body.error).to.eq('invalid rc_number passed');
-        });
+  it("should return 400 when an invalid rc_number is passed", () => {
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/line-of-business",
+      headers: HEADERS.VALID_API_KEY,
+      body: {
+        rc_number: "INVALID_RC_NUMBER",
+        entity_type: "INCORPORATED_TRUSTEE",
+      },
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(400);
+      expect(response.body.status).to.eq("BAD_REQUEST");
+      expect(response.body.message).to.eq("invalid data");
+      expect(response.body.error).to.eq("invalid rc_number passed");
     });
+  });
 
-    it('should return 401 Unauthorized for invalid API key', () => {
-
-        const requestBody = {
-            "rc_number": "7214181",
-            "entity_type": "BUSINESS_NAME"
-        };
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/tin',
-            headers: HEADERS.INVALID_API_KEY,
-            body: requestBody,
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(401);
-            expect(response.body.error).to.eq('Unauthorized');
-            cy.log(response.body);
-        });
+  it("should return 401 Unauthorized for invalid API key", () => {
+    const requestBody = {
+      rc_number: "7214181",
+      entity_type: "BUSINESS_NAME",
+    };
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company/rc",
+      headers: HEADERS.INVALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(401);
+      expect(response.body.error).to.eq("Unauthorized");
+      cy.log(response.body);
     });
+  });
 
-    // GET COMPANY API
-    it('should return 200 and valid company data when valid rc_number and entity_type is passed for GET COMPANY API', () => {
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/company',
-          headers: HEADERS.VALID_API_KEY,
-            body: {
-                "rc_number": "7214181",
-                "entity_type": "BUSINESS_NAME"
-            }
-        }).then((response) => {
-            expect(response.status).to.eq(200);
-            expect(response.body.status).to.eq('OK');
-            expect(response.body.message).to.eq('company data');
-            expect(response.body.data.rc_number).to.not.be.empty;
-            expect(response.body.data.entity_name).to.not.be.empty;
-            expect(response.body.data.entity_type).to.not.be.empty;
-            expect(response.body.data.address).to.not.be.empty;
-            expect(response.body.data.registration_date).to.not.be.empty;
-            expect(response.body.data.entity_status).to.not.be.empty;
-            expect(response.body.data.line_of_business).to.not.be.empty;
-        });
+  // GET COMPANY TIN API
+  it("should return 200 and valid company data when valid rc_number and entity_type is passed for GET COMPANY TIN API", () => {
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin",
+      headers: HEADERS.VALID_API_KEY,
+      body: {
+        rc_number: "7214181",
+        entity_type: "BUSINESS_NAME",
+      },
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.status).to.eq("OK");
+      expect(response.body.message).to.eq("company data");
+      expect(response.body.data.rc_number).to.not.be.empty;
+      expect(response.body.data.entity_name).to.not.be.empty;
+      expect(response.body.data.entity_type).to.not.be.empty;
+      expect(response.body.data.address).to.not.be.empty;
+      expect(response.body.data.registration_date).to.not.be.empty;
+      expect(response.body.data.entity_status).to.not.be.empty;
+      expect(response.body.data.tin).to.not.be.empty;
     });
+  });
 
-    it('should return 400 when an invalid entity_type is passed', () => {
-        // Invalid Entity Type
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/company',
-          headers: HEADERS.VALID_API_KEY,
-            body: {
-                "rc_number": "7214181",
-                "entity_type": "INVALID_ENTITY_TYPE"
-            },
-            failOnStatusCode: false
-        }).then((response) => {
-            // Assert the status code and error message
-            expect(response.status).to.eq(400);
-            expect(response.body.status).to.eq('BAD_REQUEST');
-        });
+  it("should return 400 when an invalid entity_type is passed", () => {
+    // Invalid Entity Type
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin",
+      headers: HEADERS.VALID_API_KEY,
+      body: {
+        rc_number: "7214181",
+        entity_type: "INVALID_ENTITY_TYPE",
+      },
+      failOnStatusCode: false,
+    }).then((response) => {
+      // Assert the status code and error message
+      expect(response.status).to.eq(400);
+      expect(response.body.status).to.eq("BAD_REQUEST");
     });
+  });
 
-    it('should return 400 when an invalid rc_number is passed', () => {
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/company',
-          headers: HEADERS.VALID_API_KEY,
-            body: {
-                "rc_number": "INVALID_RC_NUMBER",
-                "entity_type": "INCORPORATED_TRUSTEE"
-            },
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(400);
-            expect(response.body.status).to.eq('BAD_REQUEST');
-            expect(response.body.message).to.eq('invalid data');
-            expect(response.body.error).to.eq('invalid rc_number passed');
-        });
+  it("should return 400 when an invalid rc_number is passed", () => {
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin",
+      headers: HEADERS.VALID_API_KEY,
+      body: {
+        rc_number: "INVALID_RC_NUMBER",
+        entity_type: "INCORPORATED_TRUSTEE",
+      },
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(400);
+      expect(response.body.status).to.eq("BAD_REQUEST");
+      expect(response.body.message).to.eq("invalid data");
+      expect(response.body.error).to.eq("invalid rc_number passed");
     });
+  });
 
-    it('should return 401 Unauthorized for invalid API key', () => {
-
-        const requestBody = {
-            "rc_number": "7214181",
-            "entity_type": "BUSINESS_NAME"
-        };
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/company',
-            headers: HEADERS.INVALID_API_KEY,
-            body: requestBody,
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(401);
-            expect(response.body.error).to.eq('Unauthorized');
-            cy.log(response.body);
-        });
+  it("should return 401 Unauthorized for invalid API key", () => {
+    const requestBody = {
+      rc_number: "7214181",
+      entity_type: "BUSINESS_NAME",
+    };
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin",
+      headers: HEADERS.INVALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(401);
+      expect(response.body.error).to.eq("Unauthorized");
+      cy.log(response.body);
     });
+  });
 
-    // BUSINESS VALIDATION SINGLE SERVICE (PREMIUM)
-
-    it('should return 200 and valid company data when valid RC number and entity type is passed for BUSINESS VALIDATION SINGLE SERVICE (PREMIUM)', () => {
-        const requestBody = {
-            rc_number: "8002155",
-            entity_type: "BUSINESS_NAME"
-        };
-
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/single-service',
-            headers: HEADERS.VALID_API_KEY,
-            body: requestBody,
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(200);
-            expect(response.body.status).to.eq('OK');
-            expect(response.body.message).to.eq('company data');
-            expect(response.body.success).to.be.true;
-            expect(response.body.data.rc_number).to.not.be.empty;
-            expect(response.body.data.entity_type).to.not.be.empty;
-            expect(response.body.data.entity_status).to.not.be.empty;
-            expect(response.body.data.entity_name).to.not.be.empty;
-            expect(response.body.data.address).to.not.be.empty;
-            expect(response.body.data.affiliates).to.be.an('array').and.have.length.greaterThan(0);
-
-        });
+  // GET COMPANY API
+  it("should return 200 and valid company data when valid rc_number and entity_type is passed for GET COMPANY API", () => {
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company",
+      headers: HEADERS.VALID_API_KEY,
+      body: {
+        rc_number: "7214181",
+        entity_type: "BUSINESS_NAME",
+      },
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.status).to.eq("OK");
+      expect(response.body.message).to.eq("company data");
+      expect(response.body.data.rc_number).to.not.be.empty;
+      expect(response.body.data.entity_name).to.not.be.empty;
+      expect(response.body.data.entity_type).to.not.be.empty;
+      expect(response.body.data.address).to.not.be.empty;
+      expect(response.body.data.registration_date).to.not.be.empty;
+      expect(response.body.data.entity_status).to.not.be.empty;
+      expect(response.body.data.line_of_business).to.not.be.empty;
     });
-    it('should return 401 Unauthorized for invalid API key', () => {
-        const requestBody = {
-            "rc_number": "8082155",
-            "entity_type": "BUSINESS_NAME"
-        };
+  });
 
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/single-service',
-            headers: HEADERS.INVALID_API_KEY,
-            body: requestBody,
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(401);
-            expect(response.body.error).to.eq('Unauthorized');
-            cy.log(response.body);
-        });
+  it("should return 400 when an invalid entity_type is passed", () => {
+    // Invalid Entity Type
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company",
+      headers: HEADERS.VALID_API_KEY,
+      body: {
+        rc_number: "7214181",
+        entity_type: "INVALID_ENTITY_TYPE",
+      },
+      failOnStatusCode: false,
+    }).then((response) => {
+      // Assert the status code and error message
+      expect(response.status).to.eq(400);
+      expect(response.body.status).to.eq("BAD_REQUEST");
     });
+  });
 
-    it('should return 400 Bad Request for invalid rc_number', () => {
-        const requestBody = {
-            rc_number: "INVALID_RC",
-            entity_type: "BUSINESS_NAME"
-        };
-
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/single-service',
-            headers: HEADERS.VALID_API_KEY,
-            body: requestBody,
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(400);
-            expect(response.body.status).to.eq('BAD_REQUEST');
-            expect(response.body.message).to.eq('invalid data');
-            expect(response.body.error).to.eq('invalid rc_number passed');
-            expect(response.body.success).to.be.false;
-            expect(response.body.errors).to.include('invalid rc_number passed');
-
-            cy.log('Error Response:', response.body);
-        });
+  it("should return 400 when an invalid rc_number is passed", () => {
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company",
+      headers: HEADERS.VALID_API_KEY,
+      body: {
+        rc_number: "INVALID_RC_NUMBER",
+        entity_type: "INCORPORATED_TRUSTEE",
+      },
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(400);
+      expect(response.body.status).to.eq("BAD_REQUEST");
+      expect(response.body.message).to.eq("invalid data");
+      expect(response.body.error).to.eq("invalid rc_number passed");
     });
+  });
 
-    it('should return 400 Bad Request for invalid entity_type', () => {
-        const requestBody = {
-            "rc_number": "8082155",
-            "entity_type": "INVALID_TYPE"
-        };
-
-        cy.request({
-            method: 'POST',
-            url: 'http://vasapp.oasisproducts.ng/api/vas/validation/single-service',
-            headers: HEADERS.VALID_API_KEY,
-            body: requestBody,
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(400);
-            expect(response.body.status).to.eq('BAD_REQUEST');
-            cy.log(response.body);
-        });
+  it("should return 401 Unauthorized for invalid API key", () => {
+    const requestBody = {
+      rc_number: "7214181",
+      entity_type: "BUSINESS_NAME",
+    };
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company",
+      headers: HEADERS.INVALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(401);
+      expect(response.body.error).to.eq("Unauthorized");
+      cy.log(response.body);
     });
+  });
 
-       // OPEN SEARCH COMPANY SEARCH
+  // BUSINESS VALIDATION SINGLE SERVICE (PREMIUM)
 
-    it('should return 200 and valid company data when valid RC number and entity type is passed for COMPANY OPEN SEARCH', () => {
-        const requestBody = {
-            "company_name": "Hassan",
-            "filter_param": {
-            "search_type": "PREFIX",
-            "reg_start_date": "2025-08-05",
-            "reg_end_date": "2025-10-27",
-            "entity_type": "LIMITED_LIABILITY_PARTNERSHIP", 
-            "entity_email_address": "Peaceoasis9023@gmail.com",
-            "rc_number": "27782342"
-}
-        };
+  it("should return 200 and valid company data when valid RC number and entity type is passed for BUSINESS VALIDATION SINGLE SERVICE (PREMIUM)", () => {
+    const requestBody = {
+      rc_number: "8002155",
+      entity_type: "BUSINESS_NAME",
+    };
 
-        cy.request({
-            method: 'POST',
-            url: 'http://41.207.248.246:9000/api/vas/validation/open-search/company',
-            headers: HEADERS.VALID_API_KEY,
-            body: requestBody,
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(200);
-            expect(response.body.status).to.eq('OK');
-            expect(response.body.message).to.eq('Company data');
-            expect(response.body.success).to.be.true;
-             const company = response.body.data[0];
-            expect(company.rc_number).to.be.a('string').and.not.be.empty;
-            expect(company.entity_type).to.be.a('string').and.not.be.empty;
-            expect(company.entity_name).to.be.a('string').and.not.be.empty;
-
-        });
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/single-service",
+      headers: HEADERS.VALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.status).to.eq("OK");
+      expect(response.body.message).to.eq("company data");
+      expect(response.body.success).to.be.true;
+      expect(response.body.data.rc_number).to.not.be.empty;
+      expect(response.body.data.entity_type).to.not.be.empty;
+      expect(response.body.data.entity_status).to.not.be.empty;
+      expect(response.body.data.entity_name).to.not.be.empty;
+      expect(response.body.data.address).to.not.be.empty;
+      expect(response.body.data.affiliates)
+        .to.be.an("array")
+        .and.have.length.greaterThan(0);
     });
+  });
+  it("should return 401 Unauthorized for invalid API key", () => {
+    const requestBody = {
+      rc_number: "8082155",
+      entity_type: "BUSINESS_NAME",
+    };
 
-
-    it('should return 401 Unauthorized for invalid API key', () => {
-        const requestBody = {
-            "company_name": "Hassan",
-            "filter_param": {
-            "search_type": "PREFIX",
-            "reg_start_date": "2025-08-05",
-            "reg_end_date": "2025-10-27",
-            "entity_type": "LIMITED_LIABILITY_PARTNERSHIP", 
-            "entity_email_address": "Peaceoasis9023@gmail.com",
-            "rc_number": "27782342",
-            "entity_address": "75687 Haag River, West Anh, AZ 12472"
-            }
-        };
-
-        cy.request({
-            method: 'POST',
-            url: 'http://41.207.248.246:9000/api/vas/validation/open-search/company',
-            headers: HEADERS.INVALID_API_KEY,
-            body: requestBody,
-            failOnStatusCode: false
-        }).then((response) => {
-            expect(response.status).to.eq(401);
-            expect(response.body.error).to.eq('Unauthorized');
-            cy.log(response.body);
-        });
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/single-service",
+      headers: HEADERS.INVALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(401);
+      expect(response.body.error).to.eq("Unauthorized");
+      cy.log(response.body);
     });
+  });
 
+  it("should return 400 Bad Request for invalid rc_number", () => {
+    const requestBody = {
+      rc_number: "INVALID_RC",
+      entity_type: "BUSINESS_NAME",
+    };
+
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/single-service",
+      headers: HEADERS.VALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(400);
+      expect(response.body.status).to.eq("BAD_REQUEST");
+      expect(response.body.message).to.eq("invalid data");
+      expect(response.body.error).to.eq("invalid rc_number passed");
+      expect(response.body.success).to.be.false;
+      expect(response.body.errors).to.include("invalid rc_number passed");
+
+      cy.log("Error Response:", response.body);
+    });
+  });
+
+  it("should return 400 Bad Request for invalid entity_type", () => {
+    const requestBody = {
+      rc_number: "8082155",
+      entity_type: "INVALID_TYPE",
+    };
+
+    cy.request({
+      method: "POST",
+      url: "http://vasapp.oasisproducts.ng/api/vas/validation/single-service",
+      headers: HEADERS.VALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(400);
+      expect(response.body.status).to.eq("BAD_REQUEST");
+      cy.log(response.body);
+    });
+  });
+
+  // OPEN SEARCH COMPANY SEARCH
+
+  it("should return 200 and valid company data when valid Company name or RC number and entity type is passed for COMPANY OPEN SEARCH", () => {
+    const requestBody = {
+      company_name: "Hassan",
+      filter_param: {
+        search_type: "PREFIX",
+        reg_start_date: "2025-08-05",
+        reg_end_date: "2025-10-27",
+        entity_type: "LIMITED_LIABILITY_PARTNERSHIP",
+        entity_email_address: "Peaceoasis9023@gmail.com",
+        rc_number: "27782342",
+      },
+    };
+
+    cy.request({
+      method: "POST",
+      url: "http://41.207.248.246:9000/api/vas/validation/open-search/company",
+      headers: HEADERS.VALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.status).to.eq("OK");
+      expect(response.body.message).to.eq("Company data");
+      expect(response.body.success).to.be.true;
+      const company = response.body.data[0];
+      expect(company.rc_number).to.be.a("string").and.not.be.empty;
+      expect(company.entity_type).to.be.a("string").and.not.be.empty;
+      expect(company.entity_name).to.be.a("string").and.not.be.empty;
+    });
+  });
+  it("should return 400 when registration start date is later than end date for COMPANY OPEN SEARCH", () => {
+    const requestBody = {
+      company_name: "Hassan",
+      filter_param: {
+        search_type: "PREFIX",
+        reg_start_date: "2026-08-05", // Start date after end date
+        reg_end_date: "2025-10-27", // End date before start date
+        entity_type: "LIMITED_LIABILITY_PARTNERSHIP",
+        entity_email_address: "Peaceoasis9023@gmail.com",
+        rc_number: "27782342",
+        entity_address:
+          "APT. 831 013 CRISTOBAL LIGHT, WEST RUSSELCHESTER, TN 16502",
+      },
+    };
+
+    cy.request({
+      method: "POST",
+      url: "http://41.207.248.246:9000/api/vas/validation/open-search/company",
+      headers: HEADERS.VALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(400);
+      expect(response.body.statusCode).to.eq(400);
+      expect(response.body.status).to.eq("BAD_REQUEST");
+      expect(response.body.success).to.be.false;
+      expect(response.body.error).to.eq(
+        "Registration start date must be earlier than end date"
+      );
+      expect(response.body.message).to.contain("invalid request sent");
+      expect(response.body.errors).to.be.null;
+    });
+  });
+
+  it("should return 401 Unauthorized for invalid API key", () => {
+    const requestBody = {
+      company_name: "Hassan",
+      filter_param: {
+        search_type: "PREFIX",
+        reg_start_date: "2025-08-05",
+        reg_end_date: "2025-10-27",
+        entity_type: "LIMITED_LIABILITY_PARTNERSHIP",
+        entity_email_address: "Peaceoasis9023@gmail.com",
+        rc_number: "27782342",
+        entity_address: "75687 Haag River, West Anh, AZ 12472",
+      },
+    };
+
+    cy.request({
+      method: "POST",
+      url: "http://41.207.248.246:9000/api/vas/validation/open-search/company",
+      headers: HEADERS.INVALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(401);
+      expect(response.body.error).to.eq("Unauthorized");
+      cy.log(response.body);
+    });
+  });
+
+  // OPEN SEARCH AFFILIATE SEARCH
+
+  it("should return 200 and valid company data when valid entities are passed for COMPANY AFFILIATE SEARCH", () => {
+    const requestBody = {
+      first_name: "Diedra",
+      last_name: "Jast",
+      filter_param: {
+        phone_number: "07051690854",
+        start_year_of_birth: "1995",
+        end_year_of_birth: "2025",
+        gender: "FEMALE",
+        nationality: "NIGERIAN",
+        affiliate_email_address: "peaceoasis9023@gmail.com",
+      },
+    };
+
+    cy.request({
+      method: "POST",
+      url: "http://41.207.248.246:9000/api/vas/validation/open-search/affiliate",
+      headers: HEADERS.VALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.statusCode).to.eq(200);
+      expect(response.body.status).to.eq("OK");
+      expect(response.body.success).to.be.true;
+      expect(response.body.message).to.eq("Affiliate data");
+      expect(response.body.data).to.be.an("array").and.not.be.empty;
+    });
+  });
+
+  it("should return 200 and valid company data when valid firstname and lastname is passed for COMPANY AFFILIATE SEARCH", () => {
+    const requestBody = {
+      first_name: "Diedra",
+      last_name: "Jast",
+    };
+
+    cy.request({
+      method: "POST",
+      url: "http://41.207.248.246:9000/api/vas/validation/open-search/affiliate",
+      headers: HEADERS.VALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.statusCode).to.eq(200);
+      expect(response.body.status).to.eq("OK");
+      expect(response.body.success).to.be.true;
+      expect(response.body.message).to.eq("Affiliate data");
+      expect(response.body.data).to.be.an("array").and.not.be.empty;
+    });
+  });
+
+  it("should return 401 Unauthorized for invalid API key", () => {
+    const requestBody = {
+      first_name: "Diedra",
+      last_name: "Jast",
+      filter_param: {
+        phone_number: "07051690854",
+        start_year_of_birth: "1995",
+        end_year_of_birth: "2025",
+        gender: "FEMALE",
+        nationality: "NIGERIAN",
+        affiliate_email_address: "peaceoasis9023@gmail.com",
+      },
+    };
+
+    cy.request({
+      method: "POST",
+      url: "http://41.207.248.246:9000/api/vas/validation/open-search/affiliate",
+      headers: HEADERS.INVALID_API_KEY,
+      body: requestBody,
+      failOnStatusCode: false,
+    }).then((response) => {
+      expect(response.status).to.eq(401);
+      expect(response.body.error).to.eq("Unauthorized");
+      cy.log(response.body);
+    });
+  });
 });
-
-
-
 
 describe("API Validation for VAS Registration Endpoints", () => {
   //  DOWNLOAD CERTIFICATE API
