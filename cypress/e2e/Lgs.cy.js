@@ -1,24 +1,138 @@
-describe("LGS Business Name Registration Flow", () => {
-  const baseUrl = "http://lgs.oasisproducts.ng";
+// describe('LGS Website Navbar Interaction and Navigation Flow', () => {
 
-  it("loads the registration landing page and confirms visibility of primary elements", () => {
-    cy.log("Visiting the business registration landing page");
-    cy.visit(`${baseUrl}/Bn-registration`);
+//   beforeEach(() => {
+//     cy.log('Visiting the LGS Business Registration Landing Page');
+//     cy.visit('http://lgs.oasisproducts.ng');
 
-    cy.log("Validating presence of headline text");
-    cy.get(".words").contains("Register A New Business Name In 4 simple Steps");
+//     cy.wait(1000); // allow UI elements to settle
+//   });
 
+//   it('should click the About button in the navbar', () => {
+//     cy.log('Clicking on the About button');
+    
+//     cy.get('a.btn-login')
+//       .contains('About')
+//       .should('be.visible')
+//       .click();
+
+//     cy.wait(500);
+//   });
+
+//   it('should open Services dropdown and select Business Registration', () => {
+//     cy.log('Opening Services dropdown');
+    
+//     cy.get('button[data-bs-toggle="dropdown"]')
+//       .contains('Services')
+//       .click();
+
+//     cy.wait(500);
+
+//     cy.log('Selecting Business Registration from dropdown');
+
+//     cy.get('.dropdown-menu')
+//       .contains('Business Registration')
+//       .click();
+
+//     cy.url().should('include', 'Bn-registration');
+
+//     cy.wait(1000);
+//   });
+
+//   it('should open Services dropdown and select Storefront Creation', () => {
+//     cy.log('Opening Services dropdown');
+    
+//     cy.get('button[data-bs-toggle="dropdown"]')
+//       .contains('Services')
+//       .click();
+
+//     cy.wait(500);
+
+//     cy.log('Selecting Storefront Creation');
+
+//     cy.get('.dropdown-menu')
+//       .contains('Storefront Creation')
+//       .click();
+
+//     cy.url().should('include', 'agents');
+
+//     cy.wait(1000);
+//   });
+
+//   it('should open Services dropdown and select Batch Registration', () => {
+//     cy.log('Opening Services dropdown');
+
+//     cy.get('button[data-bs-toggle="dropdown"]')
+//       .contains('Services')
+//       .click();
+
+//     cy.wait(500);
+
+//     cy.log('Selecting Batch Registration');
+
+//     cy.get('.dropdown-menu')
+//       .contains('Batch Registration')
+//       .click();
+
+//     cy.url().should('include', 'client');
+
+//     cy.wait(1000);
+//   });
+
+//   it('should click on the Login button', () => {
+//     cy.log('Clicking Login button in the navbar');
+
+//     cy.get('button.btn-login')
+//       .contains('Login')
+//       .should('be.visible')
+//       .click();
+
+//     cy.url().should('include', 'agents');
+
+//     cy.wait(1000);
+//   });
+// it("loads the registration landing page and confirms visibility of primary elements", () => {
+//     cy.log("Visiting the business registration landing page");
+  
+//     cy.get('p.landing-page-paragraph')
+//   .invoke('text')
+//   .should('include', 'Register Your Business Name')
+//   .and('include', 'in Nigeria')
+//   .and('include', 'Seamlessly');
+
+// });
+
+// });
+
+
+  describe("LGS Business Name Registration Flow", () => {
+  const baseUrl = "http://lgs.oasisproducts.ng"; 
+
+  it("should display the correct navbar buttons and links", () => {
+    // Visit the base page before tests
+    cy.visit("http://lgs.oasisproducts.ng/Bn-registration");
+
+    // Check that submit button is disabled initially
+    cy.get(".button-submit").should("be.disabled");
+
+    // Check if the correct business name header is visible
+    cy.get(".words").contains("Register Your Business Name In 4 simple Steps:");
+
+    // Log for validating visibility of navigation buttons
     cy.log("Validating visibility of navigation buttons");
     cy.get('[routerlink="/Bn-registration/application"]')
       .contains("Register New Business")
       .should("be.visible");
-    cy.get('button[routerlink="/status"]') 
+
+    cy.get('button[routerlink="/status"]')
       .contains("Check Registration Status")
       .should("be.visible");
+
     cy.get('button[routerlink="/agents"]')
       .contains("Signup for Free")
       .should("be.visible");
   });
+
+ 
 
   it("shows error modal when name already exists during compliance check", () => {
     cy.log("Navigating to application form");
@@ -582,7 +696,7 @@ describe("LGS Business Name Registration Flow", () => {
       .click();
     cy.log("Navigating to the 'Create Storefront' page");
 
-    // ===================== Negative Test - Storefront Name =====================
+    //  Negative Test - Storefront Name  
 
     cy.log(
       "Entering invalid storefront name with spaces and special characters"
@@ -595,7 +709,7 @@ describe("LGS Business Name Registration Flow", () => {
     );
     cy.log("Storefront name validation message displayed correctly");
 
-    // ===================== Negative Test - Storefront Link =====================
+    //   Negative Test - Storefront Link  
 
     cy.log("Entering invalid storefront link with special character");
     cy.get("#storefrontLink").clear().type("testerstore_");
@@ -613,59 +727,63 @@ describe("LGS Business Name Registration Flow", () => {
       });
   });
 
-  // it("should be able to create a storefront", () => {
-  //   const validFile = "gamma1.png";
-  //   cy.visit(`${baseUrl}`);
-  //   cy.log('Visiting the base URL and clicking the "Signup for Free" button');
-  //   cy.get(".becomeAnAgentBtn").contains("Signup for Free").click();
+  it("should be able to create a storefront", () => {
+    const validFile = "gamma1.png";
+    cy.visit(`${baseUrl}`);
+    cy.log('Visiting the base URL and clicking the "Signup for Free" button');
+    cy.get(".becomeAnAgentBtn").contains("Signup for Free").click();
 
-  //   // Enter login credentials and submit
-  //   cy.log("Entering valid agent email and password");
-  //   cy.get("#agentEmail").type("joyoasis9023+4@gmail.com");
-  //   cy.get("#agentLogin").type("Gsure9023@2025");
-  //   cy.get(".button-submit").click();
+    // Enter login credentials and submit
+    cy.log("Entering valid agent email and password");
+    cy.get("#agentEmail").type("joyoasis9023+4@gmail.com");
+    cy.get("#agentLogin").type("Gsure9023@2025");
+    cy.get(".button-submit").click();
 
-  //   // Wait for the dashboard to load and validate redirection
-  //   cy.log("Validating successful login and redirecting to the dashboard");
-  //   cy.url().should("include", "/overview");
-  //   cy.log("Successfully navigated to the dashboard");
+    // Wait for the dashboard to load and validate redirection
+    cy.log("Validating successful login and redirecting to the dashboard");
+    cy.url().should("include", "/overview");
+    cy.log("Successfully navigated to the dashboard");
 
-  //   cy.get("a.overview-btn")
-  //     .should("contain.text", "Create Storefront")
-  //     .should("be.visible")
-  //     .click();
-  //   cy.log("Navigating to the 'Create Storefront' page");
+    cy.get("a.overview-btn")
+      .should("contain.text", "Create Storefront")
+      .should("be.visible")
+      .click();
+    cy.log("Navigating to the 'Create Storefront' page");
 
-  //   // Enter valid values for name, link, and price
-  //   cy.get("#storefrontName").clear().type("testerstorefront1");
-  //   cy.log("Valid storefront name entered");
+    // Enter valid values for name, link, and price
+    cy.get("#storefrontName").clear().type("testerstorefront1");
+    cy.log("Valid storefront name entered");
 
-  //   cy.get("#storefrontLink").clear().type("testerstore1");
-  //   cy.log("Valid storefront link entered");
+    cy.get("#storefrontLink").clear().type("testerstore1");
+    cy.log("Valid storefront link entered");
 
-  //   cy.get("#setPrice").clear().type("3000");
-  //   cy.log("Valid price entered");
+    cy.get("#setPrice").clear().type("3000");
+    cy.log("Valid price entered");
 
-  //   cy.get(".save-btn").click();
-  //   cy.get(
-  //     'input[type="file"][accept="image/png, image/jpeg, image/jpg,image/svg+xml"]'
-  //   ).selectFile(`cypress/fixtures/${validFile}`, { force: true });
-  //   cy.get(":nth-child(2) > .theme-color").click();
-  //   cy.get(
-  //     '[style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;"] > :nth-child(2) > img'
-  //   ).click();
-  //   cy.get(".openLink.ng-star-inserted > .ng-star-inserted").click();
-  //   cy.get(".publish-section > h5")
-  //     .should("contain.text", "Congratulations")
-  //     .should("be.visible")
-  //     .click();
-  //     cy.get(".publish-paragraph")
-  //       .should("contain.text", "Your storefront has been published")
-  //       .should("be.visible")
-  //       .click();
-  //     cy.get(".publishLink")
-  //       .should("contain.text", "Copy Storefront Link")
-  //       .should("be.visible")
-  //       .click();
-  // });
+    cy.get(".save-btn").click();
+    cy.get(
+      'input[type="file"][accept="image/png, image/jpeg, image/jpg,image/svg+xml"]'
+    ).selectFile(`cypress/fixtures/${validFile}`, { force: true });
+    cy.get(":nth-child(2) > .theme-color").click();
+    cy.get(
+      '[style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;"] > :nth-child(2) > img'
+    ).click();
+    cy.get(".openLink.ng-star-inserted > .ng-star-inserted").click();
+    cy.get(".publish-section > h5")
+      .should("contain.text", "Congratulations")
+      .should("be.visible")
+      .click();
+      cy.get(".publish-paragraph")
+        .should("contain.text", "Your storefront has been published")
+        .should("be.visible")
+        .click();
+      cy.get(".publishLink")
+        .should("contain.text", "Copy Storefront Link")
+        .should("be.visible")
+        .click();
+  });
+
+
 });
+
+  
