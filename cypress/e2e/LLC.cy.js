@@ -33,6 +33,8 @@ describe("LLC Registration API Flow", () => {
       expect(reservationCode).to.not.be.empty;
 
       expect(response.body.data.nextStepUrl).to.not.be.empty;
+      expect(response.body.data.createdDate).to.not.be.empty;
+      expect(response.body.data.expiryDate).to.not.be.empty;
 
       cy.wait(1500);
     });
@@ -56,7 +58,7 @@ describe("LLC Registration API Flow", () => {
         natureOfBusinessCategory: "Manufacturing",
         natureOfBusiness: "Food and Beverage Processing",
         principalActivityDescription: "Production of packaged fruit juices and bottled water",
-        companyEmail: "peaceoasis9023@gmailcom",
+        companyEmail: "peaceoasis9023@gmail.com",
         phoneNumber: "07033223322",
         companyAddress: {
           registeredAddress: {
@@ -107,7 +109,7 @@ describe("LLC Registration API Flow", () => {
         natureOfBusinessCategory: "Manufacturing",
         natureOfBusiness: "Food and Beverage Processing",
         principalActivityDescription: "Production of packaged fruit juices and bottled water",
-        companyEmail: "joyoasis9023@gmailcom",
+        companyEmail: "joyoasis9023@gmail.com",
         phoneNumber: "07033223322",
         companyAddress: {
           registeredAddress: {
@@ -195,7 +197,7 @@ it("should register an individual affiliate using the same transactionRef", () =
         nationality: "Nigerian",
         dob: "1990-05-12",
         gender: "MALE",
-        email: "johnterry9023@gmailcom",
+        email: "johnterry9023@gmail.com",
         phoneNumber: "08023456789",
         affiliateType: "DIRECTOR",
         serviceAddress: {
