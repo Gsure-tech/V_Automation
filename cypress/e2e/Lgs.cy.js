@@ -1,395 +1,395 @@
-// describe('LGS Website Navbar Interaction and Navigation Flow', () => {
+describe('LGS Website Navbar Interaction and Navigation Flow', () => {
 
-//   beforeEach(() => {
-//     cy.log('Visiting the LGS Business Registration Landing Page');
-//     cy.visit('http://lgs.oasisproducts.ng');
+  beforeEach(() => {
+    cy.log('Visiting the LGS Business Registration Landing Page');
+    cy.visit('http://lgs.oasisproducts.ng');
 
-//     cy.wait(1000); // allow UI elements to settle
-//   });
+    cy.wait(1000); // allow UI elements to settle
+  });
 
-//   it('should click the About button in the navbar', () => {
-//     cy.log('Clicking on the About button');
+  it('should click the About button in the navbar', () => {
+    cy.log('Clicking on the About button');
     
-//     cy.get('a.btn-login')
-//       .contains('About')
-//       .should('be.visible')
-//       .click();
+    cy.get('a.btn-login')
+      .contains('About')
+      .should('be.visible')
+      .click();
 
-//     cy.wait(500);
-//   });
+    cy.wait(500);
+  });
 
-//   it('should open Services dropdown and select Business Registration', () => {
-//     cy.log('Opening Services dropdown');
+  it('should open Services dropdown and select Business Registration', () => {
+    cy.log('Opening Services dropdown');
     
-//     cy.get('button[data-bs-toggle="dropdown"]')
-//       .contains('Services')
-//       .click();
+    cy.get('button[data-bs-toggle="dropdown"]')
+      .contains('Services')
+      .click();
 
-//     cy.wait(500);
+    cy.wait(500);
 
-//     cy.log('Selecting Business Registration from dropdown');
+    cy.log('Selecting Business Registration from dropdown');
 
-//     cy.get('.dropdown-menu')
-//       .contains('Business Registration')
-//       .click();
+    cy.get('.dropdown-menu')
+      .contains('Business Registration')
+      .click();
 
-//     cy.url().should('include', 'Bn-registration');
+    cy.url().should('include', 'Bn-registration');
 
-//     cy.wait(1000);
-//   });
+    cy.wait(1000);
+  });
 
-//   it('should open Services dropdown and select Storefront Creation', () => {
-//     cy.log('Opening Services dropdown');
+  it('should open Services dropdown and select Storefront Creation', () => {
+    cy.log('Opening Services dropdown');
     
-//     cy.get('button[data-bs-toggle="dropdown"]')
-//       .contains('Services')
-//       .click();
+    cy.get('button[data-bs-toggle="dropdown"]')
+      .contains('Services')
+      .click();
 
-//     cy.wait(500);
+    cy.wait(500);
 
-//     cy.log('Selecting Storefront Creation');
+    cy.log('Selecting Storefront Creation');
 
-//     cy.get('.dropdown-menu')
-//       .contains('Storefront Creation')
-//       .click();
+    cy.get('.dropdown-menu')
+      .contains('Storefront Creation')
+      .click();
 
-//     cy.url().should('include', 'agents');
+    cy.url().should('include', 'agents');
 
-//     cy.wait(1000);
-//   });
+    cy.wait(1000);
+  });
 
-//   it('should open Services dropdown and select Batch Registration', () => {
-//     cy.log('Opening Services dropdown');
+  it('should open Services dropdown and select Batch Registration', () => {
+    cy.log('Opening Services dropdown');
 
-//     cy.get('button[data-bs-toggle="dropdown"]')
-//       .contains('Services')
-//       .click();
+    cy.get('button[data-bs-toggle="dropdown"]')
+      .contains('Services')
+      .click();
 
-//     cy.wait(500);
+    cy.wait(500);
 
-//     cy.log('Selecting Batch Registration');
+    cy.log('Selecting Batch Registration');
 
-//     cy.get('.dropdown-menu')
-//       .contains('Batch Registration')
-//       .click();
+    cy.get('.dropdown-menu')
+      .contains('Batch Registration')
+      .click();
 
-//     cy.url().should('include', 'client');
+    cy.url().should('include', 'client');
 
-//     cy.wait(1000);
-//   });
+    cy.wait(1000);
+  });
 
-//   it('should click on the Login button', () => {
-//     cy.log('Clicking Login button in the navbar');
+  it('should click on the Login button', () => {
+    cy.log('Clicking Login button in the navbar');
 
-//     cy.get('button.btn-login')
-//       .contains('Login')
-//       .should('be.visible')
-//       .click();
+    cy.get('button.btn-login')
+      .contains('Login')
+      .should('be.visible')
+      .click();
 
-//     cy.url().should('include', 'agents');
+    cy.url().should('include', 'agents');
 
-//     cy.wait(1000);
-//   });
-// it("loads the registration landing page and confirms visibility of primary elements", () => {
-//     cy.log("Visiting the business registration landing page");
+    cy.wait(1000);
+  });
+it("loads the registration landing page and confirms visibility of primary elements", () => {
+    cy.log("Visiting the business registration landing page");
   
-//     cy.get('p.landing-page-paragraph')
-//   .invoke('text')
-//   .should('include', 'Register Your Business Name')
-//   .and('include', 'in Nigeria')
-//   .and('include', 'Seamlessly');
+    cy.get('p.landing-page-paragraph')
+  .invoke('text')
+  .should('include', 'Register Your Business Name')
+  .and('include', 'in Nigeria')
+  .and('include', 'Seamlessly');
 
-// });
+});
 
-// });
+});
 
 
   describe("LGS Business Name Registration Flow", () => {
   const baseUrl = "http://lgs.oasisproducts.ng"; 
  
 
-  // it("shows error modal when name already exists during compliance check", () => {
-  //   cy.log("Navigating to application form");
-  //   cy.visit(`${baseUrl}/Bn-registration`);
-  //   cy.get('[routerlink="/Bn-registration/application"]')
-  //     .contains("Register New Business")
-  //     .click();
-  //   cy.url().should("include", "/Bn-registration/application");
+  it("shows error modal when name already exists during compliance check", () => {
+    cy.log("Navigating to application form");
+    cy.visit(`${baseUrl}/Bn-registration`);
+    cy.get('[routerlink="/Bn-registration/application"]')
+      .contains("Register New Business")
+      .click();
+    cy.url().should("include", "/Bn-registration/application");
 
-  //   cy.log("Filling business registration form with existing name");
-  //   cy.get("#BusinessName").type("Mighty Accelarator Hub");
-  //   cy.get("#companyEmail").type("founder@mah.com");
-  //   cy.get("#companyStreetNumber").type("12");
-  //   cy.get("#companyStateOfResidence").select("Kano State");
-  //   cy.get("#companyAddress").type("12B Airport Road, Kano");
-  //   cy.get("#companyCity").type("Kano");
-  //   cy.get("#lineOfBusiness").select("Legal practice and Consultancy");
+    cy.log("Filling business registration form with existing name");
+    cy.get("#BusinessName").type("Mighty Accelarator Hub");
+    cy.get("#companyEmail").type("founder@mah.com");
+    cy.get("#companyStreetNumber").type("12");
+    cy.get("#companyStateOfResidence").select("Kano State");
+    cy.get("#companyAddress").type("12B Airport Road, Kano");
+    cy.get("#companyCity").type("Kano");
+    cy.get("#lineOfBusiness").select("Legal practice and Consultancy");
 
-  //   cy.log("Clicking Check Compliance button");
-  //   cy.get("button[class$='ng-star-inserted']")
-  //     .contains("Check compliance")
-  //     .click();
+    cy.log("Clicking Check Compliance button");
+    cy.get("button[class$='ng-star-inserted']")
+      .contains("Check compliance")
+      .click();
 
-  //   cy.log("Waiting for modal header to appear");
-  //   cy.get(".words", { timeout: 50000 })
-  //     .should("be.visible")
-  //     .and("contain.text", "Business Name Compliance Check");
+    cy.log("Waiting for modal header to appear");
+    cy.get(".words", { timeout: 50000 })
+      .should("be.visible")
+      .and("contain.text", "Business Name Compliance Check");
 
-  //   cy.log("Validating modal content for existing name");
-  //   cy.get(".info-span > .paragraph")
-  //     .should("be.visible")
-  //     .and("contain.text", "BUSINESS NAME EXISTS");
+    cy.log("Validating modal content for existing name");
+    cy.get(".info-span > .paragraph")
+      .should("be.visible")
+      .and("contain.text", "BUSINESS NAME EXISTS");
 
-  //   cy.log("Closing the compliance modal using SVG icon");
-  //   cy.get('svg[viewBox="0 0 21 21"]').click();
-  // });
+    cy.log("Closing the compliance modal using SVG icon");
+    cy.get('svg[viewBox="0 0 21 21"]').click();
+  });
 
-  // it("registers successfully with valid name and uploads valid files", () => {
-  //   cy.log("Opening application form for new registration");
-  //   cy.visit(`${baseUrl}/Bn-registration`);
-  //   cy.get('[routerlink="/Bn-registration/application"]')
-  //     .contains("Register New Business")
-  //     .click();
-  //   cy.url().should("include", "/Bn-registration/application");
+  it("registers successfully with valid name and uploads valid files", () => {
+    cy.log("Opening application form for new registration");
+    cy.visit(`${baseUrl}/Bn-registration`);
+    cy.get('[routerlink="/Bn-registration/application"]')
+      .contains("Register New Business")
+      .click();
+    cy.url().should("include", "/Bn-registration/application");
 
-  //   cy.log("Filling form with a unique business name");
-  //   cy.get("#BusinessName").type("hakutestreal Hub");
-  //   cy.get("#companyEmail").type("founder@mah.com");
-  //   cy.get("#companyStreetNumber").type("12");
-  //   cy.get("#companyStateOfResidence").select("Kano State");
-  //   cy.get("#companyAddress").type("12B Airport Road, Kano");
-  //   cy.get("#companyCity").type("Kano");
-  //   cy.get("#lineOfBusiness").select("Trading");
+    cy.log("Filling form with a unique business name");
+    cy.get("#BusinessName").type("hakutestreal Hub");
+    cy.get("#companyEmail").type("founder@mah.com");
+    cy.get("#companyStreetNumber").type("12");
+    cy.get("#companyStateOfResidence").select("Kano State");
+    cy.get("#companyAddress").type("12B Airport Road, Kano");
+    cy.get("#companyCity").type("Kano");
+    cy.get("#lineOfBusiness").select("Trading");
 
-  //   cy.log("Intercepting name compliance check");
-  //   cy.intercept(
-  //     "POST",
-  //     "http://41.207.248.246:9088/api/ls/bn/external-registration/check-name"
-  //   ).as("checkName");
-  //   cy.get("button[class$='ng-star-inserted']")
-  //     .contains("Check compliance")
-  //     .click();
+    cy.log("Intercepting name compliance check");
+    cy.intercept(
+      "POST",
+      "http://41.207.248.246:9088/api/ls/bn/external-registration/check-name"
+    ).as("checkName");
+    cy.get("button[class$='ng-star-inserted']")
+      .contains("Check compliance")
+      .click();
 
-  //   cy.wait("@checkName").then(({ response }) => {
-  //     const { statusCode } = response;
-  //     cy.log(`Compliance response: ${statusCode}`);
+    cy.wait("@checkName").then(({ response }) => {
+      const { statusCode } = response;
+      cy.log(`Compliance response: ${statusCode}`);
 
-  //     if (statusCode === 200) {
-  //       cy.log("Filling proprietor bio data section");
-  //       cy.get("h4").contains("Business Registration form");
-  //       cy.get("#proprietorFirstName").type("Agada");
-  //       cy.get("#proprietorLastName").type("Joseph");
-  //       cy.get("#proprietorOtherName").type("Akpala");
-  //       cy.get("#proprietorPhoneNumber").type("08033221100");
-  //       cy.get("#proprietorEmail").type("geeee9023@gmail.com");
-  //       cy.get("#proprietorGender").select("Male");
-  //       cy.get(".nextBtn").contains("Next").click();
+      if (statusCode === 200) {
+        cy.log("Filling proprietor bio data section");
+        cy.get("h4").contains("Business Registration form");
+        cy.get("#proprietorFirstName").type("Agada");
+        cy.get("#proprietorLastName").type("Joseph");
+        cy.get("#proprietorOtherName").type("Akpala");
+        cy.get("#proprietorPhoneNumber").type("08033221100");
+        cy.get("#proprietorEmail").type("geeee9023@gmail.com");
+        cy.get("#proprietorGender").select("Male");
+        cy.get(".nextBtn").contains("Next").click();
 
-  //       cy.log("Completing demographic data section");
-  //       cy.get("#proprietorStreetNumber").type("40");
-  //       cy.get("#proprietorState").select("Adamawa State");
-  //       cy.get("#proprietorCity").type("Mubi");
-  //       cy.get("#proprietorLga").select("Hong");
-  //       cy.get("#proprietorDob")
-  //         .type("1995-06-01")
-  //         .should("have.value", "1995-06-01");
-  //       cy.get("#proprietorServiceAddress").type("College Road");
-  //       cy.get(".nextBtn").contains("Next").click();
+        cy.log("Completing demographic data section");
+        cy.get("#proprietorStreetNumber").type("40");
+        cy.get("#proprietorState").select("Adamawa State");
+        cy.get("#proprietorCity").type("Mubi");
+        cy.get("#proprietorLga").select("Hong");
+        cy.get("#proprietorDob")
+          .type("1995-06-01")
+          .should("have.value", "1995-06-01");
+        cy.get("#proprietorServiceAddress").type("College Road");
+        cy.get(".nextBtn").contains("Next").click();
 
-  //       const largeFile = "spiral.png";
-  //       cy.log("Uploading large invalid files to test file size validation");
+        const largeFile = "spiral.png";
+        cy.log("Uploading large invalid files to test file size validation");
 
-  //       [
-  //         "Upload Proprietor Signature",
-  //         "Upload Proprietor ID",
-  //         "Upload Proprietor Photograph",
-  //         "Upload Supporting Document",
-  //       ].forEach((label) => {
-  //         cy.contains(label)
-  //           .parent()
-  //           .find('input[type="file"]')
-  //           .selectFile(`cypress/fixtures/${largeFile}`, { force: true });
-  //       });
+        [
+          "Upload Proprietor Signature",
+          "Upload Proprietor ID",
+          "Upload Proprietor Photograph",
+          "Upload Supporting Document",
+        ].forEach((label) => {
+          cy.contains(label)
+            .parent()
+            .find('input[type="file"]')
+            .selectFile(`cypress/fixtures/${largeFile}`, { force: true });
+        });
 
-  //       const errorSelectors = [
-  //         ":nth-child(1) > :nth-child(2) > div.ng-star-inserted > .error-message",
-  //         ":nth-child(2) > :nth-child(2) > div.ng-star-inserted > .error-message",
-  //         ":nth-child(3) > :nth-child(2) > div.ng-star-inserted > .error-message",
-  //         ":nth-child(4) > :nth-child(2) > div.ng-star-inserted > .error-message",
-  //       ];
+        const errorSelectors = [
+          ":nth-child(1) > :nth-child(2) > div.ng-star-inserted > .error-message",
+          ":nth-child(2) > :nth-child(2) > div.ng-star-inserted > .error-message",
+          ":nth-child(3) > :nth-child(2) > div.ng-star-inserted > .error-message",
+          ":nth-child(4) > :nth-child(2) > div.ng-star-inserted > .error-message",
+        ];
 
-  //       cy.log("Validating oversized file error messages");
-  //       errorSelectors.forEach((selector) => {
-  //         cy.get(selector)
-  //           .invoke("text")
-  //           .should((text) =>
-  //             expect(text.trim().toLowerCase()).to.match(
-  //               /file size exceed(s)? 500kb/i
-  //             )
-  //           );
-  //       });
+        cy.log("Validating oversized file error messages");
+        errorSelectors.forEach((selector) => {
+          cy.get(selector)
+            .invoke("text")
+            .should((text) =>
+              expect(text.trim().toLowerCase()).to.match(
+                /file size exceed(s)? 500kb/i
+              )
+            );
+        });
 
-  //       const validFile = "gamma1.png";
-  //       cy.log("Uploading valid files after error");
-  //       [
-  //         "Upload Proprietor Signature",
-  //         "Upload Proprietor ID",
-  //         "Upload Proprietor Photograph",
-  //         "Upload Supporting Document",
-  //       ].forEach((label) => {
-  //         cy.contains(label)
-  //           .parent()
-  //           .find('input[type="file"]')
-  //           .selectFile(`cypress/fixtures/${validFile}`, { force: true });
-  //       });
+        const validFile = "gamma1.png";
+        cy.log("Uploading valid files after error");
+        [
+          "Upload Proprietor Signature",
+          "Upload Proprietor ID",
+          "Upload Proprietor Photograph",
+          "Upload Supporting Document",
+        ].forEach((label) => {
+          cy.contains(label)
+            .parent()
+            .find('input[type="file"]')
+            .selectFile(`cypress/fixtures/${validFile}`, { force: true });
+        });
 
-  //       cy.log("Submitting registration form for payment");
-  //       cy.get(".submitBtn").should("not.be.disabled").click();
-  //       cy.wait(3000);
-  //       cy.get(".header > .words", { timeout: 10000 })
-  //         .contains("Payment")
-  //         .should("exist");
+        cy.log("Submitting registration form for payment");
+        cy.get(".submitBtn").should("not.be.disabled").click();
+        cy.wait(3000);
+        cy.get(".header > .words", { timeout: 10000 })
+          .contains("Payment")
+          .should("exist");
 
-  //       cy.wait(1000);
-  //       cy.log("Entering mismatched emails to test validation");
-  //       cy.get('input[formcontrolname="email"]').type("test1@example.com");
-  //       cy.get('input[formcontrolname="confirmEmail"]').type(
-  //         "test2@example.com"
-  //       );
-  //       cy.get("button.status-button").contains("Make Payment").click();
+        cy.wait(1000);
+        cy.log("Entering mismatched emails to test validation");
+        cy.get('input[formcontrolname="email"]').type("test1@example.com");
+        cy.get('input[formcontrolname="confirmEmail"]').type(
+          "test2@example.com"
+        );
+        cy.get("button.status-button").contains("Make Payment").click();
 
-  //       cy.get('div[class$="error-background"] div')
-  //         .should("contain.text", "Emails supplied do not match")
-  //         .then(() => {
-  //           cy.log("Mismatched email error confirmed");
-  //           cy.get('div[class$="error-background"] svg').click({ force: true });
-  //           cy.log("Closed mismatched email modal");
-  //         });
+        cy.get('div[class$="error-background"] div')
+          .should("contain.text", "Emails supplied do not match")
+          .then(() => {
+            cy.log("Mismatched email error confirmed");
+            cy.get('div[class$="error-background"] svg').click({ force: true });
+            cy.log("Closed mismatched email modal");
+          });
 
-  //       cy.log("Entering matching emails for payment");
-  //       cy.get('input[formcontrolname="email"]')
-  //         .clear()
-  //         .type("geeee9023@gmail.com");
-  //       cy.get('input[formcontrolname="confirmEmail"]')
-  //         .clear()
-  //         .type("geeee9023@gmail.com");
-  //       cy.get("button.status-button").contains("Make Payment").click();
-  //     }
-  //   });
+        cy.log("Entering matching emails for payment");
+        cy.get('input[formcontrolname="email"]')
+          .clear()
+          .type("geeee9023@gmail.com");
+        cy.get('input[formcontrolname="confirmEmail"]')
+          .clear()
+          .type("geeee9023@gmail.com");
+        cy.get("button.status-button").contains("Make Payment").click();
+      }
+    });
 
-  //   cy.log("Final confirmation of payment modal");
-  //   cy.get("h3").contains("Payment").should("exist");
-  // });
+    cy.log("Final confirmation of payment modal");
+    cy.get("h3").contains("Payment").should("exist");
+  });
 
-  // it("check registration status", () => {
-  //   cy.visit(`${baseUrl}/Bn-registration`);
-  //   cy.log('Clicking "Check Registration Status" from landing page');
-  //   cy.get('button[routerlink="/status"]').should("be.visible").click();
-  //   cy.url().should("include", "/status");
-  //   cy.log("Validating fields for registration status check");
-  //   cy.get('input[formcontrolname="transactionReference"]').should("exist");
-  //   cy.get('input[formcontrolname="passcode"]').should("exist");
-  //   cy.get("button.status-button").should("contain.text", "Check Status");
-  // });
+  it("check registration status", () => {
+    cy.visit(`${baseUrl}/Bn-registration`);
+    cy.log('Clicking "Check Registration Status" from landing page');
+    cy.get('button[routerlink="/status"]').should("be.visible").click();
+    cy.url().should("include", "/status");
+    cy.log("Validating fields for registration status check");
+    cy.get('input[formcontrolname="transactionReference"]').should("exist");
+    cy.get('input[formcontrolname="passcode"]').should("exist");
+    cy.get("button.status-button").should("contain.text", "Check Status");
+  });
 
-  // it("shows and closes error modal on incorrect transaction reference or passcode", () => {
-  //   cy.visit("http://lgs.oasisproducts.ng/status");
-  //   cy.log("Typing incorrect registration credentials");
-  //   cy.get('input[formcontrolname="transactionReference"]').type(
-  //     "LGS9884949830PQ"
-  //   );
-  //   cy.get('input[formcontrolname="passcode"]').type("wrongpass");
-  //   cy.get("button.status-button").click();
-  //   cy.log("Expecting error modal for incorrect credentials");
-  //   cy.get('div[class$="error-background"] div').should(
-  //     "contain.text",
-  //     "Incorrect passcode or transaction reference"
-  //   );
-  //   cy.get('path[d="M6.5 6.08911L18.5 18.0891"]').click();
-  //   cy.log("Clicked close icon on error modal");
-  //   cy.get("h6.paragraph span").contains("Click here").click();
-  //   cy.get('header[class="header"] h3').should(
-  //     "contain.text",
-  //     "Don’t have a passcode?"
-  //   );
-  // });
+  it("shows and closes error modal on incorrect transaction reference or passcode", () => {
+    cy.visit("http://lgs.oasisproducts.ng/status");
+    cy.log("Typing incorrect registration credentials");
+    cy.get('input[formcontrolname="transactionReference"]').type(
+      "LGS9884949830PQ"
+    );
+    cy.get('input[formcontrolname="passcode"]').type("wrongpass");
+    cy.get("button.status-button").click();
+    cy.log("Expecting error modal for incorrect credentials");
+    cy.get('div[class$="error-background"] div').should(
+      "contain.text",
+      "Incorrect passcode or transaction reference"
+    );
+    cy.get('path[d="M6.5 6.08911L18.5 18.0891"]').click();
+    cy.log("Clicked close icon on error modal");
+    cy.get("h6.paragraph span").contains("Click here").click();
+    cy.get('header[class="header"] h3').should(
+      "contain.text",
+      "Don’t have a passcode?"
+    );
+  });
 
-  // it("requests passcode and handles error/success modals", () => {
-  //   cy.visit("http://lgs.oasisproducts.ng/status");
-  //   cy.log("Opening passcode request modal");
-  //   cy.get("h6.paragraph span").contains("Click here").click();
-  //   cy.get("header.header h3").should("contain.text", "Don’t have a passcode?");
-  //   cy.log("Submitting invalid reference");
-  //   cy.get(".passcode-card input.inputField")
-  //     .clear()
-  //     .type("LGS2506231435130PP");
-  //   cy.get('button[class$="ng-star-inserted"]')
-  //     .contains("Send passcode")
-  //     .click();
-  //   cy.get('div[class$="error-background"] div').should(
-  //     "contain.text",
-  //     "error generating passcode"
-  //   );
-  //   cy.get(
-  //     'svg[viewBox="0 0 25 25"] path[d="M6.5 6.08911L18.5 18.0891"]'
-  //   ).click();
-  //   cy.log("Submitting valid transaction reference");
-  //   cy.get(".passcode-card input.inputField")
-  //     .clear()
-  //     .type("LGS250623143513003");
-  //   cy.get('button[class$="ng-star-inserted"]')
-  //     .contains("Send passcode")
-  //     .click();
-  //   cy.get('div[class$="success-background"] div').should(
-  //     "contain.text",
-  //     "Passcode has been sent to your email"
-  //   );
-  // });
+  it("requests passcode and handles error/success modals", () => {
+    cy.visit("http://lgs.oasisproducts.ng/status");
+    cy.log("Opening passcode request modal");
+    cy.get("h6.paragraph span").contains("Click here").click();
+    cy.get("header.header h3").should("contain.text", "Don’t have a passcode?");
+    cy.log("Submitting invalid reference");
+    cy.get(".passcode-card input.inputField")
+      .clear()
+      .type("LGS2506231435130PP");
+    cy.get('button[class$="ng-star-inserted"]')
+      .contains("Send passcode")
+      .click();
+    cy.get('div[class$="error-background"] div').should(
+      "contain.text",
+      "error generating passcode"
+    );
+    cy.get(
+      'svg[viewBox="0 0 25 25"] path[d="M6.5 6.08911L18.5 18.0891"]'
+    ).click();
+    cy.log("Submitting valid transaction reference");
+    cy.get(".passcode-card input.inputField")
+      .clear()
+      .type("LGS250623143513003");
+    cy.get('button[class$="ng-star-inserted"]')
+      .contains("Send passcode")
+      .click();
+    cy.get('div[class$="success-background"] div').should(
+      "contain.text",
+      "Passcode has been sent to your email"
+    );
+  });
 
-  // it("handles application status or expired passcode scenarios", () => {
-  //   cy.visit("http://lgs.oasisproducts.ng/status");
-  //   cy.log("Typing valid transaction reference and passcode");
+  it("handles application status or expired passcode scenarios", () => {
+    cy.visit("http://lgs.oasisproducts.ng/status");
+    cy.log("Typing valid transaction reference and passcode");
 
-  //   cy.get('input[formcontrolname="transactionReference"]').type(
-  //     "LGS250623143513003"
-  //   );
-  //   cy.get('input[formcontrolname="passcode"]').type("05216864");
-  //   cy.get("button.status-button").click();
+    cy.get('input[formcontrolname="transactionReference"]').type(
+      "LGS250623143513003"
+    );
+    cy.get('input[formcontrolname="passcode"]').type("05216864");
+    cy.get("button.status-button").click();
 
-  //   cy.log("Waiting for status or error modal");
+    cy.log("Waiting for status or error modal");
 
-  //   cy.get('h3.words, div[class$="error-background"] div', {
-  //     timeout: 7000,
-  //   }).then(($el) => {
-  //     const text = $el.text().trim();
+    cy.get('h3.words, div[class$="error-background"] div', {
+      timeout: 7000,
+    }).then(($el) => {
+      const text = $el.text().trim();
 
-  //     if (text.includes("Application Status Check")) {
-  //       cy.log("Application status modal appeared");
-  //       cy.get("p")
-  //         .should("be.visible")
-  //         .and("contain.text", "Your application")
-  //         .invoke("text")
-  //         .then((msg) => {
-  //           expect(msg).to.match(
-  //             /Your application is (PENDING|APPROVED|QUERIED)/i
-  //           );
-  //           cy.log(`Application Status: ${msg.trim()}`);
-  //         });
+      if (text.includes("Application Status Check")) {
+        cy.log("Application status modal appeared");
+        cy.get("p")
+          .should("be.visible")
+          .and("contain.text", "Your application")
+          .invoke("text")
+          .then((msg) => {
+            expect(msg).to.match(
+              /Your application is (PENDING|APPROVED|QUERIED)/i
+            );
+            cy.log(`Application Status: ${msg.trim()}`);
+          });
 
-  //       cy.get('svg[viewBox="0 0 21 21"]').click();
-  //     }
+        cy.get('svg[viewBox="0 0 21 21"]').click();
+      }
 
-  //     if (text.includes("Incorrect passcode or transaction reference")) {
-  //       cy.log("Error modal detected for incorrect/expired passcode");
-  //       cy.get('div[class$="error-background"] div').should(
-  //         "contain.text",
-  //         "Incorrect passcode or transaction reference"
-  //       );
+      if (text.includes("Incorrect passcode or transaction reference")) {
+        cy.log("Error modal detected for incorrect/expired passcode");
+        cy.get('div[class$="error-background"] div').should(
+          "contain.text",
+          "Incorrect passcode or transaction reference"
+        );
 
-  //       cy.get('path[d="M6.5 6.08911L18.5 18.0891"]').click();
-  //     }
-  //   });
-  // });
+        cy.get('path[d="M6.5 6.08911L18.5 18.0891"]').click();
+      }
+    });
+  });
 
   it("successfully signs up an agent", () => {
     cy.visit(`${baseUrl}/agents`);
@@ -480,7 +480,6 @@
 
   it("validates agent login form fields", () => {
     cy.visit(`${baseUrl}/agents`);
-    // cy.get(".becomeAnAgentBtn").contains("Signup for Free").click();
 
     // Check Forgot Password label exists
     cy.get(
@@ -505,8 +504,7 @@
     cy.get("#agentEmail").type("testagent@example.com");
     cy.get("#agentLogin").type("StrongPass123!");
     cy.get(".button-submit").click();
-
-    cy.get(".containerModal > div").contains("invalid credentials");
+    cy.get('.containerModal').contains("invalid credentials")
 
     // Validate redirect or welcome
     cy.url().should("not.include", "/create-account");
@@ -741,6 +739,7 @@
         .should("be.visible")
         .click();
   });
+
 });
 
   
