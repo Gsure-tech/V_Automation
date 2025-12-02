@@ -701,7 +701,7 @@ it("loads the registration landing page and confirms visibility of primary eleme
 
     // Enter login credentials and submit
     cy.log("Entering valid agent email and password");
-    cy.get("#agentEmail").type("peaceoasis9023+1764679700404@gmail.com");
+    cy.get("#agentEmail").type("peaceoasis9023+1764684655857@gmail.com");
     cy.get("#agentLogin").type("StrongPass123!");
     cy.get(".button-submit").click();
 
