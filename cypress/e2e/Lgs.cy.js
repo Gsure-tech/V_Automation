@@ -405,11 +405,11 @@ it("loads the registration landing page and confirms visibility of primary eleme
     // Submit
     cy.get(".button-submit").click();
 
-    // Email verification modal appears
-    cy.get(".agent-title-words").should(
-      "contain.text",
-      "Verify your email address"
-    );
+  // Email verification modal appears
+
+  cy.get(".agent-title-words").should("include.text", "Verify your email address");
+
+    
     cy.get(".verify-form > :nth-child(4)").should(
       "contain.text",
       "A verification mail has been"
