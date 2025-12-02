@@ -340,6 +340,7 @@ it("loads the registration landing page and confirms visibility of primary eleme
     cy.get('button[class$="ng-star-inserted"]')
       .contains("Send passcode")
       .click();
+      cy.wait(3000)
     cy.get('div[class$="success-background"] div').should(
       "contain.text",
       "Passcode has been sent to your email"
@@ -406,7 +407,7 @@ it("loads the registration landing page and confirms visibility of primary eleme
     cy.get(".button-submit").click();
 
   // Email verification modal appears
-
+      cy.wait(3000);
   cy.get(".agent-title-words").should("include.text", "Verify your email address");
 
     
@@ -686,14 +687,22 @@ it("loads the registration landing page and confirms visibility of primary eleme
       });
   });
 
+
+  /***
+   * For this script to run do the following:
+   * **use an agent's email that has been verified but the no existing store front created with it
+   * ** Modify line 704 & 705 to carry the actual email. 
+   */
   it("should be able to create a storefront", () => {
     const validFile = "gamma1.png";
+    const storefrontName = `Test${Date.now()} Academy`;
+    const storefrontLink = `Test${Date.now()}`;
     cy.visit(`${baseUrl}/agents`);
 
     // Enter login credentials and submit
     cy.log("Entering valid agent email and password");
-    cy.get("#agentEmail").type("joyoasis9023+4@gmail.com");
-    cy.get("#agentLogin").type("Gsure9023@2025");
+    cy.get("#agentEmail").type("peaceoasis9023+1764679700404@gmail.com");
+    cy.get("#agentLogin").type("StrongPass123!");
     cy.get(".button-submit").click();
 
     // Wait for the dashboard to load and validate redirection
@@ -706,12 +715,11 @@ it("loads the registration landing page and confirms visibility of primary eleme
       .should("be.visible")
       .click();
     cy.log("Navigating to the 'Create Storefront' page");
-
     // Enter valid values for name, link, and price
-    cy.get("#storefrontName").clear().type("testerstorefront1");
+    cy.get("#storefrontName").type(storefrontName);
     cy.log("Valid storefront name entered");
 
-    cy.get("#storefrontLink").clear().type("testerstore1");
+    cy.get("#storefrontLink").type(storefrontLink);
     cy.log("Valid storefront link entered");
 
     cy.get("#setPrice").clear().type("3000");
@@ -721,11 +729,10 @@ it("loads the registration landing page and confirms visibility of primary eleme
     cy.get(
       'input[type="file"][accept="image/png, image/jpeg, image/jpg,image/svg+xml"]'
     ).selectFile(`cypress/fixtures/${validFile}`, { force: true });
-    cy.get(":nth-child(2) > .theme-color").click();
-    cy.get(
-      '[style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;"] > :nth-child(2) > img'
-    ).click();
-    cy.get(".openLink.ng-star-inserted > .ng-star-inserted").click();
+    cy.get('.openLink.ng-star-inserted').click();
+    cy.get('.publish-section > h5')
+
+
     cy.get(".publish-section > h5")
       .should("contain.text", "Congratulations")
       .should("be.visible")
