@@ -9,8 +9,37 @@ describe("LLC Registration API Flow", () => {
   let affiliateKeyIndividual; 
   let affiliateKeyCorporate; 
 
+// A. COMPLIANCE CHECK USING PROPOSED NAME
+it("should check compliance using the proposedName",() => {
 
-  // 1. SUCCESSFUL NAME RESERVATION
+  // Sending the compliance check request
+  cy.request({
+    method: "POST",
+    url: "http://41.207.248.246:9088/api/vas/llc/compliance",
+    headers: HEADERS.VALID_API_KEY,
+    body: {
+      lineOfBusiness: "ICT",
+      proposedName: "GSURETECH ENTERPRISE MOMENTUM TRADERS LTD",
+      companyType: "PRIVATE_COMPANY_LIMITED_BY_SHARES"
+    }
+  }).then((resp) => {
+    // Verifying the response status and message
+    expect(resp.status).to.eq(200);
+    expect(resp.body.status).to.eq("OK");
+
+    // Verifying the data in the response
+    const data = resp.body.data;
+    
+    expect(data.recommendedActions).to.have.length.greaterThan(0);
+    expect(data.recommendedActions[0].message).to.eq("Proceed to filing");
+    expect(data.complianceScorePercentage).to.be.a("number"); 
+    expect(data.similarityScorePercentage).to.be.a("number");
+    cy.wait(1500);
+  });
+});
+
+
+  //  SUCCESSFUL NAME RESERVATION
   it("should return 200 and reservation details when a unique proposedName is submitted", () => {
 
     const proposedName = `Model${Date.now()} Academy Enterprise`;
@@ -42,7 +71,113 @@ describe("LLC Registration API Flow", () => {
 
 
 
-  // 2. COMPANY REGISTRATION USING reservationCode
+   // NEGATIVE TEST: NAME ALREADY EXISTS
+  it("should return 400 when the proposed name already exists", () => {
+
+    cy.request({
+      method: "POST",
+      url: "http://41.207.248.246:9088/api/vas/llc/name-reservation",
+      headers: HEADERS.VALID_API_KEY,
+      failOnStatusCode: false,
+      body: {
+        proposedName: "Zarah Academy Enterprise",
+        companyTypes: "PRIVATE_COMPANY_LIMITED_BY_SHARES"
+      }
+    }).then((response) => {
+
+      expect(response.status).to.eq(400);
+      expect(response.body.status).to.eq("BAD_REQUEST");
+      expect(response.body.message).to.eq("Name already exist");
+    });
+  });
+
+
+// REGISTER COMPANY – INVALID RESERVATION CODE
+it("should return 400 BAD_REQUEST when an invalid reservationCode is used to register name", () => {
+  cy.request({
+    method: "POST",
+    url: "http://41.207.248.246:9088/api/vas/llc/company",
+    headers: HEADERS.VALID_API_KEY,
+    failOnStatusCode: false,
+    body: {
+      reservationCode: "VAS17647518358",
+      companyType: "PRIVATE_COMPANY_LIMITED_BY_SHARES",
+        natureOfBusinessCategory: "Manufacturing",
+        natureOfBusiness: "Food and Beverage Processing",
+        principalActivityDescription: "Production of packaged fruit juices and bottled water",
+        companyEmail: "peaceoasis9023@gmail.com",
+        phoneNumber: "07033223322",
+        companyAddress: {
+          registeredAddress: {
+            state: "Lagos",
+            lga: "Ikeja",
+            city: "Ikeja",
+            street: "15A Adeola Odeku Street"
+          },
+          headOffice: {
+            state: "Lagos",
+            lga: "Eti-Osa",
+            city: "Victoria Island",
+            street: "45B Ahmadu Bello Way"
+          }
+        },
+        objectsOfMem: [
+          "Organize and manage public prize draws",
+          "Provide betting services for sports events",
+          "Administer state-regulated chance games",
+          "Offer wagering on athletic competitions",
+          "Facilitate community fundraising through raffles"
+        ]
+      }
+  }).then((resp) => {
+    expect(resp.status).to.eq(400);
+    expect(resp.body.status).to.eq("BAD_REQUEST");
+    expect(resp.body.message).to.eq("invalid reservation code, provide a valid reservation code or a proposed name");
+  });
+});
+
+// REGISTER COMPANY – INVALID DATA CODE
+it("should return 400 BAD_REQUEST with message 'Invalid Data Provided'when invalid data is used to register name", () => {
+  cy.request({
+    method: "POST",
+    url: "http://41.207.248.246:9088/api/vas/llc/company",
+    headers: HEADERS.VALID_API_KEY,
+    failOnStatusCode: false,
+    body: {
+      reservationCode: "VAS17647518358",
+      companyType: "PRIVATE_COMPANY_LIMITED_BY_SHARES",
+      natureOfBusinessCategory: "Manufacturing",
+      natureOfBusiness: "Food and Beverage Processing",
+      principalActivityDescription:
+        "Production of packaged fruit juices and bottled water",
+      companyEmail: "peaceoasis9023@gmail.com",
+      phoneNumber: "070332323322",
+      companyAddress: {
+        registeredAddress: {
+          state: "Lagos",
+          lga: "Ikeja",
+          city: "Ikeja",
+          street: "15A Adeola Odeku Street"
+        },
+        headOffice: {
+          state: "Lagos",
+          lga: "Eti-Osa",
+          city: "Victoria Island",
+          street: "45B Ahmadu Bello Way"
+        }
+      }
+    }
+  }).then((resp) => {
+    expect(resp.status).to.eq(400);
+    expect(resp.body.status).to.eq("BAD_REQUEST");
+    expect(resp.body.message).to.eq("Invalid data provided");
+  });
+});
+
+
+
+
+  // COMPANY REGISTRATION USING reservationCode SUCCESS
   it("should use the reservationCode from the name reservation to create a company", function () {
 
     transactionRef = `VAS${Date.now()}`;   // unique ID for this test run
@@ -95,8 +230,98 @@ describe("LLC Registration API Flow", () => {
     });
   });
 
+  // REGISTER COMPANY – TransactionRef ALREADY EXISTS
+it("should return 400 with message 'Transaction Ref already exist for this process' when registering a company with an already-used TransactionRef", function () {
+  cy.request({
+    method: "POST",
+    url: "http://41.207.248.246:9088/api/vas/llc/company",
+    headers: HEADERS.VALID_API_KEY,
+    failOnStatusCode: false,
+    body: {
+      transactionRef,
+      reservationCode,
+      companyType: "PRIVATE_COMPANY_LIMITED_BY_SHARES",
+        natureOfBusinessCategory: "Manufacturing",
+        natureOfBusiness: "Food and Beverage Processing",
+        principalActivityDescription: "Production of packaged fruit juices and bottled water",
+        companyEmail: "peaceoasis9023@gmail.com",
+        phoneNumber: "07033223322",
+        companyAddress: {
+          registeredAddress: {
+            state: "Lagos",
+            lga: "Ikeja",
+            city: "Ikeja",
+            street: "15A Adeola Odeku Street"
+          },
+          headOffice: {
+            state: "Lagos",
+            lga: "Eti-Osa",
+            city: "Victoria Island",
+            street: "45B Ahmadu Bello Way"
+          }
+        },
+        objectsOfMem: [
+          "Organize and manage public prize draws",
+          "Provide betting services for sports events",
+          "Administer state-regulated chance games",
+          "Offer wagering on athletic competitions",
+          "Facilitate community fundraising through raffles"
+        ]
+      }
+  }).then((resp) => {
+    expect(resp.status).to.eq(400);
+    expect(resp.body.status).to.eq("BAD_REQUEST");
+    expect(resp.body.message).to.eq("Transaction Ref already exist for this process");
+  });
+});
 
-   // 2b. COMPANY REGISTRATION UPDATE USING reservationCode
+
+
+  // REGISTER COMPANY – NAME ALREADY EXISTS
+it("should return 400 when registering a company with an already-used name", function () {
+  cy.request({
+    method: "POST",
+    url: "http://41.207.248.246:9088/api/vas/llc/company",
+    headers: HEADERS.VALID_API_KEY,
+    failOnStatusCode: false,
+    body: {
+      reservationCode,
+      companyType: "PRIVATE_COMPANY_LIMITED_BY_SHARES",
+        natureOfBusinessCategory: "Manufacturing",
+        natureOfBusiness: "Food and Beverage Processing",
+        principalActivityDescription: "Production of packaged fruit juices and bottled water",
+        companyEmail: "peaceoasis9023@gmail.com",
+        phoneNumber: "07033223322",
+        companyAddress: {
+          registeredAddress: {
+            state: "Lagos",
+            lga: "Ikeja",
+            city: "Ikeja",
+            street: "15A Adeola Odeku Street"
+          },
+          headOffice: {
+            state: "Lagos",
+            lga: "Eti-Osa",
+            city: "Victoria Island",
+            street: "45B Ahmadu Bello Way"
+          }
+        },
+        objectsOfMem: [
+          "Organize and manage public prize draws",
+          "Provide betting services for sports events",
+          "Administer state-regulated chance games",
+          "Offer wagering on athletic competitions",
+          "Facilitate community fundraising through raffles"
+        ]
+      }
+  }).then((resp) => {
+    expect(resp.status).to.eq(400);
+    expect(resp.body.status).to.eq("BAD_REQUEST");
+    expect(resp.body.message).to.eq("Name already exist");
+  });
+});
+
+   // COMPANY REGISTRATION UPDATE USING reservationCode
   it("should update registration using the transactionRef", function () {
     cy.request({
       method: "PUT",
@@ -142,7 +367,6 @@ describe("LLC Registration API Flow", () => {
       cy.wait(1500);
     });
   });
-
 
 
 // 3. REGISTER SHARES USING SAME transactionRef
@@ -388,26 +612,51 @@ it("should update the individual affiliate details", () => {
     });
   });
 
-
-  // 6. NEGATIVE TEST: NAME ALREADY EXISTS
-  it("should return 400 when the proposed name already exists", () => {
-
-    cy.request({
-      method: "POST",
-      url: "http://41.207.248.246:9088/api/vas/llc/name-reservation",
-      headers: HEADERS.VALID_API_KEY,
-      failOnStatusCode: false,
-      body: {
-        proposedName: "Zarah Academy Enterprise",
-        companyTypes: "PRIVATE_COMPANY_LIMITED_BY_SHARES"
-      }
-    }).then((response) => {
-
-      expect(response.status).to.eq(400);
-      expect(response.body.status).to.eq("BAD_REQUEST");
-      expect(response.body.message).to.eq("Name already exist");
-    });
+// 7. DELETE AFFILIATE – INVALID affiliate_id / transaction_ref
+it("should return 400 when deleting affiliate with invalid affiliate_id or transaction_ref", () => {
+  cy.request({
+    method: "DELETE",
+    url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
+    headers: HEADERS.VALID_API_KEY,
+    failOnStatusCode: false,
+    body: {
+      affiliate_id: "IND2025120210210599190000284",
+      transaction_ref: "VAS202512021008297530"
+    }
+  }).then((resp) => {
+    expect(resp.status).to.eq(400);
+    expect(resp.body.status).to.eq("BAD_REQUEST");
+    expect(resp.body.message).to.eq(
+      "Invalid affiliate key or transactionRef passed"
+    );
+    expect(resp.body.data).to.be.null;
+    expect(resp.body.success).to.be.false;
   });
+});
+
+//  DELETE AFFILIATE – SUCCESS 
+it("should delete an affiliate successfully and return 200", function() {
+  cy.request({
+    method: "DELETE",
+    url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
+    headers: HEADERS.VALID_API_KEY,
+    failOnStatusCode: false,
+    body: {
+      affiliate_id: affiliateKeyCorporate,
+      transaction_ref: transactionRef
+    }
+  }).then((deleteResp) => {
+     expect(deleteResp.status).to.eq(200);
+     expect(deleteResp.body.status).to.eq("OK");
+     expect(deleteResp.body.message).to.eq("Affiliate deleted");
+     expect(deleteResp.body.data.affiliateKey).to.eq(affiliateKeyCorporate);
+     expect(deleteResp.body.success).to.be.true;
+  });
+});
+
+
+
+
 
   it("should successfully submit the company registration", () => {
     cy.request({
