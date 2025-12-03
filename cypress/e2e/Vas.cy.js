@@ -2882,7 +2882,6 @@ describe("API Validation for VAS Registration Endpoints", () => {
   });
 
   // BUSINESS NAME PARTNERSHIP
-  // BUSINESS NAME PARTNERSHIP
   it("should attempt to register a partner and handle success or maximum partnership limit response", () => {
     cy.request({
       method: "POST",
