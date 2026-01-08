@@ -155,7 +155,7 @@
 
     cy.log("Filling form with a unique business name");
     cy.get("#BusinessName").type("hakutestreal Hub");
-    cy.get("#companyEmail").type("founder@mah.com");
+    cy.get("#companyEmail").type("joyoasis9023@gmail.com");
     cy.get("#companyStreetNumber").type("12");
     cy.get("#companyStateOfResidence").select("Kano State");
     cy.get("#companyAddress").type("12B Airport Road, Kano");
@@ -280,7 +280,8 @@
 
     cy.log("Final confirmation of payment modal");
     cy.get("h3").contains("Payment").should("exist");
-  });
+    cy.wait(80000)
+  }); 
 
   // it("check registration status", () => {
   //   cy.visit(`${baseUrl}/Bn-registration`);
@@ -694,6 +695,7 @@
    * **use an agent's email that has been verified but the no existing store front created with it
    * ** Modify line 704 & 705 to carry the actual email. 
    */
+
   // it("should be able to create a storefront", () => {
   //   const validFile = "gamma1.png";
   //   const storefrontName = `Test${Date.now()} Academy`;
