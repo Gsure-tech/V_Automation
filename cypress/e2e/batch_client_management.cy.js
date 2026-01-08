@@ -166,7 +166,9 @@ describe("LGS Batct Client Registration Flow", () => {
     
 //   });
 
-  it("Add Bulk customers by searching, using campaingn_id and the action button", () => {
+ 
+
+    it("should search customer uploaded using the customer's transactionRef", () => {
     cy.log("Opening application form for new registration");
     cy.visit(`${baseUrl}/client`);
     cy.get("#clientEmail").clear().type("abubakarabdul9023+1@gmail.com");
@@ -176,21 +178,13 @@ describe("LGS Batct Client Registration Flow", () => {
       .should("be.visible")
       .click();
     cy.url().should("include", "/client/management");
-    cy.get('.search-input').clear().type("251224143228410");
-    cy.get('.search-btn')
-          .should("contain.text", "Search")
-      .should("be.visible")
-      .click();
-      cy.get('.d-inline-block > .actionBtn')
+    cy.get(':nth-child(1) > :nth-child(6) > .d-inline-block > .actionBtn')
         .should("contain.text", "Action")
       .should("be.visible")
       .click();
-
-      cy.get('.dropdown-menu > :nth-child(2)').click();
-      cy.get('[style="background-color: #229653;"]').click();
-      cy.get('[style="background-color: #092933; border: 0.2px solid #229653;"]').click();
-      cy.wait(60000);
   
+      cy.get(':nth-child(1) > :nth-child(6) > .d-inline-block > .dropdown-menu > .dropdown-li').click();
+      cy.get(':nth-child(2) > div > aside > .search-input').clear().type("INV20251210154808-846");
+      cy.get(':nth-child(2) > div > aside > .search-btn').click();
   });
-
 });
