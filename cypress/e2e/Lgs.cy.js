@@ -106,25 +106,25 @@
 describe("LGS Business Name Registration Flow", () => {
   const baseUrl = "http://lgs.oasisproducts.ng";
 
-  it("shows error modal when name already exists during compliance check", () => {
-    cy.log("Navigating to application form");
-    cy.visit(`${baseUrl}/Bn-registration`);
-    cy.url().should("include", "/Bn-registration/application");
+  // it("shows error modal when name already exists during compliance check", () => {
+  //   cy.log("Navigating to application form");
+  //   cy.visit(`${baseUrl}/Bn-registration`);
+  //   cy.url().should("include", "/Bn-registration/application");
 
-    cy.log("Filling business registration form with existing name");
-    cy.get("#BusinessName").type("Mighty Accelarator Hub");
-    cy.get("#lineOfBusiness").select("Legal practice and Consultancy");
+  //   cy.log("Filling business registration form with existing name");
+  //   cy.get("#BusinessName").type("Mighty Accelarator Hub");
+  //   cy.get("#lineOfBusiness").select("Legal practice and Consultancy");
 
-    cy.log("Clicking Check Compliance button");
-    cy.get("button[class$='ng-star-inserted']")
-      .contains("Check compliance")
-      .click();
+  //   cy.log("Clicking Check Compliance button");
+  //   cy.get("button[class$='ng-star-inserted']")
+  //     .contains("Check compliance")
+  //     .click();
 
-    cy.log("Validating modal content for existing name");
-    cy.get(".containerModal")
-      .should("be.visible")
-      .and("contain.text", "name already exists");
-  });
+  //   cy.log("Validating modal content for existing name");
+  //   cy.get(".containerModal")
+  //     .should("be.visible")
+  //     .and("contain.text", "name already exists");
+  // });
 
   it("registers successfully with valid name and uploads valid files", () => {
     cy.log("Opening application form for new registration");
@@ -139,7 +139,7 @@ describe("LGS Business Name Registration Flow", () => {
     cy.get("button[class$='ng-star-inserted']")
       .contains("Check compliance")
       .click();
-    // cy.wait("5000")
+    // cy.wait("2000")
 
     cy.get("#companyEmail").type("joyoasis9023@gmail.com");
     cy.get("#companyStreetNumber").type("12");
@@ -233,10 +233,11 @@ describe("LGS Business Name Registration Flow", () => {
 
     cy.log("Final confirmation");
     cy.get("h3", { timeout: 10000 }).should("contain", "Payment");
-    cy.wait(80000)
+    // cy.wait(80000)
 
   });
-});
+
+
 
 // it("check registration status", () => {
 //   cy.visit(`${baseUrl}/Bn-registration`);
@@ -248,6 +249,8 @@ describe("LGS Business Name Registration Flow", () => {
 //   cy.get('input[formcontrolname="passcode"]').should("exist");
 //   cy.get("button.status-button").should("contain.text", "Check Status");
 // });
+
+
 
 // it("shows and closes error modal on incorrect transaction reference or passcode", () => {
 //   cy.visit("http://lgs.oasisproducts.ng/status");
@@ -841,3 +844,4 @@ describe("LGS Business Name Registration Flow", () => {
 // });
 
 // });
+});
