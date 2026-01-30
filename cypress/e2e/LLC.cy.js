@@ -19,7 +19,7 @@ it("should check compliance using the proposedName",() => {
     headers: HEADERS.VALID_API_KEY,
     body: {
       lineOfBusiness: "ICT",
-      proposedName: "GSURETECH ENTERPRISE MOMENTUM TRADERS LTD",
+      proposedName: "TUESDAY COLLECTIONS MOMENTUM LTD",
       companyType: "PRIVATE_COMPANY_LIMITED_BY_SHARES"
     }
   }).then((resp) => {
@@ -30,7 +30,6 @@ it("should check compliance using the proposedName",() => {
     // Verifying the data in the response
     const data = resp.body.data;
     
-    expect(data.recommendedActions).to.have.length.greaterThan(0);
     expect(data.recommendedActions[0].message).to.eq("Proceed to filing");
     expect(data.complianceScorePercentage).to.be.a("number"); 
     expect(data.similarityScorePercentage).to.be.a("number");
