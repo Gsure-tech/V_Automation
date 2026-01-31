@@ -863,7 +863,7 @@ describe("LGS Bank Account Creation Flow", () => {
     cy.wait(5000)
     cy.get(':nth-child(2) > .inputField-option').select("AGRICULTURE");
     cy.get('.ng-star-inserted.ng-touched > .form-grid > :nth-child(3) > .inputField-option').select("AGRICULTURE");
-    cy.get(':nth-child(2) > .inputField').clear().type('350466783222')
+    cy.get(':nth-child(2) > .inputField').clear().type('220480678311')
     cy.get('.ng-untouched.ng-star-inserted > .form-grid > :nth-child(1) > .inputField').clear().type("14147789535");
    cy.get('.ng-invalid.ng-star-inserted > .form-grid > :nth-child(3) > .inputField-option').select("Miss");
     cy.get(':nth-child(9) > .inputField').clear().type("08033443322");
@@ -891,8 +891,15 @@ cy.get('input[placeholder="---Enter LGA---"]')
   cy.get('.call-to-action-btn').click();
   cy.get('.add-authorization').click();
   cy.get('.dropdown-menu > :nth-child(1)').click();
-  cy.get('.login-input').clear().type("350466783230")
+  cy.get('.login-input').clear().type("350120678311")
   cy.get('.signIn-btn').click()
 
+  cy.get(':nth-child(1) > .inputField-option').select("Miss");
+  cy.get(':nth-child(4) > .inputField-option').select("Sibling");
+  cy.get(':nth-child(8) > .inputField').clear().type("08033334422")
+  cy.get(':nth-child(9) > .inputField-option').select("Nigeria");
+  cy.get('.button-submit').click();
+cy.get('.authorization-checkbox').check();
+cy.get('[style="color: white; background-color: #229653;"]').click();
   });
 });
