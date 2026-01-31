@@ -853,8 +853,8 @@ describe("LGS Bank Account Creation Flow", () => {
       .should("contain.text", "Verify Details")
       .should("be.visible")
       .click();
-
-    cy.get('[style="cursor: pointer;"]', { timeout: 50000 }).click();
+ cy.wait(5000)
+    cy.get('[style="cursor: pointer;"]', { timeout: 5000 }).click();
 
     cy.get('.publishLink').click();
     cy.get('.fa-pen-to-square', { timeout: 7000 }).click();
@@ -865,7 +865,7 @@ describe("LGS Bank Account Creation Flow", () => {
     cy.get('.ng-star-inserted.ng-touched > .form-grid > :nth-child(3) > .inputField-option').select("AGRICULTURE");
     cy.get(':nth-child(2) > .inputField').clear().type('350466783222')
     cy.get('.ng-untouched.ng-star-inserted > .form-grid > :nth-child(1) > .inputField').clear().type("14147789535");
-    cy.get('[_ngcontent-ng-c2820738640=""][autocomplete="off"] > .form-grid > :nth-child(3) > .inputField-option').select("Miss");
+   cy.get('.ng-invalid.ng-star-inserted > .form-grid > :nth-child(3) > .inputField-option').select("Miss");
     cy.get(':nth-child(9) > .inputField').clear().type("08033443322");
     cy.get(':nth-child(10) > .inputField').clear().type("joyoasis9023@gmail.com");
     cy.get(':nth-child(11) > .inputField-option').select("Single");
@@ -886,5 +886,13 @@ cy.get('input[placeholder="---Enter LGA---"]')
     // cy.get(':nth-child(16) > .inputField-option').clear().type("219 Edem street, Awka, Soba, Kaduna State");
     cy.get(':nth-child(17) > .inputField').clear().type("Mamara");
     cy.get('.button-submit').click();
+    cy.wait(3000)
+  cy.get('.authorization-checkbox').check();
+  cy.get('.call-to-action-btn').click();
+  cy.get('.add-authorization').click();
+  cy.get('.dropdown-menu > :nth-child(1)').click();
+  cy.get('.login-input').clear().type("350466783230")
+  cy.get('.signIn-btn').click()
+
   });
 });
