@@ -712,7 +712,7 @@ describe("LGS Business Name Registration Flow", () => {
   //       .click();
   // });
 
-  // it("should be able to register a business using a storefront link", () => {
+  // it("should register a business using a storefront link", () => {
   //   cy.log("Opening application form for new registration");
   //   cy.visit(`${baseUrl}/storefront/bterry`);
   //   cy.get('[style="color: rgb(255, 255, 255); background-color: rgb(33, 150, 83);"]')
@@ -826,80 +826,194 @@ describe("LGS Business Name Registration Flow", () => {
   //     cy.wait(80000)
 
   // });
-});
 
-describe("LGS Bank Account Creation Flow", () => {
-  const baseUrl = "http://lgs.oasisproducts.ng";
+  it("should register a business using a fully paid Batch link", () => {
+    cy.log("Opening application form for new registration");
+    cy.visit(`${baseUrl}/users/application`);
 
-  // it("should display error message if transaction reference already has an account number", () => {
-  //   cy.visit(`${baseUrl}/account-creation`);
-  //   cy.get(".login-input").clear().type("LGS251028132326359");
+    cy.log("Filling form with a unique business name");
+      cy.get("#BusinessName").type("Mandatory Goto Hub");
+      cy.get("#lineOfBusiness").select("Trading");
 
-  //   cy.get(".signIn-btn")
-  //     .should("contain.text", "Verify Details")
-  //     .should("be.visible")
-  //     .click();
+      cy.log("Clicking Check Compliance button");
+      cy.get("button[class$='ng-star-inserted']")
+        .contains("Check compliance")
+        .click();
+      cy.wait(10000)
 
-  //   cy.get(".containerModal > div", { timeout: 50000 })
-  //     .should("be.visible")
-  //     .and("contain.text", "already has an");
-  // });
+      cy.get("#companyEmail").type("joyoasis9023@gmail.com");
+      cy.get("#companyStreetNumber").type("12");
+      cy.get("#companyStateOfResidence").select("Kano State");
+      cy.get("#companyAddress").type("12B Airport Road, Kano");
+      cy.get("#companyCity").type("Kano");
+      cy.get(".navigation-buttons > .submitBtn").contains("Continue").click();
+      cy.get("#NIN").clear().type("70123456789");
+      cy.get(".submitBtn").contains("Validate NIN").click();
 
-  it("create bank account for an approved business name", () => {
-    cy.visit(`${baseUrl}/account-creation`);
+      cy.log("Filling proprietor bio data section");
+      cy.get(".section-names").contains("Proprietor Bio Data");
+      cy.get("#proprietorPhoneNumber").clear().type("08033221100");
+      cy.get("#proprietorEmail").clear().type("geeee9023@gmail.com");
+      cy.get(".nextBtn").contains("Next").click();
 
-    cy.get(".login-input").clear().type("INV20260127130029-764");
-    cy.get(".signIn-btn", { timeout: 1000 })
-      .should("contain.text", "Verify Details")
-      .should("be.visible")
-      .click();
- cy.wait(5000)
-    cy.get('[style="cursor: pointer;"]', { timeout: 5000 }).click();
+      cy.log("Completing demographic data section");
+      cy.get("#proprietorStreetNumber").clear().type("40");
+      cy.get("#proprietorState").select("Adamawa State");
+      cy.get("#proprietorCity").clear().type("Mubi");
+      cy.get("#proprietorLga").select("Hong");
+      cy.get("#proprietorServiceAddress").clear().type("College Road");
+      cy.get(".nextBtn").contains("Next").click();
 
-    cy.get('.publishLink').click();
-    cy.get('.fa-pen-to-square', { timeout: 7000 }).click();
-    cy.wait(5000)
-    cy.get(':nth-child(4) > .form-grid > :nth-child(1) > .inputField').clear().type("08033443322");
-    cy.wait(5000)
-    cy.get(':nth-child(2) > .inputField-option').select("AGRICULTURE");
-    cy.get('.ng-star-inserted.ng-touched > .form-grid > :nth-child(3) > .inputField-option').select("AGRICULTURE");
-    cy.get(':nth-child(2) > .inputField').clear().type('220480678311')
-    cy.get('.ng-untouched.ng-star-inserted > .form-grid > :nth-child(1) > .inputField').clear().type("14147789535");
-   cy.get('.ng-invalid.ng-star-inserted > .form-grid > :nth-child(3) > .inputField-option').select("Miss");
-    cy.get(':nth-child(9) > .inputField').clear().type("08033443322");
-    cy.get(':nth-child(10) > .inputField').clear().type("joyoasis9023@gmail.com");
-    cy.get(':nth-child(11) > .inputField-option').select("Single");
-    cy.get(':nth-child(12) > .inputField-option').select("Nigeria");
-    cy.get(':nth-child(13) > .inputField-option').select("LAGOS");
-    // cy.get('.p-inputtext').clear().type("IKEJA");
+      const largeFile = "spiral.png";
+      const validFile = "gamma1.png";
 
-    // cy.contains('.p-autocomplete-item', 'IKEJA', { timeout: 10000 }).click();    
+      cy.log("Uploading large invalid files");
 
-// 1. Target the input specifically by its placeholder
-cy.get('input[placeholder="---Enter LGA---"]')
-  .clear()
-  .type("IKEJA", { delay: 100 });
-  cy.get('#pn_id_1_0 > .ng-star-inserted').click({ force: true });
+      // 1. Upload Signature (Large)
+      cy.contains("p", "Proprietor Signature")
+        .closest(".fileUpload-choose")
+        .find('input[type="file"]')
+        .selectFile(`cypress/fixtures/${largeFile}`, { force: true });
 
-    cy.get(':nth-child(15) > .inputField-option').select("Nigeria");
-    cy.wait(3000)
-    // cy.get(':nth-child(16) > .inputField-option').clear().type("219 Edem street, Awka, Soba, Kaduna State");
-    cy.get(':nth-child(17) > .inputField').clear().type("Mamara");
-    cy.get('.button-submit').click();
-    cy.wait(3000)
-  cy.get('.authorization-checkbox').check();
-  cy.get('.call-to-action-btn').click();
-  cy.get('.add-authorization').click();
-  cy.get('.dropdown-menu > :nth-child(1)').click();
-  cy.get('.login-input').clear().type("350120678311")
-  cy.get('.signIn-btn').click()
+      // 2. Upload ID (Large)
+      cy.contains("p", "Proprietor ID")
+        .closest(".fileUpload-choose")
+        .find('input[type="file"]')
+        .selectFile(`cypress/fixtures/${largeFile}`, { force: true });
 
-  cy.get(':nth-child(1) > .inputField-option').select("Miss");
-  cy.get(':nth-child(4) > .inputField-option').select("Sibling");
-  cy.get(':nth-child(8) > .inputField').clear().type("08033334422")
-  cy.get(':nth-child(9) > .inputField-option').select("Nigeria");
-  cy.get('.button-submit').click();
-cy.get('.authorization-checkbox').check();
-cy.get('[style="color: white; background-color: #229653;"]').click();
+      // 3. Upload Photograph (Large)
+      cy.contains("p", "Proprietor Photograph")
+        .closest(".fileUpload-choose")
+        .find('input[type="file"]')
+        .selectFile(`cypress/fixtures/${largeFile}`, { force: true });
+
+      // 4. Upload Supporting Document (Large)
+      cy.contains("p", "Supporting Document")
+        .closest(".fileUpload-choose")
+        .find('input[type="file"]')
+        .selectFile(`cypress/fixtures/${largeFile}`, { force: true });
+
+      cy.log("Validating error messages");
+      // Looks for the error text that appears in your HTML
+      cy.contains("file size should not exceed 500KB").should("be.visible");
+
+      cy.log("Uploading valid files");
+
+      // Replace with valid files
+      cy.contains("p", "Proprietor Signature")
+        .closest(".fileUpload-choose")
+        .find('input[type="file"]')
+        .selectFile(`cypress/fixtures/${validFile}`, { force: true });
+
+      cy.contains("p", "Proprietor ID")
+        .closest(".fileUpload-choose")
+        .find('input[type="file"]')
+        .selectFile(`cypress/fixtures/${validFile}`, { force: true });
+
+      cy.contains("p", "Proprietor Photograph")
+        .closest(".fileUpload-choose")
+        .find('input[type="file"]')
+        .selectFile(`cypress/fixtures/${validFile}`, { force: true });
+
+      cy.contains("p", "Supporting Document")
+        .closest(".fileUpload-choose")
+        .find('input[type="file"]')
+        .selectFile(`cypress/fixtures/${validFile}`, { force: true });
+
+      cy.log("Submitting form");
+      // Using the exact text from your HTML button
+      cy.contains("button", "Continue to Payment")
+        .should("not.be.disabled")
+        .click();
+      cy.wait(5000)
+
+      cy.log("Payment Section");
+      cy.get('input[formcontrolname="email"]').clear().type("joyoasis9023@gmail.com");
+      cy.get('[style="margin-top: 1.5rem;"] > :nth-child(2) > .inputField').clear().type("INV20260204073836-523")
+      cy.get('.status-button').click();
+
+      cy.wait(80000)
+
   });
+
 });
+
+
+
+
+
+// describe("LGS Bank Account Creation Flow", () => {
+//   const baseUrl = "http://lgs.oasisproducts.ng";
+
+//   // it("should display error message if transaction reference already has an account number", () => {
+//   //   cy.visit(`${baseUrl}/account-creation`);
+//   //   cy.get(".login-input").clear().type("LGS251028132326359");
+
+//   //   cy.get(".signIn-btn")
+//   //     .should("contain.text", "Verify Details")
+//   //     .should("be.visible")
+//   //     .click();
+
+//   //   cy.get(".containerModal > div", { timeout: 50000 })
+//   //     .should("be.visible")
+//   //     .and("contain.text", "already has an");
+//   // });
+
+//   it("create bank account for an approved business name", () => {
+//     cy.visit(`${baseUrl}/account-creation`);
+
+//     cy.get(".login-input").clear().type("INV20260202130704-757");
+//     cy.get(".signIn-btn", { timeout: 1000 })
+//       .should("contain.text", "Verify Details")
+//       .should("be.visible")
+//       .click();
+//  cy.wait(5000)
+//     cy.get('[style="cursor: pointer;"]', { timeout: 5000 }).click();
+
+//     cy.get('.publishLink').click();
+//     cy.get('.fa-pen-to-square', { timeout: 7000 }).click();
+//     cy.wait(5000)
+//     cy.get(':nth-child(4) > .form-grid > :nth-child(1) > .inputField').clear().type("08033443322");
+//     cy.wait(5000)
+//     cy.get(':nth-child(2) > .inputField-option').select("AGRICULTURE");
+//     cy.get('.ng-star-inserted.ng-touched > .form-grid > :nth-child(3) > .inputField-option').select("AGRICULTURE");
+//     cy.get(':nth-child(2) > .inputField').clear().type('29480678311')
+//     cy.get('.ng-untouched.ng-star-inserted > .form-grid > :nth-child(1) > .inputField').clear().type("14147789535");
+//    cy.get('.ng-invalid.ng-star-inserted > .form-grid > :nth-child(3) > .inputField-option').select("Miss");
+//     cy.get(':nth-child(9) > .inputField').clear().type("08033443322");
+//     cy.get(':nth-child(10) > .inputField').clear().type("joyoasis9023@gmail.com");
+//     cy.get(':nth-child(11) > .inputField-option').select("Single");
+//     cy.get(':nth-child(12) > .inputField-option').select("Nigeria");
+//     cy.get(':nth-child(13) > .inputField-option').select("LAGOS");
+//     // cy.get('.p-inputtext').clear().type("IKEJA");
+
+//     // cy.contains('.p-autocomplete-item', 'IKEJA', { timeout: 10000 }).click();    
+
+// // 1. Target the input specifically by its placeholder
+// cy.get('input[placeholder="---Enter LGA---"]')
+//   .clear()
+//   .type("IKEJA", { delay: 100 });
+//   cy.get('#pn_id_1_0 > .ng-star-inserted').click({ force: true });
+
+//     cy.get(':nth-child(15) > .inputField-option').select("Nigeria");
+//     cy.wait(3000)
+//     // cy.get(':nth-child(16) > .inputField-option').clear().type("219 Edem street, Awka, Soba, Kaduna State");
+//     cy.get(':nth-child(17) > .inputField').clear().type("Mamara");
+//     cy.get('.button-submit').click();
+//     cy.wait(3000)
+//   cy.get('.authorization-checkbox').check();
+//   cy.get('.call-to-action-btn').click();
+//   cy.get('.add-authorization').click();
+//   cy.get('.dropdown-menu > :nth-child(1)').click();
+//   cy.get('.login-input').clear().type("29480678311")
+//   cy.get('.signIn-btn').click()
+
+//   cy.get(':nth-child(1) > .inputField-option').select("Miss");
+//   cy.get(':nth-child(4) > .inputField-option').select("Sibling");
+//   cy.get(':nth-child(8) > .inputField').clear().type("08033334422")
+//   cy.get(':nth-child(9) > .inputField-option').select("Nigeria");
+//   cy.get('.button-submit').click();
+// cy.get('.authorization-checkbox').check();
+// cy.get('[style="color: white; background-color: #229653;"]').click();
+//   });
+// });

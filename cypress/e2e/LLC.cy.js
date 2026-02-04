@@ -41,7 +41,7 @@ it("should check compliance using the proposedName",() => {
   //  SUCCESSFUL NAME RESERVATION
   it("should return 200 and reservation details when a unique proposedName is submitted", () => {
 
-    const proposedName = `Model${Date.now()} Academy Enterprise`;
+    const proposedName = `TestLLC${Date.now()} Academy Enterprise`;
 
     cy.request({
       method: "POST",
@@ -486,7 +486,7 @@ it("should register a corporate affiliate using the same transactionRef", () => 
         rcNumber: "RC1234567",
         companyName: "TechNova Solutions Ltd",
         contactPhoneNumber: "08098765432",
-        contactEmail: "info@technova.com",
+        contactEmail: "info@technova.com", 
         contactSignature:base64Images.signature,
         affiliateType: "SHAREHOLDER",
         serviceAddress: {
