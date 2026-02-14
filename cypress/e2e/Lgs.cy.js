@@ -105,7 +105,14 @@
 
 describe("LGS Business Name Registration Flow", () => {
   const baseUrl = "http://lgs.oasisproducts.ng";
+  // const uniqueName = `Mandatory ${Date.now()} Hub`;
 
+  const date = new Date();
+    const day = date.toLocaleString('default', { day: 'numeric' });
+    const month = date.toLocaleString('default', { month: 'short' });
+    const time = `${date.getHours()}${date.getMinutes()}`;
+    const uniqueName = `Mandatory Hub-${month}${day}-${time}`;
+    
   // it("shows error modal when name already exists during compliance check", () => {
   //   cy.log("Navigating to application form");
   //   cy.visit(`${baseUrl}/Bn-registration`);
@@ -832,7 +839,7 @@ describe("LGS Business Name Registration Flow", () => {
     cy.visit(`${baseUrl}/users/application`);
 
     cy.log("Filling form with a unique business name");
-      cy.get("#BusinessName").type("Mandatory Goto Hub");
+      cy.get("#BusinessName").type(uniqueName);
       cy.get("#lineOfBusiness").select("Trading");
 
       cy.log("Clicking Check Compliance button");
