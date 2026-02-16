@@ -63,6 +63,7 @@ describe("LLC Registration API Flow", () => {
       expect(response.body.data.createdDate).to.not.be.empty;
       expect(response.body.data.expiryDate).to.not.be.empty;
 
+      cy.log(`Reservation code : ${reservationCode}`)
       cy.wait(1500);
     });
   });
@@ -998,26 +999,5 @@ it("should generate RRR and visit the payment link", () => {
   });
 
 });
-
-// it("should generate RRR and capture the payment link", () => {
-//   cy.request({
-//     method: "POST",
-//     url: "http://41.207.248.246:9088/api/vas/llc/stamp-duty/rrr",
-//     headers: HEADERS.VALID_API_KEY,
-//     body: {
-//       transactionRef: transactionRef,
-//       phoneNumber: "08012345678",
-//     },
-//   }).then((response) => {
-//     expect(response.status).to.eq(200);
-//     expect(response.body.status).to.eq("OK");
-//     expect(response.body.message).to.eq("stamp duty generate rrr");
-//     // Store the URL for the next step
-//     stampDutyPaymentUrl = response.body.data.paymentUrl;
-//     cy.log(`Captured Payment URL: ${stampDutyPaymentUrl}`);
-//   });
-// });
-
-
 
 });
