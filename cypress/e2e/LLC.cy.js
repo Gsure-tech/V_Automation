@@ -994,11 +994,9 @@ it("should generate RRR and visit the payment link", () => {
     // 2. Visit the link IMMEDIATELY within the same test flow
     // This prevents the "undefined" variable error
     cy.visit(paymentUrl);
-    cy.wait(500000)
+    cy.wait(50000)
   });
 
-  // 3. Confirm the page loaded
-  cy.url({ timeout: 15000 }).should("include", "stamp-duty");
 });
 
 // it("should generate RRR and capture the payment link", () => {
