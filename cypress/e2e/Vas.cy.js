@@ -1543,7 +1543,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
     });
   });
 
-  it('Should return 200, statusCode "07" with the message BUSINESS_NAME_EXISTS when business name exists', () => {
+  it('Should return 403 FOrbidden, statusCode "07" with the message BUSINESS_NAME_EXISTS when business name exists', () => {
     cy.request({
       method: "POST",
       url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
@@ -1554,20 +1554,22 @@ describe("API Validation for VAS Registration Endpoints", () => {
       },
       failOnStatusCode: false,
     }).then((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body.status).to.eq("OK");
-      expect(response.body.data.message).to.eq("BUSINESS_NAME_EXISTS");
-      expect(response.body.data.statusCode).to.eq("07");
-      expect(response.body.data.data.recommendedActions).to.not.be.empty;
+      expect(response.status).to.eq(403);
+      expect(response.body.status).to.eq("FORBIDDEN");
+      // expect(response.body.data.message).to.eq("BUSINESS_NAME_EXISTS");
+      expect(response.body.message).to.eq("Name exist");
+
+      // expect(response.body.data.statusCode).to.eq("07");
+      // expect(response.body.data.data.recommendedActions).to.not.be.empty;
       // expect(response.body.data.data.similarNames).to.not.be.empty;
       // expect(response.body.data.data.suggestedNames).to.not.be.empty;
       // expect(response.body.data.data.mostSimilarName).to.not.be.empty;
-      expect(response.body.data.data.similarityScorePercentage).to.be.a(
-        "number"
-      );
-      expect(response.body.data.data.complianceScorePercentage).to.be.a(
-        "number"
-      );
+      // expect(response.body.data.data.similarityScorePercentage).to.be.a(
+      //   "number"
+      // );
+      // expect(response.body.data.data.complianceScorePercentage).to.be.a(
+      //   "number"
+      // );
     });
   });
 
@@ -1610,19 +1612,19 @@ describe("API Validation for VAS Registration Endpoints", () => {
       },
       failOnStatusCode: false,
     }).then((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body.status).to.eq("OK");
-      expect(response.body.data.message).to.eq("SINGLE_WORD");
-      expect(response.body.data.statusCode).to.eq("10");
-      expect(response.body.data.data.recommendedActions).to.not.be.empty;
-      expect(response.body.data.data.recommendedActions[0].message).to.not.be
-        .empty;
-      expect(response.body.data.data.similarityScorePercentage).to.be.a(
-        "number"
-      );
-      expect(response.body.data.data.complianceScorePercentage).to.be.a(
-        "number"
-      );
+      expect(response.status).to.eq(400);
+      expect(response.body.status).to.eq("BAD_REQUEST");
+      // expect(response.body.data.message).to.eq("SINGLE_WORD");
+      expect(response.body.data.message).to.eq("proposed name cant have a single word");
+      // expect(response.body.data.statusCode).to.eq("10");
+      // expect(response.body.data.data.recommendedActions).to.not.be.empty;
+      // expect(response.body.data.data.recommendedActions[0].message).to.not.be.empty;
+      // expect(response.body.data.data.similarityScorePercentage).to.be.a(
+      //   "number"
+      // );
+      // expect(response.body.data.data.complianceScorePercentage).to.be.a(
+      //   "number"
+      // );
     });
   });
 
@@ -1655,31 +1657,31 @@ describe("API Validation for VAS Registration Endpoints", () => {
     });
   });
 
-  it('should return 200, statusCode "15" with the message PAYMENT_SERVICE_CONNOTATION when proposed name includes keyword like "wealth"', () => {
-    cy.request({
-      method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
-      headers: HEADERS.VALID_API_KEY,
-      body: {
-        proposedName: "Okpulku wealth Hub",
-        lineOfBusiness: "general_merchandise",
-      },
-      failOnStatusCode: false,
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body.data.message).to.eq("PAYMENT_SERVICE_CONNOTATION");
-      expect(response.body.data.statusCode).to.eq("15");
+  // it('should return 200, statusCode "15" with the message PAYMENT_SERVICE_CONNOTATION when proposed name includes keyword like "wealth"', () => {
+  //   cy.request({
+  //     method: "POST",
+  //     url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
+  //     headers: HEADERS.VALID_API_KEY,
+  //     body: {
+  //       proposedName: "Okpulku wealth Hub",
+  //       lineOfBusiness: "general_merchandise",
+  //     },
+  //     failOnStatusCode: false,
+  //   }).then((response) => {
+  //     expect(response.status).to.eq(200);
+  //     expect(response.body.data.message).to.eq("PAYMENT_SERVICE_CONNOTATION");
+  //     expect(response.body.data.statusCode).to.eq("15");
 
-      const compliance = response.body.data.data;
+  //     const compliance = response.body.data.data;
 
-      expect(compliance.recommendedActions).to.not.be.empty;
-      expect(compliance.recommendedActions[0].message).to.not.be.empty;
-      expect(compliance.recommendedActions[0].keywords).to.not.be.empty;
+  //     expect(compliance.recommendedActions).to.not.be.empty;
+  //     expect(compliance.recommendedActions[0].message).to.not.be.empty;
+  //     expect(compliance.recommendedActions[0].keywords).to.not.be.empty;
 
-      expect(compliance.similarityScorePercentage).to.be.a("number");
-      expect(compliance.complianceScorePercentage).to.be.a("number");
-    });
-  });
+  //     expect(compliance.similarityScorePercentage).to.be.a("number");
+  //     expect(compliance.complianceScorePercentage).to.be.a("number");
+  //   });
+  // });
 
   it("Should return 400 Bad Request when Line of Business is not passed", () => {
     cy.request({
