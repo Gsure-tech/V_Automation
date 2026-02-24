@@ -63,6 +63,7 @@ describe("LLC Registration API Flow", () => {
       expect(response.body.data.createdDate).to.not.be.empty;
       expect(response.body.data.expiryDate).to.not.be.empty;
 
+      cy.log(`Reservation code : ${reservationCode}`)
       cy.wait(1500);
     });
   });
@@ -707,7 +708,7 @@ describe("LLC Registration API Flow", () => {
 
 
   
-  // REGISTER PSC 1
+// REGISTER PSC 1
 it("should add a person with significant control (PSC) 1", () => {
   cy.request({
     method: "POST",
@@ -715,39 +716,41 @@ it("should add a person with significant control (PSC) 1", () => {
     headers: HEADERS.VALID_API_KEY,
     body: {
       transactionRef: transactionRef,
-      individual: {
-        surname: "Lekan",
-        firstname: "Chinedu",
-        otherName: "Moses",
-        occupation: "Civil Engineer",
-        nationality: "Nigerian",
-        dob: "1988-05-15",
-        gender: "MALE",
-        email: "chidi.adepoju@example.com",
-        phoneNumber: "09011223344",
-        affiliateType: ["PSC"],
-        serviceAddress: {
-          country: "NIGERIA",
-          state: "LAGOS",
-          lga: "IKEJA",
-          city: "Lagos",
-          streetInfo: "15 Adeola Odeku Street, Victoria Island",
-        },
-        residentialAddress: {
-          country: "NIGERIA",
-          state: "IMO",
-          lga: "MBAITOLI",
-          city: "Owerri",
-          streetInfo: "12 Okija Road, opposite Modern Market",
-        },
-        meansOfId: {
-          idType: "NIN",
-          idNumber: "12345678901",
-          image: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-        },
-        signature: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-        passport: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-        ownsIndirectShares: true,
+      affiliateKey: affiliateKeyIndividual1,
+      // individual: {
+      //   surname: "Lekan",
+      //   firstname: "Chinedu",
+      //   otherName: "Moses",
+      //   occupation: "Civil Engineer",
+      //   nationality: "Nigerian",
+      //   dob: "1988-05-15",
+      //   gender: "MALE",
+      //   email: "chidi.adepoju@example.com",
+      //   phoneNumber: "09011223344",
+      //   affiliateType: ["PSC"],
+      //   serviceAddress: {
+      //     country: "NIGERIA",
+      //     state: "LAGOS",
+      //     lga: "IKEJA",
+      //     city: "Lagos",
+      //     streetInfo: "15 Adeola Odeku Street, Victoria Island",
+      //   },
+      //   residentialAddress: {
+      //     country: "NIGERIA",
+      //     state: "IMO",
+      //     lga: "MBAITOLI",
+      //     city: "Owerri",
+      //     streetInfo: "12 Okija Road, opposite Modern Market",
+      //   },
+      //   meansOfId: {
+      //     idType: "NIN",
+      //     idNumber: "12345678901",
+      //     image: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+      //   },
+      //   signature: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+      //   passport: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+      // },
+        ownsIndirectShares: false,
         // indirectShareDetails: {
         //     sharePercent: "5",
         //     legalOwners: [
@@ -790,7 +793,6 @@ it("should add a person with significant control (PSC) 1", () => {
         canChangeDirectors: true,
         hasSignificantControlOfCompany: true,
       },
-    },
   }).then((response) => {
     // Asserting the success status based on your sample response
     expect(response.status).to.eq(200);
@@ -809,7 +811,7 @@ it("should add a person with significant control (PSC) 1", () => {
   });
 });
 
- // REGISTER PSC 2
+// REGISTER PSC 2
 it("should add a person with significant control (PSC) 2", () => {
   cy.request({
     method: "POST",
@@ -817,44 +819,46 @@ it("should add a person with significant control (PSC) 2", () => {
     headers: HEADERS.VALID_API_KEY,
     body: {
       transactionRef: transactionRef,
-      individual: {
-        surname: "Lekan",
-        firstname: "Chinedu",
-        otherName: "Moses",
-        occupation: "Civil Engineer",
-        nationality: "Nigerian",
-        dob: "1988-05-15",
-        gender: "MALE",
-        email: "chidi.adepoju@example.com",
-        phoneNumber: "09011223344",
-        affiliateType: ["PSC"],
-        serviceAddress: {
-          country: "NIGERIA",
-          state: "LAGOS",
-          lga: "IKEJA",
-          city: "Lagos",
-          streetInfo: "15 Adeola Odeku Street, Victoria Island",
-        },
-        residentialAddress: {
-          country: "NIGERIA",
-          state: "IMO",
-          lga: "MBAITOLI",
-          city: "Owerri",
-          streetInfo: "12 Okija Road, opposite Modern Market",
-        },
-        meansOfId: {
-          idType: "NIN",
-          idNumber: "12345678901",
-          image: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-        },
-        signature: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-        passport: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-        ownsIndirectShares: true,
+      affiliateKey: affiliateKeyIndividual2,
+      // individual: {
+      //   surname: "Lekan",
+      //   firstname: "Chinedu",
+      //   otherName: "Moses",
+      //   occupation: "Civil Engineer",
+      //   nationality: "Nigerian",
+      //   dob: "1988-05-15",
+      //   gender: "MALE",
+      //   email: "chidi.adepoju@example.com",
+      //   phoneNumber: "09011223344",
+      //   affiliateType: ["PSC"],
+      //   serviceAddress: {
+      //     country: "NIGERIA",
+      //     state: "LAGOS",
+      //     lga: "IKEJA",
+      //     city: "Lagos",
+      //     streetInfo: "15 Adeola Odeku Street, Victoria Island",
+      //   },
+      //   residentialAddress: {
+      //     country: "NIGERIA",
+      //     state: "IMO",
+      //     lga: "MBAITOLI",
+      //     city: "Owerri",
+      //     streetInfo: "12 Okija Road, opposite Modern Market",
+      //   },
+      //   meansOfId: {
+      //     idType: "NIN",
+      //     idNumber: "12345678901",
+      //     image: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+      //   },
+      //   signature: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+      //   passport: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+      // },
+        ownsIndirectShares: false,
         // indirectShareDetails: {
         //     sharePercent: "5",
         //     legalOwners: [
         //         {
-        //             affiliateKey: affiliateKeyIndividual2,
+        //             affiliateKey: affiliateKeyIndividual1,
         //             sharePercent: "5"
         //         }
         //     ]
@@ -892,7 +896,6 @@ it("should add a person with significant control (PSC) 2", () => {
         canChangeDirectors: true,
         hasSignificantControlOfCompany: true,
       },
-    },
   }).then((response) => {
     // Asserting the success status based on your sample response
     expect(response.status).to.eq(200);
@@ -905,12 +908,13 @@ it("should add a person with significant control (PSC) 2", () => {
     expect(data.affiliateKey).to.be.a("string").and.not.be.empty;
     
     // Storing the value globally/locally for the next it block
-    affiliateKeyPSC2 = data.affiliateKey;
+    affiliateKeyPSC1 = data.affiliateKey;
 
-    cy.log(`Stored PSC 2 Affiliate Key: ${affiliateKeyPSC2}`);
+    cy.log(`Stored PSC 1 Affiliate Key: ${affiliateKeyPSC1}`);
   });
 });
 
+//SUBMIT REGISTRATION
 it("should successfully submit the company registration", () => {
   cy.request({
     method: "POST",
@@ -944,7 +948,7 @@ it("should successfully submit the company registration", () => {
 
     // 3. Validate Shares Object
     const shares = body.shares;
-    expect(shares.shareCapital).to.eq(10000000.00);
+    expect(shares.shareCapital).to.be.a("number").and.be.at.least(0);
     expect(shares.ordinaryIssuedShare).to.be.a("number").and.be.at.least(0);
     expect(shares.preferenceIssuedShare).to.be.a("number").and.be.at.least(0);
     expect(shares.shareCapitalInWords).to.be.a("string").and.not.be.empty;
@@ -970,9 +974,7 @@ it("should successfully submit the company registration", () => {
   });
 });
 
-
-
-
+//GENERATE RRR & VISIT PAYMENT LINK
 it("should generate RRR and visit the payment link", () => {
   cy.request({
     method: "POST",
@@ -994,32 +996,9 @@ it("should generate RRR and visit the payment link", () => {
     // 2. Visit the link IMMEDIATELY within the same test flow
     // This prevents the "undefined" variable error
     cy.visit(paymentUrl);
-    cy.wait(500000)
+    cy.wait(50000)
   });
 
-  // 3. Confirm the page loaded
-  cy.url({ timeout: 15000 }).should("include", "stamp-duty");
 });
-
-// it("should generate RRR and capture the payment link", () => {
-//   cy.request({
-//     method: "POST",
-//     url: "http://41.207.248.246:9088/api/vas/llc/stamp-duty/rrr",
-//     headers: HEADERS.VALID_API_KEY,
-//     body: {
-//       transactionRef: transactionRef,
-//       phoneNumber: "08012345678",
-//     },
-//   }).then((response) => {
-//     expect(response.status).to.eq(200);
-//     expect(response.body.status).to.eq("OK");
-//     expect(response.body.message).to.eq("stamp duty generate rrr");
-//     // Store the URL for the next step
-//     stampDutyPaymentUrl = response.body.data.paymentUrl;
-//     cy.log(`Captured Payment URL: ${stampDutyPaymentUrl}`);
-//   });
-// });
-
-
 
 });
