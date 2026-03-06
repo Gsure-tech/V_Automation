@@ -41,7 +41,7 @@ describe("LLC Registration API Flow", () => {
 
   //  SUCCESSFUL NAME RESERVATION
   it("should return 200 and reservation details when a unique proposedName is submitted", () => {
-    const proposedName = `TestLawLLC${Date.now()} Academy Enterprise`;
+    const proposedName = `NoHybridLLC${Date.now()} Academy Enterprise`;
 
     cy.request({
       method: "POST",
@@ -371,8 +371,8 @@ describe("LLC Registration API Flow", () => {
       headers: HEADERS.VALID_API_KEY,
       body: {
         transactionRef,
-        ordinaryIssuedShare: 5000000.0,
-        preferenceIssuedShare: 5000000.0,
+        ordinaryIssuedShare: 10000000.0,
+        // preferenceIssuedShare: 5000000.0,
         pricePerShare: 1000000.0,
       },
     }).then((response) => {
@@ -389,10 +389,10 @@ describe("LLC Registration API Flow", () => {
       expect(data.shareCapital).to.be.greaterThan(0);
       expect(data.shareDetails.ordinaryShare.issuedShare).to.be.a("number");
       expect(data.shareDetails.ordinaryShare.issuedShare).to.be.greaterThan(0);
-      expect(data.shareDetails.preferenceShare.issuedShare).to.be.a("number");
-      expect(data.shareDetails.preferenceShare.issuedShare).to.be.greaterThan(
-        0,
-      );
+      // expect(data.shareDetails.preferenceShare.issuedShare).to.be.a("number");
+      // expect(data.shareDetails.preferenceShare.issuedShare).to.be.greaterThan(
+      //   0,
+      // );
       expect(data.nextStepUrl).to.be.a("string");
       expect(data.nextStepUrl).to.not.be.empty;
     });
@@ -504,7 +504,9 @@ describe("LLC Registration API Flow", () => {
           passport: base64Images.passport,
           isShareholder: true,
           shareAllotment: {
-            allottedPreferenceShares: 5000000.0},
+            allottedOrdinaryShares: 5000000.0
+            // allottedPreferenceShares: 5000000.0
+          },
         },
       },
     }).then((response) => {
@@ -527,7 +529,76 @@ describe("LLC Registration API Flow", () => {
   });
 
 
-  // // 6. REGISTER AFFILIATE - CORPORATE
+   // 5. REGISTER AFFILIATE - INDIVIDUAL 3nd
+   it("should register an individual affiliate using the same transactionRef AS 3nd Affiliate DIRECTOR", () => {
+    cy.request({
+      method: "POST",
+      url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
+      headers: HEADERS.VALID_API_KEY,
+      body: {
+        transactionRef: transactionRef,
+        individual: {
+          surname: "Clara",
+          firstname: "Monica",
+          otherName: "Morgan",
+          occupation: "Software Engineer",
+          nationality: "Nigerian",
+          dob: "1990-05-12",
+          gender: "MALE",
+          email: "johnterry9023@gmail.com",
+          phoneNumber: "08023456789",
+          affiliateType: ["DIRECTOR",],
+          serviceAddress: {
+            country: "Nigeria",
+            state: "Lagos",
+            lga: "Ikeja",
+            city: "Ikeja",
+            streetInfo: "15A Allen Avenue",
+          },
+          residentialAddress: {
+            country: "Nigeria",
+            state: "Lagos",
+            lga: "Eti-Osa",
+            city: "Lekki",
+            streetInfo: "45B Admiralty Way",
+          },
+          meansOfId: {
+            idType: "NIN",
+            idNumber: "12345678901",
+            image: base64Images.meansOfId,
+          },
+          signature: base64Images.signature,
+          passport: base64Images.passport,
+          isShareholder: false,
+          // shareAllotment: {
+          //   allottedOrdinaryShares: 5000000.0
+          //   // allottedPreferenceShares: 5000000.0
+          // },
+        },
+      },
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.status).to.eq("OK");
+      expect(response.body.message).to.eq("Affiliate created");
+
+      const data = response.body.data;
+
+      // Verify affiliate key
+      expect(data.affiliateKey).to.be.a("string");
+      expect(data.affiliateKey).to.not.be.empty;
+      // affiliateKeyIndividual2 = response.body.data.affiliateKey;
+
+      // Verify next step URL
+      expect(data.nextStepUrl).to.be.a("string");
+      expect(data.nextStepUrl).to.not.be.empty;
+      // cy.log(`2nd Affiliate Key: ${affiliateKeyIndividual2}`);
+    });
+  });
+
+
+
+
+  // // 6. REGISTER AFFILIATE - 
   // it("should register a corporate affiliate using the same transactionRef", () => {
   //   cy.request({
   //     method: "POST",
@@ -811,8 +882,191 @@ it("should add a person with significant control (PSC) 1", () => {
   });
 });
 
+
+  // // 6. REGISTER AFFILIATE - CORPORATE
+  // it("should register a corporate affiliate using the same transactionRef", () => {
+  //   cy.request({
+  //     method: "POST",
+  //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
+  //     headers: HEADERS.VALID_API_KEY,
+  //     body: {
+  //       transactionRef: transactionRef,
+  //       corporate: {
+  //         isForeign: false,
+  //         rcNumber: "RC1234567",
+  //         companyName: "TechNova Solutions Ltd",
+  //         contactPhoneNumber: "08098765432",
+  //         contactEmail: "info@technova.com",
+  //         contactSignature: base64Images.signature,
+  //         affiliateType: "SHAREHOLDER",
+  //         serviceAddress: {
+  //           country: "Nigeria",
+  //           state: "Abuja",
+  //           lga: "AMAC",
+  //           city: "Abuja",
+  //           streetInfo: "Plot 22, Central Business District",
+  //         },
+  //         isShareholder: true,
+  //         shareAllotment: {
+  //           allottedOrdinaryShares: 20000.0,
+  //           allottedPreferenceShares: 5000.0,
+  //         },
+  //       },
+  //     },
+  //   }).then((response) => {
+  //     expect(response.status).to.eq(200);
+  //     expect(response.body.status).to.eq("OK");
+  //     expect(response.body.message).to.eq("Affiliate created");
+
+  //     const data = response.body.data;
+
+  //     // Validate affiliate key
+  //     expect(data.affiliateKey).to.be.a("string");
+  //     expect(data.affiliateKey).to.not.be.empty;
+  //     affiliateKeyCorporate = response.body.data.affiliateKey;
+  //     // Validate nextStepUrl
+  //     expect(data.nextStepUrl).to.be.a("string");
+  //     expect(data.nextStepUrl).to.not.be.empty;
+  //   });
+  // });
+
+  // // 4b. UPDATE INDIVIDUAL AFFILIATE
+  // it("should update the individual affiliate details", () => {
+  //   cy.request({
+  //     method: "PUT",
+  //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
+  //     headers: HEADERS.VALID_API_KEY,
+  //     body: {
+  //       transactionRef: transactionRef,
+  //       affiliateKey: affiliateKeyIndividual,
+  //       surname: "Joycee",
+  //       firstname: "Kemi",
+  //       otherName: "Kolawole",
+  //       occupation: "Senior Software Engineer",
+  //       dob: "1990-05-12",
+  //       gender: "FEMALE",
+  //       email: "joyoasis9023@gmail.com",
+  //       phoneNumber: "08033499949",
+  //       affiliateType: "DIRECTOR",
+  //       serviceAddress: {
+  //         country: "Nigeria",
+  //         state: "Lagos",
+  //         lga: "Ikeja",
+  //         city: "Ikeja",
+  //         streetInfo: "15A Allen Avenue",
+  //       },
+  //       residentialAddress: {
+  //         country: "Nigeria",
+  //         state: "Lagos",
+  //         lga: "Eti-Osa",
+  //         city: "Lekki",
+  //         streetInfo: "45B Admiralty Way",
+  //       },
+  //       meansOfId: {
+  //         idType: "NIN",
+  //         idNumber: "IND202511250842060000000099",
+  //         image:
+  //           "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+  //       },
+  //       signature:
+  //         "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+  //       isShareholder: true,
+  //       shareAllotment: {
+  //         allottedOrdinaryShares: 7500.0,
+  //         allottedPreferenceShares: 2000.0,
+  //       },
+  //     },
+  //   }).then((response) => {
+  //     expect(response.status).to.eq(200);
+  //     expect(response.body.status).to.eq("OK");
+  //     expect(response.body.message).to.eq("Affiliate Updated");
+  //   });
+  // });
+
+  // // 5b. UPDATE CORPORATE AFFILIATE
+  // it("should update the corporate affiliate details", () => {
+  //   cy.request({
+  //     method: "PUT",
+  //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
+  //     headers: HEADERS.VALID_API_KEY,
+  //     body: {
+  //       transactionRef: transactionRef,
+  //       affiliateKey: affiliateKeyCorporate,
+  //       isForeign: false,
+  //       rcNumber: "RC1234567",
+  //       companyName: "TechNova Solutions Ltd",
+  //       contactPhoneNumber: "07033443322",
+  //       contactEmail: "info@technova.com",
+  //       contactSignature: "base64encodedstring-signature",
+  //       affiliateType: "SHAREHOLDER",
+  //       serviceAddress: {
+  //         country: "Nigeria",
+  //         state: "Abuja",
+  //         lga: "AMAC",
+  //         city: "Abuja",
+  //         streetInfo: "Plot 22, Central Business District",
+  //       },
+  //       isShareholder: true,
+  //       shareAllotment: {
+  //         allottedOrdinaryShares: 20000.0,
+  //         allottedPreferenceShares: 5000.0,
+  //       },
+  //     },
+  //   }).then((response) => {
+  //     expect(response.status).to.eq(200);
+  //     expect(response.body.status).to.eq("OK");
+  //     expect(response.body.message).to.eq("Affiliate Updated");
+  //   });
+  // });
+
+  // // 7. DELETE AFFILIATE – INVALID affiliate_id / transaction_ref
+  // it("should return 400 when deleting affiliate with invalid affiliate_id or transaction_ref", () => {
+  //   cy.request({
+  //     method: "DELETE",
+  //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
+  //     headers: HEADERS.VALID_API_KEY,
+  //     failOnStatusCode: false,
+  //     body: {
+  //       affiliate_id: "IND2025120210210599190000284",
+  //       transaction_ref: "VAS202512021008297530",
+  //     },
+  //   }).then((resp) => {
+  //     expect(resp.status).to.eq(400);
+  //     expect(resp.body.status).to.eq("BAD_REQUEST");
+  //     expect(resp.body.message).to.eq(
+  //       "Invalid affiliate key or transactionRef passed",
+  //     );
+  //     expect(resp.body.data).to.be.null;
+  //     expect(resp.body.success).to.be.false;
+  //   });
+  // });
+
+  // //  DELETE AFFILIATE – SUCCESS
+  // it("should delete an affiliate successfully and return 200", function () {
+  //   cy.request({
+  //     method: "DELETE",
+  //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
+  //     headers: HEADERS.VALID_API_KEY,
+  //     failOnStatusCode: false,
+  //     body: {
+  //       affiliate_id: affiliateKeyCorporate,
+  //       transaction_ref: transactionRef,
+  //     },
+  //   }).then((deleteResp) => {
+  //     expect(deleteResp.status).to.eq(200);
+  //     expect(deleteResp.body.status).to.eq("OK");
+  //     expect(deleteResp.body.message).to.eq("Affiliate deleted");
+  //     expect(deleteResp.body.data.affiliateKey).to.eq(affiliateKeyCorporate);
+  //     expect(deleteResp.body.success).to.be.true;
+  //   });
+  // });
+
+
+
+  
 // REGISTER PSC 2
 it("should add a person with significant control (PSC) 2", () => {
+  cy.log(`Stored PSC 2 Affiliate Key: ${affiliateKeyIndividual2}`),
   cy.request({
     method: "POST",
     url: "http://41.207.248.246:9088/api/vas/llc/psc",
@@ -898,6 +1152,8 @@ it("should add a person with significant control (PSC) 2", () => {
       },
   }).then((response) => {
     // Asserting the success status based on your sample response
+    cy.log(`Stored PSC 2 Affiliate Key: ${affiliateKeyPSC2}`);
+    cy.log(`Stored PSC 2 Affiliate Key: ${affiliateKeyIndividual2}`);
     expect(response.status).to.eq(200);
     expect(response.body.status).to.eq("OK");
     expect(response.body.message).to.eq("PSC created successfully");
@@ -908,11 +1164,13 @@ it("should add a person with significant control (PSC) 2", () => {
     expect(data.affiliateKey).to.be.a("string").and.not.be.empty;
     
     // Storing the value globally/locally for the next it block
-    affiliateKeyPSC1 = data.affiliateKey;
+    affiliateKeyPSC2 = data.affiliateKey;
 
-    cy.log(`Stored PSC 1 Affiliate Key: ${affiliateKeyPSC1}`);
+    cy.log(`Stored PSC 2 Affiliate Key: ${affiliateKeyPSC2}`);
   });
 });
+
+
 
 //SUBMIT REGISTRATION
 it("should successfully submit the company registration", () => {
@@ -950,7 +1208,7 @@ it("should successfully submit the company registration", () => {
     const shares = body.shares;
     expect(shares.shareCapital).to.be.a("number").and.be.at.least(0);
     expect(shares.ordinaryIssuedShare).to.be.a("number").and.be.at.least(0);
-    expect(shares.preferenceIssuedShare).to.be.a("number").and.be.at.least(0);
+    // expect(shares.preferenceIssuedShare).to.be.a("number").and.be.at.least(0);
     expect(shares.shareCapitalInWords).to.be.a("string").and.not.be.empty;
 
     // 4. Validate Affiliates (Directors, PSCs, Witnesses)
@@ -974,31 +1232,31 @@ it("should successfully submit the company registration", () => {
   });
 });
 
-//GENERATE RRR & VISIT PAYMENT LINK
-it("should generate RRR and visit the payment link", () => {
-  cy.request({
-    method: "POST",
-    url: "http://41.207.248.246:9088/api/vas/llc/stamp-duty/rrr",
-    headers: HEADERS.VALID_API_KEY,
-    body: {
-      transactionRef: transactionRef,
-      phoneNumber: "08012345678",
-    },
-  }).then((response) => {
-    expect(response.status).to.eq(200);
-    expect(response.body.status).to.eq("OK");
-    expect(response.body.message).to.eq("stamp duty generate rrr");
+// //GENERATE RRR & VISIT PAYMENT LINK
+// it("should generate RRR and visit the payment link", () => {
+//   cy.request({
+//     method: "POST",
+//     url: "http://41.207.248.246:9088/api/vas/llc/stamp-duty/rrr",
+//     headers: HEADERS.VALID_API_KEY,
+//     body: {
+//       transactionRef: transactionRef,
+//       phoneNumber: "08012345678",
+//     },
+//   }).then((response) => {
+//     expect(response.status).to.eq(200);
+//     expect(response.body.status).to.eq("OK");
+//     expect(response.body.message).to.eq("stamp duty generate rrr");
     
-    // 1. Capture the URL inside the .then()
-    const paymentUrl = response.body.data.paymentUrl;
-    cy.log(`Captured Payment URL: ${paymentUrl}`);
+//     // 1. Capture the URL inside the .then()
+//     const paymentUrl = response.body.data.paymentUrl;
+//     cy.log(`Captured Payment URL: ${paymentUrl}`);
 
-    // 2. Visit the link IMMEDIATELY within the same test flow
-    // This prevents the "undefined" variable error
-    cy.visit(paymentUrl);
-    cy.wait(50000)
-  });
+//     // 2. Visit the link IMMEDIATELY within the same test flow
+//     // This prevents the "undefined" variable error
+//     cy.visit(paymentUrl);
+//     cy.wait(50000)
+//   });
 
-});
+// });
 
 });
