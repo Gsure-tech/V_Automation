@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Registration Fee Calculator</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; padding: 40px 20px; background-color: #eef2f3; color: #333; }
+        .card { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 450px; }
+        h2 { margin-top: 0; color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-bottom: 20px; }
+
+        .input-group { margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.8rem; font-weight: 600; color: #2c3e50; }
+        input { width: 100%; padding: 12px; border: 2px solid #dfe6e9; border-radius: 6px; box-sizing: border-box; font-size: 18px; transition: border-color 0.3s; }
+        input:focus { border-color: #3498db; outline: none; }
+
+        .toggle-container { display: flex; align-items: center; justify-content: space-between; background: #f8f9fa; padding: 12px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #eee; }
+        .switch { position: relative; display: inline-block; width: 50px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #3498db; }
+        input:checked + .slider:before { transform: translateX(26px); }
+
+        .results { margin-top: 1rem; }
+        .row { display: flex; justify-content: space-between; margin-bottom: 0.8rem; font-size: 0.95rem; }
+        .fixed-cost-text { color: #e67e22; font-style: italic; }
+        .total-row { display: flex; justify-content: space-between; margin-top: 1.5rem; font-weight: bold; font-size: 1.4rem; color: #2c3e50; border-top: 2px solid #3498db; padding-top: 15px; }
+        .highlight { color: #27ae60; }
+        .sub-label { font-size: 0.8rem; color: #7f8c8d; display: block; margin-top: 4px; }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h2>Fee Calculator</h2>
+
+    <div class="input-group">
+        <label for="shareCapital">Share Capital (N)</label>
+        <input type="number" id="shareCapital" placeholder="e.g. 7152000" oninput="calculate()">
+    </div>
+
+    <div class="toggle-container">
+        <div>
+            <strong>Include Fixed Charges?</strong>
+            <span class="sub-label">Name Reservation (1,000) & Fixed Fee (7,300)</span>
+        </div>
+        <label class="switch">
+            <input type="checkbox" id="includeFixed" checked onchange="calculate()">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <div class="results">
+        <div class="row">
+            <span>Millions Units (Rounded Up):</span>
+            <span id="units">0</span>
+        </div>
+        <div class="row">
+            <span>Statutory Charge:</span>
+            <span id="statutory">N 0</span>
+        </div>
+        <div class="row">
+            <span>Service Charge:</span>
+            <span id="service">N 0</span>
+        </div>
+
+        <div class="total-row">
+            <span>Grand Total:</span>
+            <span id="total" class="highlight">N 0</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    function calculate() {
+        const capital = parseFloat(document.getElementById('shareCapital').value) || 0;
+        const includeFixed = document.getElementById('includeFixed').checked;
+
+        // 1. Determine number of millions (Round UP per your example)
+        const n = Math.ceil(capital / 1000000);
+
+        // 2. Constants
+        const nameReservation = includeFixed ? 1000 : 0;
+        const fixedService = includeFixed ? 7300 : 0;
+
+        const regPerMillion = 10000;
+        const servicePerMillion = 2500;
+
+        // 3. Calculations
+        const totalStatutory = nameReservation + (regPerMillion * n);
+        const totalService = fixedService + (servicePerMillion * n);
+        const grandTotal = totalStatutory + totalService;
+
+        // 4. Update UI
+        document.getElementById('units').innerText = capital > 0 ? n.toLocaleString() : 0;
+        document.getElementById('statutory').innerText = "N " + (capital > 0 ? totalStatutory.toLocaleString() : 0);
+        document.getElementById('service').innerText = "N " + (capital > 0 ? totalService.toLocaleString() : 0);
+        document.getElementById('total').innerText = "N " + (capital > 0 ? grandTotal.toLocaleString() : 0);
+    }
+</script>
+
+</body>
+</html>

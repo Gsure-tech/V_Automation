@@ -5,7 +5,7 @@ describe('VAS API Integrated Service', () => {
 
     it('should load the page and verify the title and check navigations', () => {
 
-        cy.visit("http://vas.oasisproducts.ng/");
+        cy.visit("https://vas.oasisproducts.ng/");
         cy.log('Verifying the title in heading');
         cy.get('.vas-heading').should('include.text', 'VAS API Integrated Service');
 
@@ -22,7 +22,7 @@ describe('VAS API Integrated Service', () => {
 
         cy.log('Going back to the landing page');
         cy.go('back');
-        cy.url().should("eq", "http://vas.oasisproducts.ng/");
+        cy.url().should("eq", "https://vas.oasisproducts.ng/");
         cy.log('Returned to the landing page');
 
         cy.log('Checking if the FAQs link is present');
@@ -43,7 +43,7 @@ describe('VAS API Integrated Service', () => {
 
     it('should navigate to the signup page and verify form fields', () => {
         cy.log('Navigating to the signup page');
-        cy.visit("http://vas.oasisproducts.ng/login");
+        cy.visit("https://vas.oasisproducts.ng/login");
 
         // Click the "Don't have an account? Click to sign up" link
         cy.get('a[routerlink="/create-account"]').click();
@@ -80,7 +80,7 @@ describe('VAS API Integrated Service', () => {
     });
 
     it('should enable the SignUp button after filling all fields', () => {
-        cy.visit("http://vas.oasisproducts.ng/create-account");
+        cy.visit("https://vas.oasisproducts.ng/create-account");
         cy.log('Entering valid email');
         cy.get('input[formcontrolname="email"]').clear().type('test@example.com');
 
@@ -124,7 +124,7 @@ describe('VAS API Integrated Service', () => {
     });
 
     it('should display an error message when a required field is missing', () => {
-        cy.visit("http://vas.oasisproducts.ng/create-account");
+        cy.visit("https://vas.oasisproducts.ng/create-account");
         cy.get('input[formcontrolname="email"]').clear();
         cy.get('input[placeholder="First Name"]').clear();
         cy.get('input[placeholder="Last Name"]').clear();
@@ -138,7 +138,7 @@ describe('VAS API Integrated Service', () => {
     });
 
     it('should display an error message when fields have invalid data', () => {
-        cy.visit("http://vas.oasisproducts.ng/create-account");
+        cy.visit("https://vas.oasisproducts.ng/create-account");
         // Enter invalid email
         cy.get('input[formcontrolname="email"]').clear().type('invalidemail');
         cy.get('input[placeholder="First Name"]').clear().type('John');
@@ -155,7 +155,7 @@ describe('VAS API Integrated Service', () => {
     });
 
 // it('should display the modal for email verification after successful sign-up', () => {
-//     cy.visit("http://vas.oasisproducts.ng/create-account");
+//     cy.visit("https://vas.oasisproducts.ng/create-account");
 //     // Sign up with valid data
 //     const uniqueId = Date.now();
 //     cy.get('input[formcontrolname="email"]').clear().type(`peaceoasis9023+${uniqueId}@gmail.com`);
@@ -179,7 +179,7 @@ describe('VAS API Integrated Service', () => {
 
 it('should navigate to the forgot password page', () => {
     cy.log('Navigating to the Forgot password page');
-    cy.visit("http://vas.oasisproducts.ng/login");
+    cy.visit("https://vas.oasisproducts.ng/login");
 
     cy.get('a[routerlink="/forgot-password"]').click();
     cy.log('Clicked the Forgot password link');
@@ -190,7 +190,7 @@ it('should navigate to the forgot password page', () => {
 });
 
 it('should enable and click the "Send Reset Link" button after entering a valid email', () => {
-    cy.visit("http://vas.oasisproducts.ng/forgot-password");
+    cy.visit("https://vas.oasisproducts.ng/forgot-password");
     cy.log('Entering a valid email address');
     // Ensure the email input is available and visible
     cy.get('input[formcontrolname="email"]').should('be.visible');
@@ -221,7 +221,7 @@ it('should enable and click the "Send Reset Link" button after entering a valid 
 });
 
 it('should display "Invalid email or password" when an incorrect email is entered with a valid password', () => {
-    cy.visit("http://vas.oasisproducts.ng/login");
+    cy.visit("https://vas.oasisproducts.ng/login");
     cy.log('Entering invalid email and valid password');
     cy.get('input[type="email"]').clear().type('invalidemail@oasismgt.net');
     cy.get('input[formcontrolname="password"]').clear().type('Gsure9023@2025');
@@ -237,7 +237,7 @@ it('should display "Invalid email or password" when an incorrect email is entere
 });
 
 it('should display "Invalid email or password" when a valid email is entered with an incorrect password', () => {
-    cy.visit("http://vas.oasisproducts.ng/login");
+    cy.visit("https://vas.oasisproducts.ng/login");
     cy.log('Entering valid email and invalid password');
     cy.get('input[type="email"]').clear().type('aabdulganiyu@oasismgt.net');
     cy.get('input[formcontrolname="password"]').clear().type('InvalidPassword@2025');
@@ -253,7 +253,7 @@ it('should display "Invalid email or password" when a valid email is entered wit
 });
 
 it('should display "Invalid email or password" when both email and password are incorrect', () => {
-    cy.visit("http://vas.oasisproducts.ng/login");
+    cy.visit("https://vas.oasisproducts.ng/login");
     cy.log('Entering invalid email and invalid password');
     cy.get('input[type="email"]').clear().type('invalidemail@oasismgt.net');
     cy.get('input[formcontrolname="password"]').clear().type('InvalidPassword@2025');
@@ -269,7 +269,7 @@ it('should display "Invalid email or password" when both email and password are 
 });
 
 it('should validate login button behavior and be able to login', () => {
-    cy.visit("http://vas.oasisproducts.ng/login");
+    cy.visit("https://vas.oasisproducts.ng/login");
 
     cy.log('Clearing the email and password fields');
     cy.get('input[type="email"]').clear();
@@ -384,7 +384,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
   it("should return 400 BAD_REQUEST when VRC has already been validated", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/secure/company",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/secure/company",
       headers: HEADERS.VALID_API_KEY,
       body: {
         vrc: "5OBZex7WxA",
@@ -409,7 +409,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
 
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin/company",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/tin/company",
       headers: HEADERS.VALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false, // Allow the test to continue even if status code isn't 200
@@ -431,7 +431,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
     };
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin/company",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/tin/company",
       headers: HEADERS.INVALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -450,7 +450,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
     };
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin/company",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/tin/company",
       headers: HEADERS.VALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -462,30 +462,30 @@ describe("API Validation for VAS Validation Endpoints", () => {
     });
   });
 
-  // GENERATE TIN API
-  it("should return 200 when valid rc_number and entity_type are passed for GENERATE TIN API", () => {
-    // Valid RC Number and Entity Type
-    cy.request({
-      method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin/generate",
-      headers: HEADERS.VALID_API_KEY,
-      body: {
-        rc_number: "27782342",
-        entity_type: "LIMITED_LIABILITY_PARTNERSHIP",
-      },
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body.status).to.eq("OK");
-      expect(response.body.message).to.eq("tin generated successfully");
-      expect(response.body.success).to.eq(true);
-    });
-  });
+  // GENERATE TIN API (OBSOLETE)
+  // it("should return 200 when valid rc_number and entity_type are passed for GENERATE TIN API", () => {
+  //   // Valid RC Number and Entity Type
+  //   cy.request({
+  //     method: "POST",
+  //     url: "https://vasapp.oasisproducts.ng/api/vas/validation/tin/generate",
+  //     headers: HEADERS.VALID_API_KEY,
+  //     body: {
+  //       rc_number: "27782342",
+  //       entity_type: "LIMITED_LIABILITY_PARTNERSHIP",
+  //     },
+  //   }).then((response) => {
+  //     expect(response.status).to.eq(200);
+  //     expect(response.body.status).to.eq("OK");
+  //     expect(response.body.message).to.eq("tin generated successfully");
+  //     expect(response.body.success).to.eq(true);
+  //   });
+  // });
 
   it("should return 400 when an invalid entity_type is passed", () => {
     // Invalid Entity Type
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin/generate",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/tin/generate",
       headers: HEADERS.VALID_API_KEY,
       body: {
         rc_number: "35147935",
@@ -502,7 +502,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
   it("should return 400 when an invalid rc_number is passed", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin/generate",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/tin/generate",
       headers: HEADERS.VALID_API_KEY,
       body: {
         rc_number: "INVALID_RC_NUMBER",
@@ -524,7 +524,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
     };
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin/generate",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/tin/generate",
       headers: HEADERS.INVALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -539,7 +539,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
   it("should return 200 and valid company data when valid rc_number and entity_name are passed for GET COMPANY BY NAME API", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company/name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/company/name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         rc_number: "8002153",
@@ -564,7 +564,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
   it("should return 400 when an invalid rc_number is passed", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company/name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/company/name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         rc_number: "INVALID_RC_NUMBER",
@@ -586,7 +586,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
     };
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company/name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/company/name",
       headers: HEADERS.INVALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -601,7 +601,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
   it("should return 200 and valid company data when valid rc_number is passed for GET COMPANY BY RC NUMBER API", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company/rc",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/company/rc",
       headers: HEADERS.VALID_API_KEY,
       body: {
         rc_number: "8002153",
@@ -625,7 +625,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
   it("should return 400 when an invalid rc_number is passed", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company/rc",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/company/rc",
       headers: HEADERS.VALID_API_KEY,
       body: {
         rc_number: "INVALID_RC_NUMBER",
@@ -645,7 +645,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
     };
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company/rc",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/company/rc",
       headers: HEADERS.INVALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -660,7 +660,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
   it("should return 200 and company line of business when valid rc_number and entity type is passed for GET COMPANY LINE OF BUSINESS API", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/line-of-business",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/line-of-business",
       headers: HEADERS.VALID_API_KEY,
       body: {
         rc_number: "7214181",
@@ -679,7 +679,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
     // Invalid Entity Type
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/line-of-business",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/line-of-business",
       headers: HEADERS.VALID_API_KEY,
       body: {
         rc_number: "7214181",
@@ -696,7 +696,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
   it("should return 400 when an invalid rc_number is passed", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/line-of-business",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/line-of-business",
       headers: HEADERS.VALID_API_KEY,
       body: {
         rc_number: "INVALID_RC_NUMBER",
@@ -718,7 +718,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
     };
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company/rc",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/company/rc",
       headers: HEADERS.INVALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -733,7 +733,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
   it("should return 200 and valid company data when valid rc_number and entity_type is passed for GET COMPANY TIN API", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/tin",
       headers: HEADERS.VALID_API_KEY,
       body: {
         rc_number: "7214181",
@@ -757,7 +757,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
     // Invalid Entity Type
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/tin",
       headers: HEADERS.VALID_API_KEY,
       body: {
         rc_number: "7214181",
@@ -774,7 +774,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
   it("should return 400 when an invalid rc_number is passed", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/tin",
       headers: HEADERS.VALID_API_KEY,
       body: {
         rc_number: "INVALID_RC_NUMBER",
@@ -796,7 +796,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
     };
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/tin",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/tin",
       headers: HEADERS.INVALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -811,7 +811,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
   it("should return 200 and valid company data when valid rc_number and entity_type is passed for GET COMPANY API", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/company",
       headers: HEADERS.VALID_API_KEY,
       body: {
         rc_number: "7214181",
@@ -835,7 +835,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
     // Invalid Entity Type
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/company",
       headers: HEADERS.VALID_API_KEY,
       body: {
         rc_number: "7214181",
@@ -852,7 +852,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
   it("should return 400 when an invalid rc_number is passed", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/company",
       headers: HEADERS.VALID_API_KEY,
       body: {
         rc_number: "INVALID_RC_NUMBER",
@@ -874,7 +874,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
     };
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/company",
       headers: HEADERS.INVALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -895,7 +895,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
 
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/single-service",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/single-service",
       headers: HEADERS.VALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -922,7 +922,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
 
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/single-service",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/single-service",
       headers: HEADERS.INVALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -941,7 +941,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
 
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/single-service",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/single-service",
       headers: HEADERS.VALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -965,7 +965,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
 
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/single-service",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/single-service",
       headers: HEADERS.VALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -993,7 +993,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
 
     cy.request({
       method: "POST",
-      url: "http://41.207.248.246:9000/api/vas/validation/open-search/company",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/open-search/company",
       headers: HEADERS.VALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -1025,7 +1025,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
 
     cy.request({
       method: "POST",
-      url: "http://41.207.248.246:9000/api/vas/validation/open-search/company",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/open-search/company",
       headers: HEADERS.VALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -1058,7 +1058,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
 
     cy.request({
       method: "POST",
-      url: "http://41.207.248.246:9000/api/vas/validation/open-search/company",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/open-search/company",
       headers: HEADERS.INVALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -1087,7 +1087,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
 
     cy.request({
       method: "POST",
-      url: "http://41.207.248.246:9000/api/vas/validation/open-search/affiliate",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/open-search/affiliate",
       headers: HEADERS.VALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -1109,7 +1109,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
 
     cy.request({
       method: "POST",
-      url: "http://41.207.248.246:9000/api/vas/validation/open-search/affiliate",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/open-search/affiliate",
       headers: HEADERS.VALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -1139,7 +1139,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
 
     cy.request({
       method: "POST",
-      url: "http://41.207.248.246:9000/api/vas/validation/open-search/affiliate",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/open-search/affiliate",
       headers: HEADERS.INVALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -1157,7 +1157,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("should return 200 and a certificate file as attachment when a valid rcNumber and transactionRef is passed for DOWNLOAD CERTIFICATE API ", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/certificate",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/certificate",
       encoding: "binary", //for non-text responses
       headers: HEADERS.VALID_API_KEY,
       body: {
@@ -1178,7 +1178,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("should return 400 when an invalid rc_number and transactionRef is passed", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/certificate",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/certificate",
       headers: HEADERS.VALID_API_KEY,
       body: {
         rcNumber: "80029",
@@ -1200,7 +1200,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
     };
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/company",
       headers: HEADERS.INVALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -1216,7 +1216,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("should return 200 and a status report file as attachment when a valid rcNumber and transactionRef is passed for DOWNLOAD STATUS REPORT API", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/certificate/status-report",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/certificate/status-report",
       encoding: "binary", //for non-text responses
       headers: HEADERS.VALID_API_KEY,
       body: {
@@ -1237,7 +1237,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("should return 400 when an invalid rc_number and transactionRef is passed", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/certificate/status-report",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/certificate/status-report",
       headers: HEADERS.VALID_API_KEY,
       body: {
         rcNumber: "80029",
@@ -1259,7 +1259,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
     };
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/validation/company",
+      url: "https://vasapp.oasisproducts.ng/api/vas/validation/company",
       headers: HEADERS.INVALID_API_KEY,
       body: requestBody,
       failOnStatusCode: false,
@@ -1275,7 +1275,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 200 and similarity details (basic check) for BN COMPLIANCE", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance",
       headers: HEADERS.VALID_API_KEY,
       body: {
         proposedName: "Gsuretech Happy Ventures enterprises",
@@ -1296,7 +1296,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 403 Forbidden when name exist for BN COMPLIANCE", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance",
       headers: HEADERS.VALID_API_KEY,
       body: {
         proposedName: "Gaya Demarina Galaxy",
@@ -1314,7 +1314,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 Bad Request when a single word is used as proposedName", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance",
       headers: HEADERS.VALID_API_KEY,
       body: {
         proposedName: "Galaxy",
@@ -1335,7 +1335,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it('Should return 200, statusCode "00" with message proceed to filing (advanceCheck=true) for BN COMPLIANCE', () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
       headers: HEADERS.VALID_API_KEY,
       body: {
         proposedName: "Alamaboro Collections",
@@ -1363,7 +1363,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it('Should return 200, statusCode "01" with the message OFFENSIVE_LANGUAGE like "hate" is used', () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
       headers: HEADERS.VALID_API_KEY,
       body: {
         proposedName: "Malammadori hate concepts",
@@ -1392,7 +1392,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it('Should return 200,  statusCode "02" with the message QUALIFIER_NOT_FOUND when no qualifier is used', () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
       headers: HEADERS.VALID_API_KEY,
       body: {
         proposedName: "Malammadori fololish",
@@ -1421,7 +1421,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it('Should return 200, statusCode "03" with the message BUSINESS_NAME_REQUIRES_CERTIFICATE when business name require a proficiency certificate', () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
       headers: HEADERS.VALID_API_KEY,
       body: {
         proposedName: "Muller Medical Ventures concepts",
@@ -1454,7 +1454,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it('Should return 200, statusCode "04" with the message BUSINESS_LINE_REQUIRES_CERTIFICATE when business line require a proficiency certificate', () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
       headers: HEADERS.VALID_API_KEY,
       body: {
         proposedName: "Cinical concepts",
@@ -1487,7 +1487,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it('Should return 200, statusCode "05" with the message PROHIBITED_BUSINESS_NAME when proposed name contains words that are prohibited', () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
       headers: HEADERS.VALID_API_KEY,
       body: {
         proposedName: "Cinical Academy concepts",
@@ -1517,7 +1517,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it('Should return 200, statusCode "06" with the message PROHIBITED_BUSINESS_LINE when proposed name contains words that are prohibited', () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
       headers: HEADERS.VALID_API_KEY,
       body: {
         proposedName: "Clinical concepts",
@@ -1546,7 +1546,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it('Should return 403 FOrbidden, statusCode "07" with the message BUSINESS_NAME_EXISTS when business name exists', () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
       headers: HEADERS.VALID_API_KEY,
       body: {
         proposedName: "Comrade Joint Ventures",
@@ -1576,7 +1576,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it('Should return 200, statusCode "08" with the message BUSINESS_NAME_TOO_SIMILAR when business is similar', () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
       headers: HEADERS.VALID_API_KEY,
       body: {
         proposedName: "Gaya emarina Galaxy",
@@ -1604,7 +1604,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it('Should return 200, statusCode "10" with the message SINGLE_WORD when a single word is used as proposed name', () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
       headers: HEADERS.VALID_API_KEY,
       body: {
         proposedName: "Comrade",
@@ -1631,7 +1631,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it('Should return 200, statusCode "12" with the message SPECIAL_CHARACTERS when special character is used in proposed name', () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
       headers: HEADERS.VALID_API_KEY,
       body: {
         proposedName: "Comrade$ Ventures",
@@ -1660,7 +1660,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   // it('should return 200, statusCode "15" with the message PAYMENT_SERVICE_CONNOTATION when proposed name includes keyword like "wealth"', () => {
   //   cy.request({
   //     method: "POST",
-  //     url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
+  //     url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance?advanceCheck=true",
   //     headers: HEADERS.VALID_API_KEY,
   //     body: {
   //       proposedName: "Okpulku wealth Hub",
@@ -1686,7 +1686,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 Bad Request when Line of Business is not passed", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/bn-compliance",
       headers: HEADERS.VALID_API_KEY,
       body: {
         proposedName: "Muller Medical concepts",
@@ -1705,7 +1705,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 200 when all details are complete for BUSINESS NAME REGISTRATION", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "fashion design",
@@ -1742,10 +1742,10 @@ describe("API Validation for VAS Registration Endpoints", () => {
     });
   });
 
-  it("Should return 403 when business name already exist", () => {
+  it("Should return 200 when business name already exist", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "fashion design",
@@ -1777,16 +1777,16 @@ describe("API Validation for VAS Registration Endpoints", () => {
       failOnStatusCode: false,
     }).then((response) => {
       expect(response.status).to.eq(403);
-      expect(response.body.status).to.eq("FORBIDDEN");
+      expect(response.body.status).to.eq("OK");
       expect(response.body.message).to.not.be.empty;
-      expect(response.body.message).contain("Name already used ");
+      expect(response.body.message).contain("BUSINESS_NAME_EXISTS");
     });
   });
 
   it("Should return 400 BAD_REQUEST when business name is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "fashion design",
@@ -1830,7 +1830,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when proprietorFirstname is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "fashion design",
@@ -1874,7 +1874,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when proprietorSurname is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "fashion design",
@@ -1918,7 +1918,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when line of business is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "",
@@ -1962,7 +1962,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when proprietorCity is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2006,7 +2006,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when proprietor phone number is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2050,7 +2050,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when proprietor business commencement date is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2094,7 +2094,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when comapany state is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2138,7 +2138,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when proprietor Nationality is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2182,7 +2182,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when proprietor State is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2226,7 +2226,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when proprietor Date of Birth is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2270,7 +2270,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when proprietor Date of Birth is below 18", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2311,7 +2311,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when proprietor Gender is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2354,7 +2354,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when proprietor Street number is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2397,7 +2397,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when proprietor service address is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2440,7 +2440,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when company email is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2483,7 +2483,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when company street number is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2526,7 +2526,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when proprietor email is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2569,7 +2569,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when company address is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2611,7 +2611,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when proprietor Postcode address is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2654,7 +2654,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when proprietorLga is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2697,7 +2697,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when passport is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2738,7 +2738,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when passport is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2779,7 +2779,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 400 BAD_REQUEST when passport is not provided", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name",
       headers: HEADERS.VALID_API_KEY,
       body: {
         lineOfBusiness: "Fashion Design",
@@ -2821,7 +2821,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("Should return 200 when the BN PRE-REG VALIDATION endpoint is called", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/bn/validation",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/bn/validation",
       headers: HEADERS.VALID_API_KEY,
       body: {
         companyCity: "Eti Osa",
@@ -2887,7 +2887,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("should attempt to register a partner and handle success or maximum partnership limit response", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name/partner",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name/partner",
       headers: HEADERS.VALID_API_KEY,
       body: {
         transactionRef: "VAS20250527112423161",
@@ -2941,7 +2941,7 @@ describe("API Validation for VAS Registration Endpoints", () => {
   it("should return 400 BAD_REQUEST when transactionRef is invalid", () => {
     cy.request({
       method: "POST",
-      url: "http://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name/partner",
+      url: "https://vasapp.oasisproducts.ng/api/vas/engine/pre/business-name/partner",
       headers: HEADERS.VALID_API_KEY,
       body: {
         transactionRef: "VAS202505271124231",
