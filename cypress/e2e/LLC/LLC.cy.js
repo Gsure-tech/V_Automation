@@ -11,7 +11,7 @@ describe("LLC Registration API Flow", () => {
   let affiliateKeyPSC2;
   let affiliateKeyCorporate;
   let stampDutyPaymentUrl;
-  const baseUrl = "http://41.207.248.246:8011";
+  const baseUrl = "https://vasapp.oasisproducts.ng";
   // A. COMPLIANCE CHECK USING PROPOSED NAME
   it("should check compliance using the proposedName", () => {
     // Sending the compliance check request
