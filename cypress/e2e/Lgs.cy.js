@@ -91,9 +91,9 @@
 //   });
 
 //   it("loads the registration landing page and confirms visibility of primary elements", () => {
-//     cy.log("Visiting the business registration landing page");
+//   cy.log("Visiting the business registration landing page");
 
-//     cy.get('p.landing-page-paragraph')
+//   cy.get('p.landing-page-paragraph')
 //   .invoke('text')
 //   .should('include', 'Register Your Business Name')
 //   .and('include', 'in Nigeria')
@@ -108,10 +108,10 @@ describe("LGS Business Name Registration Flow", () => {
   // const uniqueName = `Mandatory ${Date.now()} Hub`;
 
   const date = new Date();
-    const day = date.toLocaleString('default', { day: 'numeric' });
-    const month = date.toLocaleString('default', { month: 'short' });
-    const time = `${date.getHours()}${date.getMinutes()}`;
-    const uniqueName = `Mandatory Hub-${month}${day}-${time}`;
+  const day = date.toLocaleString('default', { day: 'numeric' });
+  const month = date.toLocaleString('default', { month: 'short' });
+  const time = `${date.getHours()}${date.getMinutes()}`;
+  const uniqueName = `Dragpitch-${month}${day}-${time} Hub`;
     
   // it("shows error modal when name already exists during compliance check", () => {
   //   cy.log("Navigating to application form");
@@ -133,7 +133,7 @@ describe("LGS Business Name Registration Flow", () => {
   //     .and("contain.text", "name already exists");
   // });
 
-  //   it("registers successfully with valid name and uploads valid files", () => {
+  // it("registers successfully with valid name and uploads valid files", () => {
   //     cy.log("Opening application form for new registration");
   //     cy.visit(`${baseUrl}/Bn-registration`);
   //     cy.url().should("include", "/Bn-registration/application");
@@ -243,7 +243,7 @@ describe("LGS Business Name Registration Flow", () => {
   //     cy.get("h3", { timeout: 10000 }).should("contain", "Payment");
   //     cy.wait(80000)
 
-  //   });
+  // });
 
   // it("check registration status", () => {
   //   cy.visit(`${baseUrl}/status`);
@@ -719,124 +719,14 @@ describe("LGS Business Name Registration Flow", () => {
   //       .click();
   // });
 
-  // it("should register a business using a storefront link", () => {
-  //   cy.log("Opening application form for new registration");
-  //   cy.visit(`${baseUrl}/storefront/bterry`);
-  //   cy.get('[style="color: rgb(255, 255, 255); background-color: rgb(33, 150, 83);"]')
-  //     .contains("Register New Business")
-  //     .click();
-  //   cy.url().should("include", "/bterry/application");
-
-  //   cy.log("Filling form with a unique business name");
-  //     cy.get("#BusinessName").type("Mandatory Goto Hub");
-  //     cy.get("#lineOfBusiness").select("Trading");
-
-  //     cy.log("Clicking Check Compliance button");
-  //     cy.get("button[class$='ng-star-inserted']")
-  //       .contains("Check compliance")
-  //       .click();
-  //     cy.wait(10000)
-
-  //     cy.get("#companyEmail").type("joyoasis9023@gmail.com");
-  //     cy.get("#companyStreetNumber").type("12");
-  //     cy.get("#companyStateOfResidence").select("Kano State");
-  //     cy.get("#companyAddress").type("12B Airport Road, Kano");
-  //     cy.get("#companyCity").type("Kano");
-  //     cy.get(".navigation-buttons > .submitBtn").contains("Continue").click();
-  //     cy.get("#NIN").clear().type("70123456789");
-  //     cy.get(".submitBtn").contains("Validate NIN").click();
-
-  //     cy.log("Filling proprietor bio data section");
-  //     cy.get(".section-names").contains("Proprietor Bio Data");
-  //     cy.get("#proprietorPhoneNumber").clear().type("08033221100");
-  //     cy.get("#proprietorEmail").clear().type("geeee9023@gmail.com");
-  //     cy.get(".nextBtn").contains("Next").click();
-
-  //     cy.log("Completing demographic data section");
-  //     cy.get("#proprietorStreetNumber").clear().type("40");
-  //     cy.get("#proprietorState").select("Adamawa State");
-  //     cy.get("#proprietorCity").clear().type("Mubi");
-  //     cy.get("#proprietorLga").select("Hong");
-  //     cy.get("#proprietorServiceAddress").clear().type("College Road");
-  //     cy.get(".nextBtn").contains("Next").click();
-
-  //     const largeFile = "spiral.png";
-  //     const validFile = "gamma1.png";
-
-  //     cy.log("Uploading large invalid files");
-
-  //     // 1. Upload Signature (Large)
-  //     cy.contains("p", "Proprietor Signature")
-  //       .closest(".fileUpload-choose")
-  //       .find('input[type="file"]')
-  //       .selectFile(`cypress/fixtures/${largeFile}`, { force: true });
-
-  //     // 2. Upload ID (Large)
-  //     cy.contains("p", "Proprietor ID")
-  //       .closest(".fileUpload-choose")
-  //       .find('input[type="file"]')
-  //       .selectFile(`cypress/fixtures/${largeFile}`, { force: true });
-
-  //     // 3. Upload Photograph (Large)
-  //     cy.contains("p", "Proprietor Photograph")
-  //       .closest(".fileUpload-choose")
-  //       .find('input[type="file"]')
-  //       .selectFile(`cypress/fixtures/${largeFile}`, { force: true });
-
-  //     // 4. Upload Supporting Document (Large)
-  //     cy.contains("p", "Supporting Document")
-  //       .closest(".fileUpload-choose")
-  //       .find('input[type="file"]')
-  //       .selectFile(`cypress/fixtures/${largeFile}`, { force: true });
-
-  //     cy.log("Validating error messages");
-  //     // Looks for the error text that appears in your HTML
-  //     cy.contains("file size should not exceed 500KB").should("be.visible");
-
-  //     cy.log("Uploading valid files");
-
-  //     // Replace with valid files
-  //     cy.contains("p", "Proprietor Signature")
-  //       .closest(".fileUpload-choose")
-  //       .find('input[type="file"]')
-  //       .selectFile(`cypress/fixtures/${validFile}`, { force: true });
-
-  //     cy.contains("p", "Proprietor ID")
-  //       .closest(".fileUpload-choose")
-  //       .find('input[type="file"]')
-  //       .selectFile(`cypress/fixtures/${validFile}`, { force: true });
-
-  //     cy.contains("p", "Proprietor Photograph")
-  //       .closest(".fileUpload-choose")
-  //       .find('input[type="file"]')
-  //       .selectFile(`cypress/fixtures/${validFile}`, { force: true });
-
-  //     cy.contains("p", "Supporting Document")
-  //       .closest(".fileUpload-choose")
-  //       .find('input[type="file"]')
-  //       .selectFile(`cypress/fixtures/${validFile}`, { force: true });
-
-  //     cy.log("Submitting form");
-  //     // Using the exact text from your HTML button
-  //     cy.contains("button", "Continue to Payment")
-  //       .should("not.be.disabled")
-  //       .click();
-  //     cy.wait(5000)
-
-  //     cy.log("Payment Section");
-  //     cy.get('input[formcontrolname="email"]').type("geeee9023@gmail.com");
-  //     cy.get('input[formcontrolname="confirmEmail"]').type("geeee9023@gmail.com");
-  //     cy.contains("button", "Make Payment").click();
-
-  //     cy.log("Final confirmation");
-  //     cy.get("h3", { timeout: 10000 }).should("contain", "Payment");
-  //     cy.wait(80000)
-
-  // });
-
-  it("should register a business using a fully paid Batch link", () => {
+  it("should register a business using a storefront link", () => {
     cy.log("Opening application form for new registration");
-    cy.visit(`${baseUrl}/users/application`);
+    // cy.visit(`${baseUrl}/storefront/bterry`);
+    // ModularEgula Ventures
+    cy.visit(`${baseUrl}/storefront/landmarkuniversity`);
+    cy.get('[style="color: rgb(255, 255, 255); background-color: rgb(194, 135, 72);"]').contains("Register New Business")
+      .click();
+    // cy.url().should("include", "/bterry/application");
 
     cy.log("Filling form with a unique business name");
       cy.get("#BusinessName").type(uniqueName);
@@ -935,36 +825,144 @@ describe("LGS Business Name Registration Flow", () => {
       cy.wait(5000)
 
       cy.log("Payment Section");
-      cy.get('input[formcontrolname="email"]').clear().type("joyoasis9023@gmail.com");
-      cy.get('[style="margin-top: 1.5rem;"] > :nth-child(2) > .inputField').clear().type("INV20260204073836-523")
-      cy.get('.status-button').click();
+      cy.get('input[formcontrolname="email"]').type("joyoasis9023@gmail.com");
+      cy.get('input[formcontrolname="confirmEmail"]').type("joyoasis9023@gmail.com");
+      cy.contains("button", "Make Payment").click();
 
+      cy.log("Final confirmation");
+      cy.get("h3", { timeout: 10000 }).should("contain", "Payment");
       cy.wait(80000)
 
   });
 
+// it("should register a business using a fully paid Batch link", () => {
+//     cy.log("Opening application form for new registration");
+//     cy.visit(`${baseUrl}/users/application`);
+
+//     cy.log("Filling form with a unique business name");
+//       cy.get("#BusinessName").type(uniqueName);
+//       cy.get("#lineOfBusiness").select("Trading");
+
+//       cy.log("Clicking Check Compliance button");
+//       cy.get("button[class$='ng-star-inserted']")
+//         .contains("Check compliance")
+//         .click();
+//       cy.wait(10000)
+
+//       cy.get("#companyEmail").type("joyoasis9023@gmail.com");
+//       cy.get("#companyStreetNumber").type("12");
+//       cy.get("#companyStateOfResidence").select("Kano State");
+//       cy.get("#companyAddress").type("12B Airport Road, Kano");
+//       cy.get("#companyCity").type("Kano");
+//       cy.get(".navigation-buttons > .submitBtn").contains("Continue").click();
+//       cy.get("#NIN").clear().type("70123456789");
+//       cy.get(".submitBtn").contains("Validate NIN").click();
+
+//       cy.log("Filling proprietor bio data section");
+//       cy.get(".section-names").contains("Proprietor Bio Data");
+//       cy.get("#proprietorPhoneNumber").clear().type("08033221100");
+//       cy.get("#proprietorEmail").clear().type("geeee9023@gmail.com");
+//       cy.get(".nextBtn").contains("Next").click();
+
+//       cy.log("Completing demographic data section");
+//       cy.get("#proprietorStreetNumber").clear().type("40");
+//       cy.get("#proprietorState").select("Adamawa State");
+//       cy.get("#proprietorCity").clear().type("Mubi");
+//       cy.get("#proprietorLga").select("Hong");
+//       cy.get("#proprietorServiceAddress").clear().type("College Road");
+//       cy.get(".nextBtn").contains("Next").click();
+
+//       const largeFile = "spiral.png";
+//       const validFile = "gamma1.png";
+
+//       cy.log("Uploading large invalid files");
+
+//       // 1. Upload Signature (Large)
+//       cy.contains("p", "Proprietor Signature")
+//         .closest(".fileUpload-choose")
+//         .find('input[type="file"]')
+//         .selectFile(`cypress/fixtures/${largeFile}`, { force: true });
+
+//       // 2. Upload ID (Large)
+//       cy.contains("p", "Proprietor ID")
+//         .closest(".fileUpload-choose")
+//         .find('input[type="file"]')
+//         .selectFile(`cypress/fixtures/${largeFile}`, { force: true });
+
+//       // 3. Upload Photograph (Large)
+//       cy.contains("p", "Proprietor Photograph")
+//         .closest(".fileUpload-choose")
+//         .find('input[type="file"]')
+//         .selectFile(`cypress/fixtures/${largeFile}`, { force: true });
+
+//       // 4. Upload Supporting Document (Large)
+//       cy.contains("p", "Supporting Document")
+//         .closest(".fileUpload-choose")
+//         .find('input[type="file"]')
+//         .selectFile(`cypress/fixtures/${largeFile}`, { force: true });
+
+//       cy.log("Validating error messages");
+//       // Looks for the error text that appears in your HTML
+//       cy.contains("file size should not exceed 500KB").should("be.visible");
+
+//       cy.log("Uploading valid files");
+
+//       // Replace with valid files
+//       cy.contains("p", "Proprietor Signature")
+//         .closest(".fileUpload-choose")
+//         .find('input[type="file"]')
+//         .selectFile(`cypress/fixtures/${validFile}`, { force: true });
+
+//       cy.contains("p", "Proprietor ID")
+//         .closest(".fileUpload-choose")
+//         .find('input[type="file"]')
+//         .selectFile(`cypress/fixtures/${validFile}`, { force: true });
+
+//       cy.contains("p", "Proprietor Photograph")
+//         .closest(".fileUpload-choose")
+//         .find('input[type="file"]')
+//         .selectFile(`cypress/fixtures/${validFile}`, { force: true });
+
+//       cy.contains("p", "Supporting Document")
+//         .closest(".fileUpload-choose")
+//         .find('input[type="file"]')
+//         .selectFile(`cypress/fixtures/${validFile}`, { force: true });
+
+//       cy.log("Submitting form");
+//       // Using the exact text from your HTML button
+//       cy.contains("button", "Continue to Payment")
+//         .should("not.be.disabled")
+//         .click();
+//       cy.wait(5000)
+
+//       cy.log("Payment Section");
+//       cy.get('input[formcontrolname="email"]').clear().type("joyoasis9023@gmail.com");
+//       cy.get('[style="margin-top: 1.5rem;"] > :nth-child(2) > .inputField').clear().type("INV20260204073836-523")
+//       cy.get('.status-button').click();
+
+//       cy.wait(80000)
+
+//  });
+
 });
-
-
-
 
 
 // describe("LGS Bank Account Creation Flow", () => {
 //   const baseUrl = "http://lgs.oasisproducts.ng";
 
-//   // it("should display error message if transaction reference already has an account number", () => {
-//   //   cy.visit(`${baseUrl}/account-creation`);
-//   //   cy.get(".login-input").clear().type("LGS251028132326359");
+//   it("should display error message if transaction reference already has an account number", () => {
+//     cy.visit(`${baseUrl}/account-creation`);
+//     cy.get(".login-input").clear().type("LGS251028132326359");
 
-//   //   cy.get(".signIn-btn")
-//   //     .should("contain.text", "Verify Details")
-//   //     .should("be.visible")
-//   //     .click();
+//     cy.get(".signIn-btn")
+//       .should("contain.text", "Verify Details")
+//       .should("be.visible")
+//       .click();
 
-//   //   cy.get(".containerModal > div", { timeout: 50000 })
-//   //     .should("be.visible")
-//   //     .and("contain.text", "already has an");
-//   // });
+//     cy.get(".containerModal > div", { timeout: 50000 })
+//       .should("be.visible")
+//       .and("contain.text", "already has an");
+//   });
 
 //   it("create bank account for an approved business name", () => {
 //     cy.visit(`${baseUrl}/account-creation`);
