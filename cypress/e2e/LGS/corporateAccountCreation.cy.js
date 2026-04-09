@@ -65,12 +65,12 @@ const uniqueEmail = `peaceoasis9023+${hours}${mins}${secs}@gmail.com`;
     cy.get('.btn').contains("Continue").click();
     cy.get(':nth-child(1) > .form-group > .form-control').clear().type("JoyTest");
     cy.get(':nth-child(2) > .form-group > .form-control').clear().type("Doe");
-    cy.get(':nth-child(3) > .form-group > .form-control').clear().type("peaceoasis9023+28@gmail.com");
+    cy.get(':nth-child(3) > .form-group > .form-control').clear().type("peaceoasis9023+30@gmail.com");
     cy.get(':nth-child(4) > .form-group > .form-control').clear().type("08033223322");
     cy.get('.input-group > .form-control').clear().type("Gsure9023@2026");
     cy.get('.btn').contains("Next: Company Info").click();
     cy.wait(2000);
-      cy.get(':nth-child(1) > .form-control').type('732367');
+      cy.get(':nth-child(1) > .form-control').type('732369');
     // cy.get(':nth-child(1) > .form-control').clear().type("807743");
     cy.wait(2000);
 

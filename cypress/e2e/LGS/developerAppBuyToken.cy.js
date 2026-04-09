@@ -28,7 +28,7 @@ describe("Buy Token", () => {
         cy.get('.bottom-half > ul > :nth-child(3) > a').click({ force: true });
 
         cy.get("html > body > app-root > intranet-html-template > main > body > article > app-token-and-payments > aside:nth-of-type(1) > button > p").click({ force: true });
-
+        cy.get('ul > :nth-child(1) > .regular-text').click({ force: true });
         cy.get("input[min='1']").clear().type("200");
 
         cy.get("div[class='center'] button").click({ force: true });
