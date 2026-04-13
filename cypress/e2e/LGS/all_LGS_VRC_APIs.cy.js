@@ -40,7 +40,7 @@ describe("VRC Services", () => {
         cy.get('.formInput-select').select("LIMITED_PARTNERSHIP");
         cy.wait(2000);
         cy.get('.sendOtp').click({ force: true });
-        cy.wait(2000);
+        cy.wait(4000);
         cy.get('.success-card').contains("An otp has been successful");
         cy.wait(9000);
 

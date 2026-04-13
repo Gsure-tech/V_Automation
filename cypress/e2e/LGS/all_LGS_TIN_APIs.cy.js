@@ -8,7 +8,7 @@ import { AUTH_TOKENS } from '../../support/constants';
 describe("TIN Service", () => {
     const apiUrl = "http://41.207.248.246:9088";
 
-    it("should successfully retrieve company data using GET_SHARE_CAPITAL_INFO", () => {
+    it("should successfully retrieve company data using GET_COMPANY_BY_TIN", () => {
             cy.request({
                 method: 'POST',
                 url: `${apiUrl}/api/ls/validation/vas-services/tin/GET_COMPANY_BY_TIN`,
