@@ -1,5 +1,5 @@
 describe('Funding Wallet with Card', () => {
-    it('should validate login button behavior and be able to login', () => {
+    it('should login and fund wallet using card', () => {
         cy.viewport(1440, 900);
         cy.visit("https://vas.oasisproducts.ng/login");
 

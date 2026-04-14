@@ -1,8 +1,7 @@
 describe('Coupon Creation Flow', () => {
-    it('should validate login button behavior and be able to login', () => {
+    it('should login and successfully create coupon', () => {
         cy.viewport(1440, 900);
         cy.visit("https://vas.oasisproducts.ng/login");
-
 
         cy.log('Entering valid email and valid password to enable the "Login" button');
         cy.get('input[type="email"]').clear().type('abubakaroasis@gmail.com');
