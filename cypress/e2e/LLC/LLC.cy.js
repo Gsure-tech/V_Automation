@@ -11,7 +11,7 @@ describe("LLC Registration API Flow", () => {
   let affiliateKeyPSC2;
   let affiliateKeyCorporate;
   let stampDutyPaymentUrl;
-  const baseUrl = "https://vasapp.oasisproducts.ng";
+    const baseUrl = "https://vasapp.oasisproducts.ng";
   // A. COMPLIANCE CHECK USING PROPOSED NAME
   it("should check compliance using the proposedName", () => {
     // Sending the compliance check request
@@ -1234,31 +1234,35 @@ it("should successfully submit the company registration", () => {
   });
 });
 
-// //GENERATE RRR & VISIT PAYMENT LINK
-// it("should generate RRR and visit the payment link", () => {
-//   cy.request({
-//     method: "POST",
-//     url: "http://41.207.248.246:9088/api/vas/llc/stamp-duty/rrr",
-//     headers: HEADERS.VALID_API_KEY,
-//     body: {
-//       transactionRef: transactionRef,
-//       phoneNumber: "08012345678",
-//     },
-//   }).then((response) => {
-//     expect(response.status).to.eq(200);
-//     expect(response.body.status).to.eq("OK");
-//     expect(response.body.message).to.eq("stamp duty generate rrr");
-    
-//     // 1. Capture the URL inside the .then()
-//     const paymentUrl = response.body.data.paymentUrl;
-//     cy.log(`Captured Payment URL: ${paymentUrl}`);
+// FINAL STEP: CHECK REGISTRATION STATUS
+    it("should successfully check the status of the registration using the current transactionRef", () => {
+        // Ensure the transactionRef exists before proceeding
+        expect(transactionRef).to.not.be.undefined;
+        cy.wait(9000);
+        cy.request({
+            method: 'GET',
+            // Dynamic URL using the transactionRef generated in the "Company Registration" step
+            url: `${baseUrl}/api/vas/llc/status/${transactionRef}`,
+            headers: HEADERS.VALID_API_KEY
+        }).then((response) => {
+            // 1. Assert Basic Response Info
+            expect(response.status).to.eq(200);
+            expect(response.body.statusCode).to.eq(200);
+            expect(response.body.status).to.eq("OK");
+            expect(response.body.success).to.be.true;
 
-//     // 2. Visit the link IMMEDIATELY within the same test flow
-//     // This prevents the "undefined" variable error
-//     cy.visit(paymentUrl);
-//     cy.wait(50000)
-//   });
+            // 2. Assert Data Structure
+            const data = response.body.data;
 
-// });
+            // Since it was just submitted, the status should be PENDING or similar
+            expect(data.status).to.be.oneOf(["PENDING", "QUERIED", "APPROVED"]);
+            expect(data.transactionRef).to.eq(transactionRef);
+
+            expect(data.data.entityName).to.not.be.empty;
+
+            // Log for visibility in the runner
+            cy.log(`Current Status for ${transactionRef}: ${data.status}`);
+        });
+    });
 
 });
