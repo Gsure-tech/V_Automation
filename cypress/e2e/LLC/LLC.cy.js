@@ -1172,8 +1172,6 @@ it("should add a person with significant control (PSC) 2", () => {
   });
 });
 
-
-
 //SUBMIT REGISTRATION
 it("should successfully submit the company registration", () => {
   cy.request({
@@ -1241,7 +1239,6 @@ it("should successfully submit the company registration", () => {
         cy.wait(9000);
         cy.request({
             method: 'GET',
-            // Dynamic URL using the transactionRef generated in the "Company Registration" step
             url: `${baseUrl}/api/vas/llc/status/${transactionRef}`,
             headers: HEADERS.VALID_API_KEY
         }).then((response) => {

@@ -54,7 +54,7 @@ describe('End-to-End Coupon Life Cycle', () => {
         cy.get('.btn').contains('Fund Wallet').click({ force: true });
         cy.get(':nth-child(3) > [name="options"]').click({force:true});
 
-        // --- USE THE CAPTURED CODE ---
+        // USE THE CAPTURED CODE
         cy.log(`Redeeming code: ${sharedCoupon}`);
         cy.get('[name="coupon"]').clear().type(sharedCoupon);
 
