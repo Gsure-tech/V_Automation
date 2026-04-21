@@ -1064,8 +1064,6 @@ it("should add a person with significant control (PSC) 1", () => {
   // });
 
 
-
-  
 // REGISTER PSC 2
 it("should add a person with significant control (PSC) 2", () => {
   cy.log(`Stored PSC 2 Affiliate Key: ${affiliateKeyIndividual2}`),
