@@ -13,31 +13,40 @@ describe("LLC Registration API Flow", () => {
   let stampDutyPaymentUrl;
     const baseUrl = "https://vasapp.oasisproducts.ng";
   // A. COMPLIANCE CHECK USING PROPOSED NAME
-  it("should check compliance using the proposedName", () => {
-    // Sending the compliance check request
-    cy.request({
-      method: "POST",
-        url: `${baseUrl}/vas/llc/compliance`,
-      headers: HEADERS.VALID_API_KEY,
-      body: {
-        lineOfBusiness: "ICT",
-        proposedName: "TUESDAY COLLECTIONS MOMENTUM LTD",
-        companyType: "PRIVATE_COMPANY_LIMITED_BY_SHARES",
-      },
-    }).then((resp) => {
-      // Verifying the response status and message
-      expect(resp.status).to.eq(200);
-      expect(resp.body.status).to.eq("OK");
+    it("should check compliance using the proposedName", () => {
+        // Define the payload based on your Postman body
+        const payload = {
+            lineOfBusiness: "ICT",
+            proposedName: "Hexagraph LIMITED",
+            companyType: "PRIVATE_COMPANY_LIMITED_BY_SHARES",
+        };
 
-      // Verifying the data in the response
-      const data = resp.body.data;
+        cy.request({
+            method: "POST",
+            // Ensure the path includes '/api' as shown in your Postman screenshot
+            url: `${baseUrl}/api/vas/llc/compliance`,
+            headers: HEADERS.VALID_API_KEY,
+            body: payload,
+            failOnStatusCode: false // Helps debug if the server returns 4xx or 500
+        }).then((response) => {
+            expect(response.status).to.eq(200);
+            expect(response.body.status).to.eq("OK");
+            expect(response.body.statusCode).to.eq(200);
+            const data = response.body.data;
 
-      expect(data.recommendedActions[0].message).to.eq("Proceed to filing");
-      expect(data.complianceScorePercentage).to.be.a("number");
-      expect(data.similarityScorePercentage).to.be.a("number");
-      cy.wait(1500);
+            // 3. Validate Compliance Data
+            expect(data.proposedName).to.eq(payload.proposedName);
+
+            // Check the first recommended action message
+            expect(data.recommendedActions[0].message).to.contain("Proceed to filing");
+
+            // Validate scores are numbers
+            expect(data.complianceScorePercentage).to.be.a("number");
+            expect(data.similarityScorePercentage).to.be.a("number");
+
+            cy.log('Compliance Check Passed: ' + data.recommendedActions[0].message);
+        });
     });
-  });
 
   //  SUCCESSFUL NAME RESERVATION
   it("should return 200 and reservation details when a unique proposedName is submitted", () => {

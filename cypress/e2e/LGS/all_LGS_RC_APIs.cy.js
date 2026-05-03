@@ -1,7 +1,10 @@
-import { AUTH_TOKENS } from '../../support/constants';
+import {AUTH_TOKENS, LGS_PROD_APIKEY} from '../../support/constants';
 
 describe("RC Services", () => {
-    const apiUrl = "http://41.207.248.246:9088";
+    const apiUrl = "https://app.lgs.oasisproducts.ng";
+    // const apiUrl = "http://41.207.248.246:9088";
+    //https://lgs.oasisproducts.ng/
+    //https://app.legalservices.com.ng/
 
     it("should successfully retrieve company data using GET_COMPANY_BY_NAME", () => {
         cy.request({
@@ -173,4 +176,76 @@ describe("RC Services", () => {
             expect(data.entity_status).to.not.be.empty
         });
     });
+
+    it("should successfully retrieve company data Using - GET CERTIFICATE", () => {
+        cy.request({
+            method: 'POST',
+            url: `${apiUrl}/api/ls/validation/vas-services/rc/GET_CERTIFICATE`,
+            qs: {
+                apiMode: 'DEV'
+            },
+            headers: {
+                'Content-Type': 'application/json',
+                'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN
+            },
+            body: {
+                "rcNumber": "21005567",
+                "entityType": "LIMITED_PARTNERSHIP",
+                "entityName": "string"
+            }
+        }).then((response) => {
+            // 1. Assert Status Code
+            expect(response.status).to.eq(200);
+
+            // 2. Assert Top Level Structure
+            expect(response.body.status).to.eq("OK");
+            expect(response.body.success).to.be.true;
+            expect(response.body.message).to.contains("retrieved successfully");
+
+            // 3. Assert Specific Data Values
+            // const data = response.body.data;
+            // expect(data.rc_number).to.not.be.empty;
+            // expect(data.rc_number).to.be.a('string');
+            // expect(data.entity_name).to.not.be.empty;
+            // expect(data.entity_name).to.be.a('string');
+            // expect(data.entity_status).to.not.be.empty
+        });
+    });
+
+    it("should successfully retrieve company data Using - GET STATUS REPORT", () => {
+        cy.request({
+            method: 'POST',
+            url: `${apiUrl}/api/ls/validation/vas-services/rc/GET_STATUS_REPORT`,
+            qs: {
+                apiMode: 'DEV'
+            },
+            headers: {
+                'Content-Type': 'application/json',
+                'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN
+            },
+            body: {
+                "rcNumber": "21005567",
+                "entityType": "LIMITED_PARTNERSHIP",
+                "entityName": "string"
+            }
+        }).then((response) => {
+            // 1. Assert Status Code
+            expect(response.status).to.eq(200);
+
+            // 2. Assert Top Level Structure
+            expect(response.body.status).to.eq("OK");
+            expect(response.body.success).to.be.true;
+            expect(response.body.message).to.contains("retrieved successfully");
+
+            // 3. Assert Specific Data Values
+            // const data = response.body.data;
+            // expect(data.rc_number).to.not.be.empty;
+            // expect(data.rc_number).to.be.a('string');
+            // expect(data.entity_name).to.not.be.empty;
+            // expect(data.entity_name).to.be.a('string');
+            // expect(data.entity_status).to.not.be.empty
+        });
+    });
+
+
 });

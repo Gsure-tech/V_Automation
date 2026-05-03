@@ -32,7 +32,7 @@ const fetchVrcAndSubmit = (inbox) => {
 };
 
 describe("VRC Services", () => {
-    const apiUrl = "http://41.207.248.246:9088";
+    const apiUrl = "https://app.lgs.oasisproducts.ng";
 
     it("should successfully retrieve company data using GET_SHARE_CAPITAL_INFO", () => {
         cy.visit("https://vas.oasisproducts.ng/vrc");

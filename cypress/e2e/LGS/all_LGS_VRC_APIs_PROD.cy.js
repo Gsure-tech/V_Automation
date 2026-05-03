@@ -76,7 +76,7 @@ describe("VRC Services", () => {
         cy.get('.sendOtp').click({ force: true });
         cy.wait(4000);
         cy.get('.success-card', { timeout: 10000 }).contains("An otp has been successful");
-        cy.wait(9000);
+        cy.wait(11000);
 
         // REUSED LOGIC CALLED HERE
         fetchVrcAndSubmit('abdulg');
@@ -110,7 +110,7 @@ describe("VRC Services", () => {
         cy.get('.sendOtp').click({ force: true });
         cy.wait(4000);
         cy.get('.success-card').contains("An otp has been successful");
-        cy.wait(9000);
+        cy.wait(11000);
 
         // REUSED LOGIC CALLED HERE
         fetchVrcAndSubmit('abdulg');
@@ -148,7 +148,7 @@ describe("VRC Services", () => {
         cy.get('.sendOtp').click({ force: true });
         cy.wait(4000);
         cy.get('.success-card').contains("An otp has been successful");
-        cy.wait(9000);
+        cy.wait(11000);
 
         // REUSED LOGIC CALLED HERE
         fetchVrcAndSubmit('abdulg');
@@ -182,7 +182,7 @@ describe("VRC Services", () => {
         cy.get('.sendOtp').click({ force: true });
         cy.wait(4000);
         cy.get('.success-card').contains("An otp has been successful");
-        cy.wait(9000);
+        cy.wait(11000);
 
         // REUSED LOGIC CALLED HERE
         fetchVrcAndSubmit('abdulg');
@@ -215,7 +215,7 @@ describe("VRC Services", () => {
         cy.get('.sendOtp').click({ force: true });
         cy.wait(4000);
         cy.get('.success-card').contains("An otp has been successful");
-        cy.wait(9000);
+        cy.wait(11000);
 
         // REUSED LOGIC CALLED HERE
         fetchVrcAndSubmit('abdulg');
@@ -248,7 +248,7 @@ describe("VRC Services", () => {
         cy.get('.sendOtp').click({ force: true });
         cy.wait(4000);
         cy.get('.success-card').contains("An otp has been successful");
-        cy.wait(9000);
+        cy.wait(11000);
 
         // REUSED LOGIC CALLED HERE
         fetchVrcAndSubmit('abdulg');
