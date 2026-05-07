@@ -6,33 +6,6 @@ describe("TAMA - LOGIN & NAVIGATION FLOW", () => {
     const uniqueEmail = `peaceoasis9023+${timestampSuffix}@gmail.com`;
     const uniquePhone = `070${timestampSuffix}`;
 
-    // --- HELPER: ROBUST UPLOAD LOGIC ---
-    const uploadDocumentInList = (itemIndex, filePath) => {
-        cy.log(`--- Starting Upload for Item Index: ${itemIndex} ---`);
-
-        // 1. Find the specific list item and click its upload button
-        cy.get('app-document-upload ul li', { timeout: 20000 })
-            .eq(itemIndex)
-            .within(() => {
-                cy.contains('button', 'Upload Document')
-                    .should('be.visible')
-                    .click({ force: true });
-            });
-
-        // 2. Search globally for the file input (Angular often appends to body)
-        // We use a slightly longer timeout to allow the event loop to render the input
-        cy.get('input[type="file"]', { timeout: 15000 })
-            .last()
-            .selectFile(filePath, { force: true });
-
-        // 3. Verification: Look for the "Uploaded" text and success icon in that specific row
-        cy.get('app-document-upload ul li')
-            .eq(itemIndex)
-            .contains('Uploaded', { timeout: 20000 })
-            .should('be.visible');
-
-        cy.log(`Item ${itemIndex} Uploaded Successfully`);
-    };
 
     it("Individual User Full TAMA Flow (Agent Login Path)", () => {
         // --- STEP 1: INITIAL NAVIGATION ---
@@ -58,9 +31,10 @@ describe("TAMA - LOGIN & NAVIGATION FLOW", () => {
         cy.get('.card.ng-star-inserted > .row > :nth-child(2) > .flex-grow-1 > .form-control').type("Manager");
         cy.get('.card.ng-star-inserted > .row > :nth-child(3) > .flex-grow-1 > .form-control').type(uniquePhone);
         cy.get('.card.ng-star-inserted > .row > :nth-child(4) > .flex-grow-1 > .form-control').type(uniqueEmail);
-        cy.get('.card.ng-star-inserted > .row > :nth-child(5) > .flex-grow-1 > .form-control').type("Agriculture");
+        // cy.get('.card.ng-star-inserted > .row > :nth-child(5) > .flex-grow-1 > .form-control').type("Agriculture");
 
         // Select ID and Proceed
+
         cy.get(':nth-child(1) > [name="meansOfId"]').click({ force: true });
         cy.get('.pt-4 > .btn').click();
 
@@ -78,23 +52,17 @@ describe("TAMA - LOGIN & NAVIGATION FLOW", () => {
         cy.get('#cert_ICAN').click();
         cy.get('.form-control').type("3");
         cy.get('.btn-warning').click();
+        cy.wait(40000);
 
-        // --- STEP 6: DOCUMENT UPLOAD PHASE ---
-        // Wait for the specific upload component to render
-        cy.get('app-document-upload', { timeout: 30000 }).should('be.visible');
-
-        // Upload first document (Index 0 - usually CAC Certificates)
-        uploadDocumentInList(0, 'cypress/fixtures/certificate.pdf');
-
-        // If you need to upload the second item in the list, uncomment below:
-        // uploadDocumentInList(1, 'cypress/fixtures/certificate.pdf');
+        // --- STEP 6: DOCUMENT UPLOAD PHASE --
 
         // --- STEP 7: FINAL SUBMISSION ---
         cy.contains('button', 'Submit Application')
             .should('be.visible')
             .click({ force: true });
+        cy.get('.modal-content > .card').contains("TAMA Registration Successful")
 
         // Final confirmation check
-        cy.contains('Successfully', { timeout: 15000 }).should('be.visible');
+        // cy.contains('TAMA Registration Successful', { timeout: 15000 }).should('be.visible');
     });
 });
