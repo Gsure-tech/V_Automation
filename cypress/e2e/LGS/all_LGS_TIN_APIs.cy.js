@@ -6,7 +6,7 @@ import { AUTH_TOKENS } from '../../support/constants';
  */
 
 describe("TIN Service", () => {
-    const apiUrl = "http://41.207.248.246:9088";
+    const apiUrl = "https://app.lgs.oasisproducts.ng";
 
     it("should successfully retrieve company data using GET_COMPANY_BY_TIN", () => {
             cy.request({

@@ -189,8 +189,8 @@ describe("RC Services", () => {
                 'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN
             },
             body: {
-                "rcNumber": "21005567",
-                "entityType": "LIMITED_PARTNERSHIP",
+                "rcNumber": "36591184",
+                "entityType": "BUSINESS_NAME",
                 "entityName": "string"
             }
         }).then((response) => {
@@ -224,8 +224,8 @@ describe("RC Services", () => {
                 'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN
             },
             body: {
-                "rcNumber": "21005567",
-                "entityType": "LIMITED_PARTNERSHIP",
+                "rcNumber": "36591184",
+                "entityType": "BUSINESS_NAME",
                 "entityName": "string"
             }
         }).then((response) => {
