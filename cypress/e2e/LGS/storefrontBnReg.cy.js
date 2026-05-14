@@ -29,27 +29,27 @@ const uniqueEmail = `joyoasis9023+${timestamp}@gmail.com`;
       cy.get('#companyStateOfResidence').select("Lagos State");
       cy.get('#companyAddress').type("No.12 College road");
       cy.get('#companyCity').type("Mafoluku");
-      cy.get('#companyEmail').type(uniqueEmail)
+      cy.get('#companyEmail').type("joyoasis9023@gmail.com")
       cy.get('.submitBtn').contains("Continue").click();
       cy.get('#NIN').type("70123456789");
       cy.get('.submitBtn').click();
       // cy.contains("Enter Manually").click({force:true});
-      cy.get('[style="background-color: transparent; border: 1px solid var(--lgs-4-color, #006481); backdrop-filter: blur(30px); margin-top: 10px; color: rgb(0, 100, 129);"]').click();
-
-      cy.get('#proprietorFirstName').type("Joyce");
-      cy.get('#proprietorLastName').type("Mooner");
-      cy.get('#proprietorOtherName').type("Joe");
-      cy.get('#proprietorPhoneNumber').type("07033223322");
+      // cy.get('[style="background-color: transparent; border: 1px solid var(--lgs-4-color, #006481); backdrop-filter: blur(30px); margin-top: 10px; color: rgb(0, 100, 129);"]').click();
+      //
+      // cy.get('#proprietorFirstName').type("Joyce");
+      // cy.get('#proprietorLastName').type("Mooner");
+      // cy.get('#proprietorOtherName').type("Joe");
+      // cy.get('#proprietorPhoneNumber').type("07033223322");
       cy.get('#proprietorEmail').type("joyoasis9023@gmail.com");
-      cy.get('#proprietorGender').select("Female");
+      // cy.get('#proprietorGender').select("Female");
       cy.get('#proprietorStreetNumber').type("21");
       cy.get('#proprietorState').select("Lagos State");
       cy.get('#proprietorCity').type("Ladipo");
       cy.get('#proprietorLga').select("Ikeja");
-      cy.get('#proprietorDob').type('2000-04-02');
+      // cy.get('#proprietorDob').type('2000-04-02');
       cy.get('#proprietorServiceAddress').type("No 11, college road");
       cy.get('.nextBtn').click();
-
+      //
       cy.get('[label="Proprietor Signature"] > .fileUpload-choose')
           .find('input[type="file"]')
           .selectFile('cypress/fixtures/gamma1.png', { force: true });

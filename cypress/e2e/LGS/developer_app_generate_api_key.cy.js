@@ -20,6 +20,7 @@ describe("Generate API Key", () => {
             cy.get('input[type="password"]').type("Gsure9023@2025");
             cy.get('button').contains(/Sign\s*In/i).click({ force: true });
         });
+        cy.get('.workspaces-grid > :nth-child(1)').click({force: true});
 
         // Use stable text selectors where possible for the sidebar
         cy.contains('a', 'API Keys').click({ force: true });

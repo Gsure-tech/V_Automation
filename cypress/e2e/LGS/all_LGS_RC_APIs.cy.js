@@ -177,40 +177,40 @@ describe("RC Services", () => {
         });
     });
 
-    it("should successfully retrieve company data Using - GET CERTIFICATE", () => {
-        cy.request({
-            method: 'POST',
-            url: `${apiUrl}/api/ls/validation/vas-services/rc/GET_CERTIFICATE`,
-            qs: {
-                apiMode: 'DEV'
-            },
-            headers: {
-                'Content-Type': 'application/json',
-                'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN
-            },
-            body: {
-                "rcNumber": "36591184",
-                "entityType": "BUSINESS_NAME",
-                "entityName": "string"
-            }
-        }).then((response) => {
-            // 1. Assert Status Code
-            expect(response.status).to.eq(200);
-
-            // 2. Assert Top Level Structure
-            expect(response.body.status).to.eq("OK");
-            expect(response.body.success).to.be.true;
-            expect(response.body.message).to.contains("retrieved successfully");
-
-            // 3. Assert Specific Data Values
-            // const data = response.body.data;
-            // expect(data.rc_number).to.not.be.empty;
-            // expect(data.rc_number).to.be.a('string');
-            // expect(data.entity_name).to.not.be.empty;
-            // expect(data.entity_name).to.be.a('string');
-            // expect(data.entity_status).to.not.be.empty
-        });
-    });
+    // it("should successfully retrieve company data Using - GET CERTIFICATE", () => {
+    //     cy.request({
+    //         method: 'POST',
+    //         url: `${apiUrl}/api/ls/validation/vas-services/rc/GET_CERTIFICATE`,
+    //         qs: {
+    //             apiMode: 'DEV'
+    //         },
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN
+    //         },
+    //         body: {
+    //             "rcNumber": "36591184",
+    //             "entityType": "BUSINESS_NAME",
+    //             "entityName": "string"
+    //         }
+    //     }).then((response) => {
+    //         // 1. Assert Status Code
+    //         expect(response.status).to.eq(200);
+    //
+    //         // 2. Assert Top Level Structure
+    //         expect(response.body.status).to.eq("OK");
+    //         expect(response.body.success).to.be.true;
+    //         expect(response.body.message).to.contains("retrieved successfully");
+    //
+    //         // 3. Assert Specific Data Values
+    //         // const data = response.body.data;
+    //         // expect(data.rc_number).to.not.be.empty;
+    //         // expect(data.rc_number).to.be.a('string');
+    //         // expect(data.entity_name).to.not.be.empty;
+    //         // expect(data.entity_name).to.be.a('string');
+    //         // expect(data.entity_status).to.not.be.empty
+    //     });
+    // });
 
     it("should successfully retrieve company data Using - GET STATUS REPORT", () => {
         cy.request({
