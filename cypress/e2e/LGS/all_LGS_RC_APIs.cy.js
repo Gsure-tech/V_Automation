@@ -20,7 +20,7 @@ describe("RC Services", () => {
             body: {
                 "rcNumber": "21005567",
                 "entityType": "LIMITED_PARTNERSHIP",
-                "entityName": "string"
+                "entityName": "String"
             }
         }).then((response) => {
             // 1. Assert Status Code

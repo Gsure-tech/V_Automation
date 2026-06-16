@@ -11,8 +11,8 @@ const mins = String(date.getMinutes()).padStart(2, '0');
 const secs = String(date.getSeconds()).padStart(2, '0');
 
 const timestamp = `${month}${day}-${hours}${mins}${secs}`;
-const uniqueBusinessName = `TesterPitch-${timestamp} Hub`;
-const uniqueName = `TesterPitch-${timestamp}`;
+const uniqueBusinessName = `TestGrowth-${timestamp} Hub`;
+const uniqueName = `TestGrowth-${timestamp}`;
 
 // 2. Create the unique sub-addressed email
 const uniqueEmail = `joyoasis9023+${timestamp}@gmail.com`;

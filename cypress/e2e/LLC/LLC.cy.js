@@ -50,7 +50,7 @@ describe("LLC Registration API Flow", () => {
 
   //  SUCCESSFUL NAME RESERVATION
   it("should return 200 and reservation details when a unique proposedName is submitted", () => {
-    const proposedName = `MondayLLCRefund${Date.now()} Academy Enterprise`;
+    const proposedName = `QualityTest${Date.now()} Academy Limited`;
 
     cy.request({
       method: "POST",
