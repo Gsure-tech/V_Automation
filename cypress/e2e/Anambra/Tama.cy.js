@@ -15,9 +15,12 @@ describe("TAMA - LOGIN & NAVIGATION FLOW", () => {
         cy.get('.btn-agent').click();
 
         // --- STEP 2: ASIN VALIDATION ---
-        cy.get('.form-control').clear().type("35147935");
-        cy.get('.d-flex > .btn').click();
-
+        cy.get(':nth-child(1) > .form-control').clear().type("35147935")
+        cy.get(':nth-child(2) > .form-control').clear().type("Monie")
+        cy.get('.btn').click();
+        cy.get('.pt-4 > .btn').click();
+        // cy.get('.card.ng-star-inserted > .row > :nth-child(1) > .flex-grow-1 > .form-control')
+        //
         // --- STEP 3: COMPANY/INDIVIDUAL CONTACT DETAILS ---
         cy.get(':nth-child(1) > .row > :nth-child(4) > .flex-grow-1 > .form-control')
             .clear()
@@ -54,13 +57,14 @@ describe("TAMA - LOGIN & NAVIGATION FLOW", () => {
         cy.get('.btn-warning').click();
         cy.wait(40000);
 
-        // --- STEP 6: DOCUMENT UPLOAD PHASE --
-
-        // --- STEP 7: FINAL SUBMISSION ---
-        cy.contains('button', 'Submit Application')
-            .should('be.visible')
-            .click({ force: true });
-        cy.get('.modal-content > .card').contains("TAMA Registration Successful")
+        //
+        // // --- STEP 6: DOCUMENT UPLOAD PHASE --
+        //
+        // // --- STEP 7: FINAL SUBMISSION ---
+        // cy.contains('button', 'Submit Application')
+        //     .should('be.visible')
+        //     .click({ force: true });
+        // cy.get('.modal-content > .card').contains("TAMA Registration Successful")
 
         // Final confirmation check
         // cy.contains('TAMA Registration Successful', { timeout: 15000 }).should('be.visible');

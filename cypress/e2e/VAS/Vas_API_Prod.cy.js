@@ -97,7 +97,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
     // Valid RC Number and Entity Type
     cy.request({
       method: "POST",
-      url: "https://vasapp.oasisproducts.ng/api/vas/validation/tin/generate",
+      url: `${baseUrl}/api/vas/validation/tin/generate`,
       headers: HEADERS.LLC_PROD_API_KEY,
       body: {
         rc_number: "7068861",
@@ -304,7 +304,6 @@ describe("API Validation for VAS Validation Endpoints", () => {
       expect(response.body.data.lineOfBusiness).to.be.an('array').and.not.be.empty;
     });
   });
-
 
   it("should return 400 when an invalid entity_type is passed", () => {
     // Invalid Entity Type
@@ -613,7 +612,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
 
   it("should return 200 and valid company data when valid Company name or RC number and entity type is passed for COMPANY OPEN SEARCH", () => {
     const requestBody = {
-      company_name: "24 HOUSE OF",
+      company_name: "OASIS",
       filter_param: {
         search_type: "CONTAINS",
         // reg_start_date: "2025-08-05",
@@ -644,16 +643,15 @@ describe("API Validation for VAS Validation Endpoints", () => {
 
   it("should return 400 when registration start date is later than end date for COMPANY OPEN SEARCH", () => {
     const requestBody = {
-      company_name: "Hassan",
+      company_name: "24 House",
       filter_param: {
         search_type: "PREFIX",
-        reg_start_date: "2026-08-05", // Start date after end date
-        reg_end_date: "2025-10-27", // End date before start date
-        entity_type: "LIMITED_LIABILITY_PARTNERSHIP",
-        entity_email_address: "Peaceoasis9023@gmail.com",
-        rc_number: "27782342",
-        entity_address:
-          "APT. 831 013 CRISTOBAL LIGHT, WEST RUSSELCHESTER, TN 16502",
+        reg_start_date: "2027-08-05", // Start date after end date
+        reg_end_date: "2020-10-27", // End date before start date
+        entity_type: "BUSINESS_NAME",
+        entity_email_address: "24houseofgraphics@gmail.com",
+        rc_number: "7068861",
+        entity_address: "SULTAN BELLO ROAD UNGUWAN SARKI KADUNA",
       },
     };
 
@@ -678,7 +676,7 @@ describe("API Validation for VAS Validation Endpoints", () => {
 
   it("should return 401 Unauthorized for invalid API key", () => {
     const requestBody = {
-      company_name: "Hassan",
+      company_name: "24 House",
       filter_param: {
         search_type: "PREFIX",
         reg_start_date: "2025-08-05",
@@ -707,15 +705,15 @@ describe("API Validation for VAS Validation Endpoints", () => {
 
   it("should return 200 and valid company data when valid entities are passed for COMPANY AFFILIATE SEARCH", () => {
     const requestBody = {
-      first_name: "Diedra",
-      last_name: "Jast",
+      first_name: "Abdulganiyu",
+      last_name: "Abubakar",
       filter_param: {
-        phone_number: "07051690854",
-        start_year_of_birth: "1995",
+        phone_number: "07063246807",
+        start_year_of_birth: "1992",
         end_year_of_birth: "2025",
-        gender: "FEMALE",
+        gender: "MALE",
         nationality: "NIGERIAN",
-        affiliate_email_address: "peaceoasis9023@gmail.com",
+        affiliate_email_address: "abubakarabdul9023@gmail.com",
       },
     };
 
@@ -737,8 +735,8 @@ describe("API Validation for VAS Validation Endpoints", () => {
 
   it("should return 200 and valid company data when valid firstname and lastname is passed for COMPANY AFFILIATE SEARCH", () => {
     const requestBody = {
-      first_name: "Diedra",
-      last_name: "Jast",
+      first_name: "Abdulganiyu",
+      last_name: "Abubakar",
     };
 
     cy.api({
@@ -759,11 +757,11 @@ describe("API Validation for VAS Validation Endpoints", () => {
 
   it("should return 401 Unauthorized for invalid API key", () => {
     const requestBody = {
-      first_name: "Diedra",
-      last_name: "Jast",
+      first_name: "Abdulganiyu",
+      last_name: "Abubakar",
       filter_param: {
-        phone_number: "07051690854",
-        start_year_of_birth: "1995",
+        phone_number: "07063246807",
+        start_year_of_birth: "1992",
         end_year_of_birth: "2025",
         gender: "FEMALE",
         nationality: "NIGERIAN",
