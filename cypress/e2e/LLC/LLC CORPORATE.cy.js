@@ -423,7 +423,7 @@ describe("LLC Registration API Flow", () => {
                     companyName: "24 HOUSE OF GRAPHICS AND CAFE",
                     contactPhoneNumber: "08098765432",
                     contactEmail: "info@technova.com",
-                    contactSignature: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+                    contactSignature: base64Images.signature,
                     affiliateType: ["DIRECTOR", "SHAREHOLDER"],
                     serviceAddress: {
                         country: "Nigeria",
@@ -493,9 +493,9 @@ describe("LLC Registration API Flow", () => {
                     meansOfId: {
                         idType: "NIN",
                         idNumber: "12345678901",
-                        image: base64Images.meansOfId,
+                        image: base64Images.passport,
                     },
-                    signature: base64Images.signature,
+                    signature: base64Images.passport,
                     passport: base64Images.passport,
                     isShareholder: true,
                     shareAllotment: {
@@ -560,9 +560,9 @@ describe("LLC Registration API Flow", () => {
                     meansOfId: {
                         idType: "NIN",
                         idNumber: "12345678901",
-                        image: base64Images.meansOfId,
+                        image: base64Images.passport,
                     },
-                    signature: base64Images.signature,
+                    signature: base64Images.passport,
                     passport: base64Images.passport,
                     isShareholder: false,
                     // shareAllotment: {
