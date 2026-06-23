@@ -444,9 +444,9 @@ describe("LLC Registration API Flow", () => {
           meansOfId: {
             idType: "NIN",
             idNumber: "12345678901",
-            image: base64Images.meansOfId,
+            image: base64Images.passport,
           },
-          signature: base64Images.signature,
+          signature: base64Images.passport,
           passport: base64Images.passport,
           isShareholder: true,
           shareAllotment: {
@@ -509,9 +509,9 @@ describe("LLC Registration API Flow", () => {
           meansOfId: {
             idType: "NIN",
             idNumber: "12345678901",
-            image: base64Images.meansOfId,
+            image: base64Images.passport,
           },
-          signature: base64Images.signature,
+          signature: base64Images.passport,
           passport: base64Images.passport,
           isShareholder: true,
           shareAllotment: {
@@ -576,9 +576,9 @@ describe("LLC Registration API Flow", () => {
           meansOfId: {
             idType: "NIN",
             idNumber: "12345678901",
-            image: base64Images.meansOfId,
+            image: base64Images.passport,
           },
-          signature: base64Images.signature,
+          signature: base64Images.passport,
           passport: base64Images.passport,
           isShareholder: false,
           // shareAllotment: {
