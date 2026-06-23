@@ -11,41 +11,50 @@ describe("LLC Registration API Flow", () => {
   let affiliateKeyPSC2;
   let affiliateKeyCorporate;
   let stampDutyPaymentUrl;
-
+    const baseUrl = "https://vasapp.oasisproducts.ng";
   // A. COMPLIANCE CHECK USING PROPOSED NAME
-  it("should check compliance using the proposedName", () => {
-    // Sending the compliance check request
-    cy.request({
-      method: "POST",
-      url: "http://41.207.248.246:9088/api/vas/llc/compliance",
-      headers: HEADERS.VALID_API_KEY,
-      body: {
-        lineOfBusiness: "ICT",
-        proposedName: "TUESDAY COLLECTIONS MOMENTUM LTD",
-        companyType: "PRIVATE_COMPANY_LIMITED_BY_SHARES",
-      },
-    }).then((resp) => {
-      // Verifying the response status and message
-      expect(resp.status).to.eq(200);
-      expect(resp.body.status).to.eq("OK");
+    it("should check compliance using the proposedName", () => {
+        // Define the payload based on your Postman body
+        const payload = {
+            lineOfBusiness: "ICT",
+            proposedName: "Hexagraph LIMITED",
+            companyType: "PRIVATE_COMPANY_LIMITED_BY_SHARES",
+        };
 
-      // Verifying the data in the response
-      const data = resp.body.data;
+        cy.request({
+            method: "POST",
+            // Ensure the path includes '/api' as shown in your Postman screenshot
+            url: `${baseUrl}/api/vas/llc/compliance`,
+            headers: HEADERS.VALID_API_KEY,
+            body: payload,
+            failOnStatusCode: false // Helps debug if the server returns 4xx or 500
+        }).then((response) => {
+            expect(response.status).to.eq(200);
+            expect(response.body.status).to.eq("OK");
+            expect(response.body.statusCode).to.eq(200);
+            const data = response.body.data;
 
-      expect(data.recommendedActions[0].message).to.eq("Proceed to filing");
-      expect(data.complianceScorePercentage).to.be.a("number");
-      expect(data.similarityScorePercentage).to.be.a("number");
-      cy.wait(1500);
+            // 3. Validate Compliance Data
+            expect(data.proposedName).to.eq(payload.proposedName);
+
+            // Check the first recommended action message
+            expect(data.recommendedActions[0].message).to.contain("Proceed to filing");
+
+            // Validate scores are numbers
+            expect(data.complianceScorePercentage).to.be.a("number");
+            expect(data.similarityScorePercentage).to.be.a("number");
+
+            cy.log('Compliance Check Passed: ' + data.recommendedActions[0].message);
+        });
     });
-  });
 
   //  SUCCESSFUL NAME RESERVATION
   it("should return 200 and reservation details when a unique proposedName is submitted", () => {
-    const proposedName = `MonTest10Mil${Date.now()} Academy Enterprise`;
+    const proposedName = `TestPriority${Date.now()} Academy Limited`;
 
     cy.request({
       method: "POST",
-      url: "http://41.207.248.246:9088/api/vas/llc/name-reservation",
+      url: `${baseUrl}/api/vas/llc/name-reservation`,
       headers: HEADERS.VALID_API_KEY,
       body: {
         proposedName,
@@ -73,7 +82,7 @@ describe("LLC Registration API Flow", () => {
   it("should return 400 when the proposed name already exists", () => {
     cy.request({
       method: "POST",
-      url: "http://41.207.248.246:9088/api/vas/llc/name-reservation",
+      url: `${baseUrl}/api/vas/llc/name-reservation`,
       headers: HEADERS.VALID_API_KEY,
       failOnStatusCode: false,
       body: {
@@ -91,7 +100,7 @@ describe("LLC Registration API Flow", () => {
   it("should return 400 BAD_REQUEST when an invalid reservationCode is used to register name", () => {
     cy.request({
       method: "POST",
-      url: "http://41.207.248.246:9088/api/vas/llc/company",
+      url: `${baseUrl}/api/vas/llc/company`,
       headers: HEADERS.VALID_API_KEY,
       failOnStatusCode: false,
       body: {
@@ -138,7 +147,7 @@ describe("LLC Registration API Flow", () => {
   it("should return 400 BAD_REQUEST with message 'Invalid Data Provided'when invalid data is used to register name", () => {
     cy.request({
       method: "POST",
-      url: "http://41.207.248.246:9088/api/vas/llc/company",
+      url: `${baseUrl}/api/vas/llc/company`,
       headers: HEADERS.VALID_API_KEY,
       failOnStatusCode: false,
       body: {
@@ -178,7 +187,7 @@ describe("LLC Registration API Flow", () => {
 
     cy.request({
       method: "POST",
-      url: "http://41.207.248.246:9088/api/vas/llc/company",
+      url: `${baseUrl}/api/vas/llc/company`,
       headers: HEADERS.VALID_API_KEY,
       body: {
         transactionRef,
@@ -228,7 +237,7 @@ describe("LLC Registration API Flow", () => {
   it("should return 400 with message 'Transaction Ref already exist for this process' when registering a company with an already-used TransactionRef", function () {
     cy.request({
       method: "POST",
-      url: "http://41.207.248.246:9088/api/vas/llc/company",
+      url: `${baseUrl}/api/vas/llc/company`,
       headers: HEADERS.VALID_API_KEY,
       failOnStatusCode: false,
       body: {
@@ -276,7 +285,7 @@ describe("LLC Registration API Flow", () => {
   it("should return 400 when registering a company with an already-used name", function () {
     cy.request({
       method: "POST",
-      url: "http://41.207.248.246:9088/api/vas/llc/company",
+      url: `${baseUrl}/api/vas/llc/company`,
       headers: HEADERS.VALID_API_KEY,
       failOnStatusCode: false,
       body: {
@@ -321,7 +330,7 @@ describe("LLC Registration API Flow", () => {
   it("should update registration using the transactionRef", function () {
     cy.request({
       method: "PUT",
-      url: "http://41.207.248.246:9088/api/vas/llc/company",
+      url: `${baseUrl}/api/vas/llc/company`,
       headers: HEADERS.VALID_API_KEY,
       body: {
         transactionRef,
@@ -368,13 +377,13 @@ describe("LLC Registration API Flow", () => {
   it("should register share details using the same transactionRef", () => {
     cy.request({
       method: "POST",
-      url: "http://41.207.248.246:9088/api/vas/llc/shares",
+      url: `${baseUrl}/api/vas/llc/shares`,
       headers: HEADERS.VALID_API_KEY,
       body: {
         transactionRef,
-        ordinaryIssuedShare: 10000000.0,
+        ordinaryIssuedShare: 20000000.0,
         // preferenceIssuedShare: 5000000.0,
-        pricePerShare: 1000000.0,
+        pricePerShare: 2000000.0,
       },
     }).then((response) => {
       expect(response.status).to.eq(200);
@@ -403,7 +412,7 @@ describe("LLC Registration API Flow", () => {
   it("should register an individual affiliate using the same transactionRef AS 1st Affiliate", () => {
     cy.request({
       method: "POST",
-      url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
+      url: `${baseUrl}/api/vas/llc/affiliates`,
       headers: HEADERS.VALID_API_KEY,
       body: {
         transactionRef: transactionRef,
@@ -441,7 +450,7 @@ describe("LLC Registration API Flow", () => {
           passport: base64Images.passport,
           isShareholder: true,
           shareAllotment: {
-              allottedOrdinaryShares: 5000000.0
+              allottedOrdinaryShares: 10000000.0
           }
         },
       },
@@ -468,7 +477,7 @@ describe("LLC Registration API Flow", () => {
    it("should register an individual affiliate using the same transactionRef AS 2nd Affiliate", () => {
     cy.request({
       method: "POST",
-      url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
+      url: `${baseUrl}/api/vas/llc/affiliates`,
       headers: HEADERS.VALID_API_KEY,
       body: {
         transactionRef: transactionRef,
@@ -506,7 +515,7 @@ describe("LLC Registration API Flow", () => {
           passport: base64Images.passport,
           isShareholder: true,
           shareAllotment: {
-            allottedOrdinaryShares: 5000000.0
+            allottedOrdinaryShares: 10000000.0
             // allottedPreferenceShares: 5000000.0
           },
         },
@@ -535,7 +544,7 @@ describe("LLC Registration API Flow", () => {
    it("should register an individual affiliate using the same transactionRef AS 3nd Affiliate DIRECTOR", () => {
     cy.request({
       method: "POST",
-      url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
+      url: `${baseUrl}/api/vas/llc/affiliates`,
       headers: HEADERS.VALID_API_KEY,
       body: {
         transactionRef: transactionRef,
@@ -785,7 +794,7 @@ describe("LLC Registration API Flow", () => {
 it("should add a person with significant control (PSC) 1", () => {
   cy.request({
     method: "POST",
-    url: "http://41.207.248.246:9088/api/vas/llc/psc",
+    url: `${baseUrl}/api/vas/llc/psc`,
     headers: HEADERS.VALID_API_KEY,
     body: {
       transactionRef: transactionRef,
@@ -1064,14 +1073,12 @@ it("should add a person with significant control (PSC) 1", () => {
   // });
 
 
-
-  
 // REGISTER PSC 2
 it("should add a person with significant control (PSC) 2", () => {
   cy.log(`Stored PSC 2 Affiliate Key: ${affiliateKeyIndividual2}`),
   cy.request({
     method: "POST",
-    url: "http://41.207.248.246:9088/api/vas/llc/psc",
+    url: `${baseUrl}/api/vas/llc/psc`,
     headers: HEADERS.VALID_API_KEY,
     body: {
       transactionRef: transactionRef,
@@ -1172,13 +1179,14 @@ it("should add a person with significant control (PSC) 2", () => {
   });
 });
 
-
-
 //SUBMIT REGISTRATION
 it("should successfully submit the company registration", () => {
   cy.request({
     method: "POST",
-    url: "http://41.207.248.246:9088/api/vas/llc/register",
+    url: `${baseUrl}/api/vas/llc/register`,
+      qs: {
+          priorityService: true
+      },
     headers: HEADERS.VALID_API_KEY,
     body: {
       transactionRef: transactionRef,
@@ -1219,14 +1227,12 @@ it("should successfully submit the company registration", () => {
     // Verify at least one PSC exists in the affiliates list
     const pscAffiliate = body.affiliates.find(a => a.affiliateType.includes("PSC"));
     expect(pscAffiliate).to.exist;
-   
 
     // 5. Validate Statutory Payment
     const payment = body.statutoryPayment;
     expect(payment.paid).to.eq(true);
     expect(payment.statutoryFee).to.be.a("number").and.be.greaterThan(0);
     expect(payment.paidAt).to.be.a("string");
-
     // 6. Logs for debugging
     cy.log(`Final Registration ID: ${body.id}`);
     cy.log(`Transaction Ref: ${reg.transactionRef}`);
@@ -1234,31 +1240,32 @@ it("should successfully submit the company registration", () => {
   });
 });
 
-// //GENERATE RRR & VISIT PAYMENT LINK
-// it("should generate RRR and visit the payment link", () => {
-//   cy.request({
-//     method: "POST",
-//     url: "http://41.207.248.246:9088/api/vas/llc/stamp-duty/rrr",
-//     headers: HEADERS.VALID_API_KEY,
-//     body: {
-//       transactionRef: transactionRef,
-//       phoneNumber: "08012345678",
-//     },
-//   }).then((response) => {
-//     expect(response.status).to.eq(200);
-//     expect(response.body.status).to.eq("OK");
-//     expect(response.body.message).to.eq("stamp duty generate rrr");
-    
-//     // 1. Capture the URL inside the .then()
-//     const paymentUrl = response.body.data.paymentUrl;
-//     cy.log(`Captured Payment URL: ${paymentUrl}`);
+// FINAL STEP: CHECK REGISTRATION STATUS
+    it("should successfully check the status of the registration using the current transactionRef", () => {
+        // Ensure the transactionRef exists before proceeding
+        expect(transactionRef).to.not.be.undefined;
+        cy.wait(9000);
+        cy.request({
+            method: 'GET',
+            url: `${baseUrl}/api/vas/llc/status/${transactionRef}`,
+            headers: HEADERS.VALID_API_KEY
+        }).then((response) => {
+            // 1. Assert Basic Response Info
+            expect(response.status).to.eq(200);
+            expect(response.body.statusCode).to.eq(200);
+            expect(response.body.status).to.eq("OK");
+            expect(response.body.success).to.be.true;
 
-//     // 2. Visit the link IMMEDIATELY within the same test flow
-//     // This prevents the "undefined" variable error
-//     cy.visit(paymentUrl);
-//     cy.wait(50000)
-//   });
+            // 2. Assert Data Structure
+            const data = response.body.data;
 
-// });
+            // Since it was just submitted, the status should be PENDING or similar
+            expect(data.status).to.be.oneOf(["PENDING", "QUERIED", "APPROVED"]);
+            expect(data.transactionRef).to.eq(transactionRef);
+            expect(data.data.entityName).to.not.be.empty;
 
+            // Log for visibility in the runner
+            cy.log(`Current Status for ${transactionRef}: ${data.status}`);
+        });
+    });
 });

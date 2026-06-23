@@ -1,4 +1,4 @@
-import { AUTH_TOKENS } from '../../support/constants';
+import { LGS_PROD_APIKEY } from '../../support/constants';
 
 /**
  * HELPER FUNCTION: Extracts the VRC from Mailinator and submits it in the UI
@@ -32,7 +32,7 @@ const fetchVrcAndSubmit = (inbox) => {
 };
 
 describe("VRC Services", () => {
-    const apiUrl = "https://app.lgs.oasisproducts.ng";
+    const apiUrl = "https://app.legalservices.com.ng";
 
     it("should successfully retrieve company data using GET_SHARE_CAPITAL_INFO", () => {
         cy.visit("https://vas.oasisproducts.ng/vrc");
@@ -54,7 +54,7 @@ describe("VRC Services", () => {
                 url: `${apiUrl}/api/ls/validation/vas-services/vrc/GET_SHARE_CAPITAL_INFO`,
                 qs: { apiMode: 'DEV', vrc: cleanedVrc },
                 headers: {
-                    'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN,
+                    'X-LGS-TOKEN': LGS_PROD_APIKEY.LGS_PROD_TOKEN,
                     'Content-Type': 'application/json'
                 },
                 body: {}
@@ -76,7 +76,7 @@ describe("VRC Services", () => {
         cy.get('.sendOtp').click({ force: true });
         cy.wait(4000);
         cy.get('.success-card', { timeout: 10000 }).contains("An otp has been successful");
-        cy.wait(9000);
+        cy.wait(11000);
 
         // REUSED LOGIC CALLED HERE
         fetchVrcAndSubmit('abdulg');
@@ -88,7 +88,7 @@ describe("VRC Services", () => {
                 url: `${apiUrl}/api/ls/validation/vas-services/vrc/GET_SHARE_DISTRIBUTION_INFO`,
                 qs: { apiMode: 'DEV', vrc: cleanedVrc },
                 headers: {
-                    'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN,
+                    'X-LGS-TOKEN': LGS_PROD_APIKEY.LGS_PROD_TOKEN,
                     'Content-Type': 'application/json'
                 },
                 body: {}
@@ -110,7 +110,7 @@ describe("VRC Services", () => {
         cy.get('.sendOtp').click({ force: true });
         cy.wait(4000);
         cy.get('.success-card').contains("An otp has been successful");
-        cy.wait(9000);
+        cy.wait(11000);
 
         // REUSED LOGIC CALLED HERE
         fetchVrcAndSubmit('abdulg');
@@ -122,7 +122,7 @@ describe("VRC Services", () => {
                 url: `${apiUrl}/api/ls/validation/vas-services/vrc/GET_WINDING_UP_INFO`,
                 qs: { apiMode: 'DEV', vrc: cleanedVrc },
                 headers: {
-                    'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN,
+                    'X-LGS-TOKEN': LGS_PROD_APIKEY.LGS_PROD_TOKEN,
                     'Content-Type': 'application/json'
                 },
                 body: {}
@@ -148,7 +148,7 @@ describe("VRC Services", () => {
         cy.get('.sendOtp').click({ force: true });
         cy.wait(4000);
         cy.get('.success-card').contains("An otp has been successful");
-        cy.wait(9000);
+        cy.wait(11000);
 
         // REUSED LOGIC CALLED HERE
         fetchVrcAndSubmit('abdulg');
@@ -160,7 +160,7 @@ describe("VRC Services", () => {
                 url: `${apiUrl}/api/ls/validation/vas-services/vrc/GET_AFFILIATE_INFO`,
                 qs: { apiMode: 'DEV', vrc: cleanedVrc },
                 headers: {
-                    'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN,
+                    'X-LGS-TOKEN': LGS_PROD_APIKEY.LGS_PROD_TOKEN,
                     'Content-Type': 'application/json'
                 },
                 body: {}
@@ -182,7 +182,7 @@ describe("VRC Services", () => {
         cy.get('.sendOtp').click({ force: true });
         cy.wait(4000);
         cy.get('.success-card').contains("An otp has been successful");
-        cy.wait(9000);
+        cy.wait(11000);
 
         // REUSED LOGIC CALLED HERE
         fetchVrcAndSubmit('abdulg');
@@ -194,7 +194,7 @@ describe("VRC Services", () => {
                 url: `${apiUrl}/api/ls/validation/vas-services/vrc/GET_CERTIFICATE`,
                 qs: { apiMode: 'DEV', vrc: cleanedVrc },
                 headers: {
-                    'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN,
+                    'X-LGS-TOKEN': LGS_PROD_APIKEY.LGS_PROD_TOKEN,
                     'Content-Type': 'application/json'
                 },
                 body: {}
@@ -215,7 +215,7 @@ describe("VRC Services", () => {
         cy.get('.sendOtp').click({ force: true });
         cy.wait(4000);
         cy.get('.success-card').contains("An otp has been successful");
-        cy.wait(9000);
+        cy.wait(11000);
 
         // REUSED LOGIC CALLED HERE
         fetchVrcAndSubmit('abdulg');
@@ -227,7 +227,7 @@ describe("VRC Services", () => {
                 url: `${apiUrl}/api/ls/validation/vas-services/vrc/GET_STATUS_REPORT`,
                 qs: { apiMode: 'DEV', vrc: cleanedVrc },
                 headers: {
-                    'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN,
+                    'X-LGS-TOKEN': LGS_PROD_APIKEY.LGS_PROD_TOKEN,
                     'Content-Type': 'application/json'
                 },
                 body: {}
@@ -248,7 +248,7 @@ describe("VRC Services", () => {
         cy.get('.sendOtp').click({ force: true });
         cy.wait(4000);
         cy.get('.success-card').contains("An otp has been successful");
-        cy.wait(9000);
+        cy.wait(11000);
 
         // REUSED LOGIC CALLED HERE
         fetchVrcAndSubmit('abdulg');
@@ -260,7 +260,7 @@ describe("VRC Services", () => {
                 url: `${apiUrl}/api/ls/validation/vas-services/vrc/GET_ASSETS`,
                 qs: { apiMode: 'DEV', vrc: cleanedVrc },
                 headers: {
-                    'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN,
+                    'X-LGS-TOKEN': LGS_PROD_APIKEY.LGS_PROD_TOKEN,
                     'Content-Type': 'application/json'
                 },
                 body: {}

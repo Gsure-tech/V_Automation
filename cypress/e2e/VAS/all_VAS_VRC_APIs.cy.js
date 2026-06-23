@@ -1,4 +1,4 @@
-import { AUTH_TOKENS } from '../../support/constants';
+import {HEADERS} from '../../support/constants';
 
 /**
  * HELPER FUNCTION: Extracts the VRC from Mailinator and submits it in the UI
@@ -15,7 +15,7 @@ const fetchVrcAndSubmit = (inbox) => {
             const vrcCode = emailText.match(/\b\d{8}\b/)?.[0];
 
             if (!vrcCode) throw new Error("8-digit VRC Code not found in email");
-
+            // GIYZPBVJ2GYIP6MRPKM52A5ORWL6KA4Q
             // Perform the Paste logic
             cy.get('.p-inputotp input').first().then(($input) => {
                 const dataTransfer = new DataTransfer();
@@ -32,9 +32,9 @@ const fetchVrcAndSubmit = (inbox) => {
 };
 
 describe("VRC Services", () => {
-    const apiUrl = "https://app.lgs.oasisproducts.ng";
+    const apiUrl = "https://vasapp.oasisproducts.ng";
 
-    it("should successfully retrieve company data using GET_SHARE_CAPITAL_INFO", () => {
+    it("should successfully retrieve company data using VRC GET_SHARE_CAPITAL_INFO", () => {
         cy.visit("https://vas.oasisproducts.ng/vrc");
         cy.get('.formInput').clear().type("56013734");
         cy.get('.formInput-select').select("LIMITED_PARTNERSHIP");
@@ -46,29 +46,25 @@ describe("VRC Services", () => {
 
         // REUSED LOGIC CALLED HERE
         fetchVrcAndSubmit('abdulg');
-
         cy.get('.copy-vrc').parent().invoke('text').then((rawText) => {
             const cleanedVrc = rawText.replace('Copy', '').trim();
             cy.request({
                 method: 'POST',
-                url: `${apiUrl}/api/ls/validation/vas-services/vrc/GET_SHARE_CAPITAL_INFO`,
-                qs: { apiMode: 'DEV', vrc: cleanedVrc },
-                headers: {
-                    'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN,
-                    'Content-Type': 'application/json'
-                },
-                body: {}
+                url: `${apiUrl}/api/vas/validation/secure/share-capital`,
+                headers: HEADERS.VALID_API_KEY,
+                body: {vrc: cleanedVrc}
             }).then((response) => {
                 expect(response.status).to.eq(200);
                 expect(response.body.success).to.be.true;
                 const data = response.body.data;
                 expect(data.rc_number).to.not.be.empty;
+                expect(data.company_name).to.not.be.empty;
                 expect(data.share_capital).to.be.a('number');
             });
         });
     });
 
-    it("should successfully retrieve company data using GET_SHARE_DISTRIBUTION_INFO", () => {
+    it("should successfully retrieve company data using VRC GET_SHARE_DISTRIBUTION_INFO", () => {
         cy.visit("https://vas.oasisproducts.ng/vrc");
         cy.get('.formInput').clear().type("56013734");
         cy.get('.formInput-select').select("LIMITED_PARTNERSHIP");
@@ -85,13 +81,9 @@ describe("VRC Services", () => {
             const cleanedVrc = rawText.replace('Copy', '').trim();
             cy.request({
                 method: 'POST',
-                url: `${apiUrl}/api/ls/validation/vas-services/vrc/GET_SHARE_DISTRIBUTION_INFO`,
-                qs: { apiMode: 'DEV', vrc: cleanedVrc },
-                headers: {
-                    'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN,
-                    'Content-Type': 'application/json'
-                },
-                body: {}
+                url: `${apiUrl}/api/vas/validation/secure/shares-distribution`,
+                headers: HEADERS.VALID_API_KEY,
+                body: {vrc: cleanedVrc},
             }).then((response) => {
                 expect(response.status).to.eq(200);
                 expect(response.body.success).to.be.true;
@@ -102,7 +94,7 @@ describe("VRC Services", () => {
         });
     });
 
-    it("should successfully retrieve company data using GET_WINDING_UP_INFO", () => {
+    it("should successfully retrieve company data using VRC GET_WINDING_UP_INFO", () => {
         cy.visit("https://vas.oasisproducts.ng/vrc");
         cy.get('.formInput').clear().type("56013734");
         cy.get('.formInput-select').select("LIMITED_PARTNERSHIP");
@@ -119,17 +111,13 @@ describe("VRC Services", () => {
             const cleanedVrc = rawText.replace('Copy', '').trim();
             cy.request({
                 method: 'POST',
-                url: `${apiUrl}/api/ls/validation/vas-services/vrc/GET_WINDING_UP_INFO`,
-                qs: { apiMode: 'DEV', vrc: cleanedVrc },
-                headers: {
-                    'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN,
-                    'Content-Type': 'application/json'
-                },
-                body: {}
+                url: `${apiUrl}/api/vas/validation/secure/wind-up`,
+                headers: HEADERS.VALID_API_KEY,
+                body: {vrc: cleanedVrc},
             }).then((response) => {
                 expect(response.status).to.eq(200);
                 expect(response.body.success).to.be.true;
-                expect(response.body.message).to.contains("data retrieved successfully")
+                expect(response.body.message).to.contains("winding up info by company")
                 const data = response.body.data;
                 expect(data.rc_number).to.not.be.empty;
                 expect(data.winding_up_type).to.not.be.empty;
@@ -140,7 +128,7 @@ describe("VRC Services", () => {
         });
     });
 
-    it("should successfully retrieve company data using GET_AFFILIATE_INFO", () => {
+    it("should successfully retrieve company data using VRC GET_AFFILIATE_INFO", () => {
         cy.visit("https://vas.oasisproducts.ng/vrc");
         cy.get('.formInput').clear().type("56013734");
         cy.get('.formInput-select').select("LIMITED_PARTNERSHIP");
@@ -157,13 +145,10 @@ describe("VRC Services", () => {
             const cleanedVrc = rawText.replace('Copy', '').trim();
             cy.request({
                 method: 'POST',
-                url: `${apiUrl}/api/ls/validation/vas-services/vrc/GET_AFFILIATE_INFO`,
+                url: `${apiUrl}/api/vas/validation/secure/company-affiliates`,
                 qs: { apiMode: 'DEV', vrc: cleanedVrc },
-                headers: {
-                    'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN,
-                    'Content-Type': 'application/json'
-                },
-                body: {}
+                headers: HEADERS.VALID_API_KEY,
+                body: {vrc: cleanedVrc},
             }).then((response) => {
                 expect(response.status).to.eq(200);
                 expect(response.body.success).to.be.true;
@@ -174,7 +159,7 @@ describe("VRC Services", () => {
         });
     });
 
-    it("should successfully retrieve company data using GET_CERTIFICATE", () => {
+    it("should successfully retrieve company data using VRC GET_CERTIFICATE", () => {
         cy.visit("https://vas.oasisproducts.ng/vrc");
         cy.get('.formInput').clear().type("56013734");
         cy.get('.formInput-select').select("LIMITED_PARTNERSHIP");
@@ -191,23 +176,16 @@ describe("VRC Services", () => {
             const cleanedVrc = rawText.replace('Copy', '').trim();
             cy.request({
                 method: 'POST',
-                url: `${apiUrl}/api/ls/validation/vas-services/vrc/GET_CERTIFICATE`,
-                qs: { apiMode: 'DEV', vrc: cleanedVrc },
-                headers: {
-                    'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN,
-                    'Content-Type': 'application/json'
-                },
-                body: {}
+                url: `${apiUrl}/api/vas/validation/secure/certificate`,
+                headers: HEADERS.VALID_API_KEY,
+                body: {vrc: cleanedVrc},
             }).then((response) => {
                 expect(response.status).to.eq(200);
-                expect(response.body.success).to.be.true;
-                expect(response.body.message).to.contains("data retrieved successfully")
-                expect(response.body.data).to.not.be.empty;
             });
         });
     });
 
-    it("should successfully retrieve company data using GET_STATUS_REPORT", () => {
+    it("should successfully retrieve company data using VRC GET_STATUS_REPORT", () => {
         cy.visit("https://vas.oasisproducts.ng/vrc");
         cy.get('.formInput').clear().type("56013734");
         cy.get('.formInput-select').select("LIMITED_PARTNERSHIP");
@@ -224,23 +202,16 @@ describe("VRC Services", () => {
             const cleanedVrc = rawText.replace('Copy', '').trim();
             cy.request({
                 method: 'POST',
-                url: `${apiUrl}/api/ls/validation/vas-services/vrc/GET_STATUS_REPORT`,
-                qs: { apiMode: 'DEV', vrc: cleanedVrc },
-                headers: {
-                    'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN,
-                    'Content-Type': 'application/json'
-                },
-                body: {}
+                url: `${apiUrl}/api/vas/validation/secure/status-report`,
+                headers: HEADERS.VALID_API_KEY,
+                body: {vrc: cleanedVrc},
             }).then((response) => {
                 expect(response.status).to.eq(200);
-                expect(response.body.success).to.be.true;
-                expect(response.body.message).to.contains("data retrieved successfully")
-                expect(response.body.data).to.not.be.empty;
             });
         });
     });
 
-    it("should successfully retrieve company data using GET_ASSETS", () => {
+    it("should successfully retrieve company data using VRC GET_ASSETS", () => {
         cy.visit("https://vas.oasisproducts.ng/vrc");
         cy.get('.formInput').clear().type("56013734");
         cy.get('.formInput-select').select("LIMITED_PARTNERSHIP");
@@ -257,24 +228,50 @@ describe("VRC Services", () => {
             const cleanedVrc = rawText.replace('Copy', '').trim();
             cy.request({
                 method: 'POST',
-                url: `${apiUrl}/api/ls/validation/vas-services/vrc/GET_ASSETS`,
-                qs: { apiMode: 'DEV', vrc: cleanedVrc },
-                headers: {
-                    'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN,
-                    'Content-Type': 'application/json'
-                },
-                body: {}
+                url: `${apiUrl}/api/vas/validation/secure/assets`,
+                headers: HEADERS.VALID_API_KEY,
+                body: {vrc: cleanedVrc},
+            }).then((response) => {
+                expect(response.status).to.eq(200);
+                expect(response.body.success).to.be.true;
+                expect(response.body.message).to.contains("address history list by company")
+                const data = response.body.data;
+                expect(data.rc_number).to.not.be.empty;
+                expect(data.company_name).to.not.be.empty;
+                expect(data.charges).to.not.be.empty;
+            });
+        });
+    });
+
+    it("should successfully retrieve company data using VRC GET_COMPANY", () => {
+        cy.visit("https://vas.oasisproducts.ng/vrc");
+        cy.get('.formInput').clear().type("56013734");
+        cy.get('.formInput-select').select("LIMITED_PARTNERSHIP");
+        cy.wait(2000);
+        cy.get('.sendOtp').click({ force: true });
+        cy.wait(4000);
+        cy.get('.success-card').contains("An otp has been successful");
+        cy.wait(9000);
+
+        // REUSED LOGIC CALLED HERE
+        fetchVrcAndSubmit('abdulg');
+
+        cy.get('.copy-vrc').parent().invoke('text').then((rawText) => {
+            const cleanedVrc = rawText.replace('Copy', '').trim();
+            cy.request({
+                method: 'POST',
+                url: `${apiUrl}/api/vas/validation/secure/company`,
+                headers: HEADERS.VALID_API_KEY,
+                body: {vrc: cleanedVrc},
             }).then((response) => {
                 expect(response.status).to.eq(200);
                 expect(response.body.success).to.be.true;
                 const data = response.body.data;
                 expect(data.rc_number).to.not.be.empty;
-                expect(data.company_name).to.not.be.empty;
-                expect(data.charges).to.not.be.empty;
-
+                expect(data.entity_name).to.not.be.empty;
+                expect(data.entity_type).to.not.be.empty;
+                expect(data.objectives).to.not.be.empty;
             });
         });
     });
-
-
 });

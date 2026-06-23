@@ -11,7 +11,7 @@ describe("LLC Registration API Flow", () => {
   let affiliateKeyPSC2;
   let affiliateKeyCorporate;
   let stampDutyPaymentUrl;
-    const baseUrl = "https://vasapp.oasisproducts.ng";
+    const baseUrl = "https://vasapp.cac.gov.ng";
   // A. COMPLIANCE CHECK USING PROPOSED NAME
     it("should check compliance using the proposedName", () => {
         // Define the payload based on your Postman body
@@ -25,7 +25,7 @@ describe("LLC Registration API Flow", () => {
             method: "POST",
             // Ensure the path includes '/api' as shown in your Postman screenshot
             url: `${baseUrl}/api/vas/llc/compliance`,
-            headers: HEADERS.VALID_API_KEY,
+            headers: HEADERS.LLC_PROD_API_KEY,
             body: payload,
             failOnStatusCode: false // Helps debug if the server returns 4xx or 500
         }).then((response) => {
@@ -50,12 +50,12 @@ describe("LLC Registration API Flow", () => {
 
   //  SUCCESSFUL NAME RESERVATION
   it("should return 200 and reservation details when a unique proposedName is submitted", () => {
-    const proposedName = `QualityTest${Date.now()} Academy Limited`;
+    const proposedName = `ProdTest${Date.now()} Global Enterprise`;
 
     cy.request({
       method: "POST",
       url: `${baseUrl}/api/vas/llc/name-reservation`,
-      headers: HEADERS.VALID_API_KEY,
+      headers: HEADERS.LLC_PROD_API_KEY,
       body: {
         proposedName,
         companyTypes: "PRIVATE_COMPANY_LIMITED_BY_SHARES",
@@ -83,10 +83,10 @@ describe("LLC Registration API Flow", () => {
     cy.request({
       method: "POST",
       url: `${baseUrl}/api/vas/llc/name-reservation`,
-      headers: HEADERS.VALID_API_KEY,
+      headers: HEADERS.LLC_PROD_API_KEY,
       failOnStatusCode: false,
       body: {
-        proposedName: "Zarah Academy Enterprise",
+        proposedName: "MotionTest and Co limited",
         companyTypes: "PRIVATE_COMPANY_LIMITED_BY_SHARES",
       },
     }).then((response) => {
@@ -101,7 +101,7 @@ describe("LLC Registration API Flow", () => {
     cy.request({
       method: "POST",
       url: `${baseUrl}/api/vas/llc/company`,
-      headers: HEADERS.VALID_API_KEY,
+      headers: HEADERS.LLC_PROD_API_KEY,
       failOnStatusCode: false,
       body: {
         reservationCode: "VAS17647518358",
@@ -144,11 +144,11 @@ describe("LLC Registration API Flow", () => {
   });
 
   // REGISTER COMPANY – INVALID DATA CODE
-  it("should return 400 BAD_REQUEST with message 'Invalid Data Provided'when invalid data is used to register name", () => {
+  it("should return 400 BAD_REQUEST with message 'Invalid Data Provided' when invalid data is used to register name", () => {
     cy.request({
       method: "POST",
       url: `${baseUrl}/api/vas/llc/company`,
-      headers: HEADERS.VALID_API_KEY,
+      headers: HEADERS.LLC_PROD_API_KEY,
       failOnStatusCode: false,
       body: {
         reservationCode: "VAS17647518358",
@@ -188,7 +188,7 @@ describe("LLC Registration API Flow", () => {
     cy.request({
       method: "POST",
       url: `${baseUrl}/api/vas/llc/company`,
-      headers: HEADERS.VALID_API_KEY,
+      headers: HEADERS.LLC_PROD_API_KEY,
       body: {
         transactionRef,
         reservationCode,
@@ -238,7 +238,7 @@ describe("LLC Registration API Flow", () => {
     cy.request({
       method: "POST",
       url: `${baseUrl}/api/vas/llc/company`,
-      headers: HEADERS.VALID_API_KEY,
+      headers: HEADERS.LLC_PROD_API_KEY,
       failOnStatusCode: false,
       body: {
         transactionRef,
@@ -286,7 +286,7 @@ describe("LLC Registration API Flow", () => {
     cy.request({
       method: "POST",
       url: `${baseUrl}/api/vas/llc/company`,
-      headers: HEADERS.VALID_API_KEY,
+      headers: HEADERS.LLC_PROD_API_KEY,
       failOnStatusCode: false,
       body: {
         reservationCode,
@@ -331,7 +331,7 @@ describe("LLC Registration API Flow", () => {
     cy.request({
       method: "PUT",
       url: `${baseUrl}/api/vas/llc/company`,
-      headers: HEADERS.VALID_API_KEY,
+      headers: HEADERS.LLC_PROD_API_KEY,
       body: {
         transactionRef,
         reservationCode,
@@ -378,12 +378,12 @@ describe("LLC Registration API Flow", () => {
     cy.request({
       method: "POST",
       url: `${baseUrl}/api/vas/llc/shares`,
-      headers: HEADERS.VALID_API_KEY,
+      headers: HEADERS.LLC_PROD_API_KEY,
       body: {
         transactionRef,
-        ordinaryIssuedShare: 2000000.0,
-        // preferenceIssuedShare: 5000000.0,
-        pricePerShare: 200000.0,
+        ordinaryIssuedShare: 100000.0,
+        preferenceIssuedShare: 100000.0,
+        pricePerShare: 10000.0,
       },
     }).then((response) => {
       expect(response.status).to.eq(200);
@@ -413,7 +413,7 @@ describe("LLC Registration API Flow", () => {
     cy.request({
       method: "POST",
       url: `${baseUrl}/api/vas/llc/affiliates`,
-      headers: HEADERS.VALID_API_KEY,
+      headers: HEADERS.LLC_PROD_API_KEY,
       body: {
         transactionRef: transactionRef,
         individual: {
@@ -450,7 +450,8 @@ describe("LLC Registration API Flow", () => {
           passport: base64Images.passport,
           isShareholder: true,
           shareAllotment: {
-              allottedOrdinaryShares: 1000000.0
+              allottedOrdinaryShares: 50000.0,
+              allottedPreferenceShares: 50000.00
           }
         },
       },
@@ -478,7 +479,7 @@ describe("LLC Registration API Flow", () => {
     cy.request({
       method: "POST",
       url: `${baseUrl}/api/vas/llc/affiliates`,
-      headers: HEADERS.VALID_API_KEY,
+      headers: HEADERS.LLC_PROD_API_KEY,
       body: {
         transactionRef: transactionRef,
         individual: {
@@ -515,8 +516,8 @@ describe("LLC Registration API Flow", () => {
           passport: base64Images.passport,
           isShareholder: true,
           shareAllotment: {
-            allottedOrdinaryShares: 1000000.0
-            // allottedPreferenceShares: 5000000.0
+            allottedOrdinaryShares: 50000.0,
+            allottedPreferenceShares: 50000.0
           },
         },
       },
@@ -545,7 +546,7 @@ describe("LLC Registration API Flow", () => {
     cy.request({
       method: "POST",
       url: `${baseUrl}/api/vas/llc/affiliates`,
-      headers: HEADERS.VALID_API_KEY,
+      headers: HEADERS.LLC_PROD_API_KEY,
       body: {
         transactionRef: transactionRef,
         individual: {
@@ -614,7 +615,7 @@ describe("LLC Registration API Flow", () => {
   //   cy.request({
   //     method: "POST",
   //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
+  //     headers: HEADERS.LLC_PROD_API_KEY,
   //     body: {
   //       transactionRef: transactionRef,
   //       corporate: {
@@ -661,7 +662,7 @@ describe("LLC Registration API Flow", () => {
   //   cy.request({
   //     method: "PUT",
   //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
+  //     headers: HEADERS.LLC_PROD_API_KEY,
   //     body: {
   //       transactionRef: transactionRef,
   //       affiliateKey: affiliateKeyIndividual,
@@ -714,7 +715,7 @@ describe("LLC Registration API Flow", () => {
   //   cy.request({
   //     method: "PUT",
   //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
+  //     headers: HEADERS.LLC_PROD_API_KEY,
   //     body: {
   //       transactionRef: transactionRef,
   //       affiliateKey: affiliateKeyCorporate,
@@ -750,7 +751,7 @@ describe("LLC Registration API Flow", () => {
   //   cy.request({
   //     method: "DELETE",
   //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
+  //     headers: HEADERS.LLC_PROD_API_KEY,
   //     failOnStatusCode: false,
   //     body: {
   //       affiliate_id: "IND2025120210210599190000284",
@@ -772,7 +773,7 @@ describe("LLC Registration API Flow", () => {
   //   cy.request({
   //     method: "DELETE",
   //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
+  //     headers: HEADERS.LLC_PROD_API_KEY,
   //     failOnStatusCode: false,
   //     body: {
   //       affiliate_id: affiliateKeyCorporate,
@@ -795,7 +796,7 @@ it("should add a person with significant control (PSC) 1", () => {
   cy.request({
     method: "POST",
     url: `${baseUrl}/api/vas/llc/psc`,
-    headers: HEADERS.VALID_API_KEY,
+    headers: HEADERS.LLC_PROD_API_KEY,
     body: {
       transactionRef: transactionRef,
       affiliateKey: affiliateKeyIndividual1,
@@ -899,7 +900,7 @@ it("should add a person with significant control (PSC) 1", () => {
   //   cy.request({
   //     method: "POST",
   //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
+  //     headers: HEADERS.LLC_PROD_API_KEY,
   //     body: {
   //       transactionRef: transactionRef,
   //       corporate: {
@@ -946,7 +947,7 @@ it("should add a person with significant control (PSC) 1", () => {
   //   cy.request({
   //     method: "PUT",
   //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
+  //     headers: HEADERS.LLC_PROD_API_KEY,
   //     body: {
   //       transactionRef: transactionRef,
   //       affiliateKey: affiliateKeyIndividual,
@@ -999,7 +1000,7 @@ it("should add a person with significant control (PSC) 1", () => {
   //   cy.request({
   //     method: "PUT",
   //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
+  //     headers: HEADERS.LLC_PROD_API_KEY,
   //     body: {
   //       transactionRef: transactionRef,
   //       affiliateKey: affiliateKeyCorporate,
@@ -1035,7 +1036,7 @@ it("should add a person with significant control (PSC) 1", () => {
   //   cy.request({
   //     method: "DELETE",
   //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
+  //     headers: HEADERS.LLC_PROD_API_KEY,
   //     failOnStatusCode: false,
   //     body: {
   //       affiliate_id: "IND2025120210210599190000284",
@@ -1057,7 +1058,7 @@ it("should add a person with significant control (PSC) 1", () => {
   //   cy.request({
   //     method: "DELETE",
   //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
+  //     headers: HEADERS.LLC_PROD_API_KEY,
   //     failOnStatusCode: false,
   //     body: {
   //       affiliate_id: affiliateKeyCorporate,
@@ -1079,7 +1080,7 @@ it("should add a person with significant control (PSC) 2", () => {
   cy.request({
     method: "POST",
     url: `${baseUrl}/api/vas/llc/psc`,
-    headers: HEADERS.VALID_API_KEY,
+    headers: HEADERS.LLC_PROD_API_KEY,
     body: {
       transactionRef: transactionRef,
       affiliateKey: affiliateKeyIndividual2,
@@ -1184,7 +1185,7 @@ it("should successfully submit the company registration", () => {
   cy.request({
     method: "POST",
     url: `${baseUrl}/api/vas/llc/register`,
-    headers: HEADERS.VALID_API_KEY,
+    headers: HEADERS.LLC_PROD_API_KEY,
     body: {
       transactionRef: transactionRef,
     },

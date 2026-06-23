@@ -1,10 +1,7 @@
-import {AUTH_TOKENS, LGS_PROD_APIKEY} from '../../support/constants';
+import { LGS_PROD_APIKEY } from '../../support/constants';
 
 describe("RC Services", () => {
-    const apiUrl = "https://app.lgs.oasisproducts.ng";
-    // const apiUrl = "http://41.207.248.246:9088";
-    //https://lgs.oasisproducts.ng/
-    //https://app.legalservices.com.ng/
+    const apiUrl = "https://app.legalservices.com.ng";
 
     it("should successfully retrieve company data using GET_COMPANY_BY_NAME", () => {
         cy.request({
@@ -15,12 +12,12 @@ describe("RC Services", () => {
             },
             headers: {
                 'Content-Type': 'application/json',
-                'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN
+                'X-LGS-TOKEN': LGS_PROD_APIKEY.LGS_PROD_TOKEN
             },
             body: {
                 "rcNumber": "21005567",
                 "entityType": "LIMITED_PARTNERSHIP",
-                "entityName": "String"
+                "entityName": "string"
             }
         }).then((response) => {
             // 1. Assert Status Code
@@ -50,7 +47,7 @@ describe("RC Services", () => {
             },
             headers: {
                 'Content-Type': 'application/json',
-                'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN
+                'X-LGS-TOKEN': LGS_PROD_APIKEY.LGS_PROD_TOKEN
             },
             body: {
                 "rcNumber": "21005567",
@@ -85,7 +82,7 @@ describe("RC Services", () => {
             },
             headers: {
                 'Content-Type': 'application/json',
-                'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN
+                'X-LGS-TOKEN': LGS_PROD_APIKEY.LGS_PROD_TOKEN
             },
             body: {
                 "rcNumber": "81019191",
@@ -120,7 +117,7 @@ describe("RC Services", () => {
             },
             headers: {
                 'Content-Type': 'application/json',
-                'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN
+                'X-LGS-TOKEN': LGS_PROD_APIKEY.LGS_PROD_TOKEN
             },
             body: {
                 "rcNumber": "21005567",
@@ -151,7 +148,7 @@ describe("RC Services", () => {
             },
             headers: {
                 'Content-Type': 'application/json',
-                'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN
+                'X-LGS-TOKEN': LGS_PROD_APIKEY.LGS_PROD_TOKEN
             },
             body: {
                 "rcNumber": "21005567",
@@ -186,11 +183,11 @@ describe("RC Services", () => {
     //         },
     //         headers: {
     //             'Content-Type': 'application/json',
-    //             'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN
+    //             'X-LGS-TOKEN': LGS_PROD_APIKEY.LGS_PROD_TOKEN
     //         },
     //         body: {
-    //             "rcNumber": "36591184",
-    //             "entityType": "BUSINESS_NAME",
+    //             "rcNumber": "21005567",
+    //             "entityType": "LIMITED_PARTNERSHIP",
     //             "entityName": "string"
     //         }
     //     }).then((response) => {
@@ -221,11 +218,11 @@ describe("RC Services", () => {
             },
             headers: {
                 'Content-Type': 'application/json',
-                'X-LGS-TOKEN': AUTH_TOKENS.VALID_LGS_TOKEN
+                'X-LGS-TOKEN': LGS_PROD_APIKEY.LGS_PROD_TOKEN
             },
             body: {
-                "rcNumber": "36591184",
-                "entityType": "BUSINESS_NAME",
+                "rcNumber": "21005567",
+                "entityType": "LIMITED_PARTNERSHIP",
                 "entityName": "string"
             }
         }).then((response) => {
@@ -246,6 +243,5 @@ describe("RC Services", () => {
             // expect(data.entity_status).to.not.be.empty
         });
     });
-
 
 });

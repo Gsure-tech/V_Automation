@@ -1,5 +1,5 @@
-import { base64Images } from "../fixtures/base64Images";
-import { HEADERS } from "../support/constants";
+import { base64Images } from "../../fixtures/base64Images";
+import { HEADERS } from "../../support/constants";
 
 describe('VAS API Integrated Service', () => {
 

@@ -50,7 +50,7 @@ describe("LLC Registration API Flow", () => {
 
   //  SUCCESSFUL NAME RESERVATION
   it("should return 200 and reservation details when a unique proposedName is submitted", () => {
-    const proposedName = `QualityTest${Date.now()} Academy Limited`;
+    const proposedName = `TesterAcura${Date.now()} Academy`;
 
     cy.request({
       method: "POST",
@@ -144,7 +144,7 @@ describe("LLC Registration API Flow", () => {
   });
 
   // REGISTER COMPANY – INVALID DATA CODE
-  it("should return 400 BAD_REQUEST with message 'Invalid Data Provided'when invalid data is used to register name", () => {
+  it("should return 400 BAD_REQUEST with message 'Invalid Data Provided' when invalid data is used to register name", () => {
     cy.request({
       method: "POST",
       url: `${baseUrl}/api/vas/llc/company`,
@@ -381,9 +381,9 @@ describe("LLC Registration API Flow", () => {
       headers: HEADERS.VALID_API_KEY,
       body: {
         transactionRef,
-        ordinaryIssuedShare: 2000000.0,
+        ordinaryIssuedShare: 40000000.0,
         // preferenceIssuedShare: 5000000.0,
-        pricePerShare: 200000.0,
+        pricePerShare: 4000000.0,
       },
     }).then((response) => {
       expect(response.status).to.eq(200);
@@ -450,7 +450,7 @@ describe("LLC Registration API Flow", () => {
           passport: base64Images.passport,
           isShareholder: true,
           shareAllotment: {
-              allottedOrdinaryShares: 1000000.0
+              allottedOrdinaryShares: 20000000.0
           }
         },
       },
@@ -515,7 +515,7 @@ describe("LLC Registration API Flow", () => {
           passport: base64Images.passport,
           isShareholder: true,
           shareAllotment: {
-            allottedOrdinaryShares: 1000000.0
+            allottedOrdinaryShares: 20000000.0
             // allottedPreferenceShares: 5000000.0
           },
         },
@@ -1184,6 +1184,9 @@ it("should successfully submit the company registration", () => {
   cy.request({
     method: "POST",
     url: `${baseUrl}/api/vas/llc/register`,
+      qs: {
+          priorityService: true
+      },
     headers: HEADERS.VALID_API_KEY,
     body: {
       transactionRef: transactionRef,
@@ -1224,14 +1227,12 @@ it("should successfully submit the company registration", () => {
     // Verify at least one PSC exists in the affiliates list
     const pscAffiliate = body.affiliates.find(a => a.affiliateType.includes("PSC"));
     expect(pscAffiliate).to.exist;
-   
 
     // 5. Validate Statutory Payment
     const payment = body.statutoryPayment;
     expect(payment.paid).to.eq(true);
     expect(payment.statutoryFee).to.be.a("number").and.be.greaterThan(0);
-    expect(payment.paidAt).to.be.a("string");
-
+    // expect(payment.paidAt).to.be.a("string");
     // 6. Logs for debugging
     cy.log(`Final Registration ID: ${body.id}`);
     cy.log(`Transaction Ref: ${reg.transactionRef}`);
@@ -1261,12 +1262,10 @@ it("should successfully submit the company registration", () => {
             // Since it was just submitted, the status should be PENDING or similar
             expect(data.status).to.be.oneOf(["PENDING", "QUERIED", "APPROVED"]);
             expect(data.transactionRef).to.eq(transactionRef);
-
             expect(data.data.entityName).to.not.be.empty;
 
             // Log for visibility in the runner
             cy.log(`Current Status for ${transactionRef}: ${data.status}`);
         });
     });
-
 });

@@ -1,7 +1,7 @@
 describe('End-to-End Coupon Life Cycle', () => {
     let sharedCoupon;
 
-    it('Part 1: Admin - Create and Extract Coupon from UI', () => {
+    it('should login, create and Extract Coupon from UI', () => {
         cy.viewport(1440, 900);
         cy.visit("https://vas.oasisproducts.ng/login");
 
@@ -31,7 +31,7 @@ describe('End-to-End Coupon Life Cycle', () => {
         cy.get("svg[viewBox$='14']").click({force:true});
     });
 
-    it('Part 2: User - Redeem the Extracted Coupon', () => {
+    it('should Redeem the Extracted Coupon and fund wallet using it', () => {
         expect(sharedCoupon).to.not.be.undefined;
 
         cy.viewport(1440, 900);
@@ -54,7 +54,7 @@ describe('End-to-End Coupon Life Cycle', () => {
         cy.get('.btn').contains('Fund Wallet').click({ force: true });
         cy.get(':nth-child(3) > [name="options"]').click({force:true});
 
-        // --- USE THE CAPTURED CODE ---
+        // USE THE CAPTURED CODE
         cy.log(`Redeeming code: ${sharedCoupon}`);
         cy.get('[name="coupon"]').clear().type(sharedCoupon);
 
