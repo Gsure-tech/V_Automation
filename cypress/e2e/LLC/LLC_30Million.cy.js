@@ -384,9 +384,9 @@ describe("LLC Registration API Flow", () => {
       headers: HEADERS.VALID_API_KEY,
       body: {
         transactionRef,
-        ordinaryIssuedShare: 40000000.0,
+        ordinaryIssuedShare: 30000000.0,
         // preferenceIssuedShare: 5000000.0,
-        pricePerShare: 4000000.0,
+        pricePerShare: 3000000.0,
       },
     }).then((response) => {
       expect(response.status).to.eq(200);
@@ -453,7 +453,7 @@ describe("LLC Registration API Flow", () => {
           passport: base64Images.passport,
           isShareholder: true,
           shareAllotment: {
-              allottedOrdinaryShares: 20000000.0
+              allottedOrdinaryShares: 15000000.0
           }
         },
       },
@@ -518,7 +518,7 @@ describe("LLC Registration API Flow", () => {
           passport: base64Images.passport,
           isShareholder: true,
           shareAllotment: {
-            allottedOrdinaryShares: 20000000.0
+            allottedOrdinaryShares: 15000000.0
             // allottedPreferenceShares: 5000000.0
           },
         },
