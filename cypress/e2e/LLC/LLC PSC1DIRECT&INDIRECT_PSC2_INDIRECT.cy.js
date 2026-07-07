@@ -50,7 +50,7 @@ describe("LLC Registration API Flow", () => {
 
   //  SUCCESSFUL NAME RESERVATION
   it("should return 200 and reservation details when a unique proposedName is submitted", () => {
-    const proposedName = `TesterAcura${Date.now()} Academy`;
+    const proposedName = `TestThursday${Date.now()} Academy Limited`;
 
     cy.request({
       method: "POST",
@@ -144,7 +144,7 @@ describe("LLC Registration API Flow", () => {
   });
 
   // REGISTER COMPANY – INVALID DATA CODE
-  it("should return 400 BAD_REQUEST with message 'Invalid Data Provided' when invalid data is used to register name", () => {
+  it("should return 400 BAD_REQUEST with message 'Invalid Data Provided'when invalid data is used to register name", () => {
     cy.request({
       method: "POST",
       url: `${baseUrl}/api/vas/llc/company`,
@@ -381,9 +381,9 @@ describe("LLC Registration API Flow", () => {
       headers: HEADERS.VALID_API_KEY,
       body: {
         transactionRef,
-        ordinaryIssuedShare: 30000000.0,
+        ordinaryIssuedShare: 2000000.0,
         // preferenceIssuedShare: 5000000.0,
-        pricePerShare: 3000000.0,
+        pricePerShare: 200000.0,
       },
     }).then((response) => {
       expect(response.status).to.eq(200);
@@ -450,7 +450,7 @@ describe("LLC Registration API Flow", () => {
           passport: base64Images.passport,
           isShareholder: true,
           shareAllotment: {
-              allottedOrdinaryShares: 15000000.0
+              allottedOrdinaryShares: 1000000.0
           }
         },
       },
@@ -515,7 +515,7 @@ describe("LLC Registration API Flow", () => {
           passport: base64Images.passport,
           isShareholder: true,
           shareAllotment: {
-            allottedOrdinaryShares: 15000000.0
+            allottedOrdinaryShares: 1000000.0
             // allottedPreferenceShares: 5000000.0
           },
         },
@@ -607,191 +607,8 @@ describe("LLC Registration API Flow", () => {
   });
 
 
-
-
-  // // 6. REGISTER AFFILIATE - 
-  // it("should register a corporate affiliate using the same transactionRef", () => {
-  //   cy.request({
-  //     method: "POST",
-  //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
-  //     body: {
-  //       transactionRef: transactionRef,
-  //       corporate: {
-  //         isForeign: false,
-  //         rcNumber: "RC1234567",
-  //         companyName: "TechNova Solutions Ltd",
-  //         contactPhoneNumber: "08098765432",
-  //         contactEmail: "info@technova.com",
-  //         contactSignature: base64Images.signature,
-  //         affiliateType: "SHAREHOLDER",
-  //         serviceAddress: {
-  //           country: "Nigeria",
-  //           state: "Abuja",
-  //           lga: "AMAC",
-  //           city: "Abuja",
-  //           streetInfo: "Plot 22, Central Business District",
-  //         },
-  //         isShareholder: true,
-  //         shareAllotment: {
-  //           allottedOrdinaryShares: 20000.0,
-  //           allottedPreferenceShares: 5000.0,
-  //         },
-  //       },
-  //     },
-  //   }).then((response) => {
-  //     expect(response.status).to.eq(200);
-  //     expect(response.body.status).to.eq("OK");
-  //     expect(response.body.message).to.eq("Affiliate created");
-
-  //     const data = response.body.data;
-
-  //     // Validate affiliate key
-  //     expect(data.affiliateKey).to.be.a("string");
-  //     expect(data.affiliateKey).to.not.be.empty;
-  //     affiliateKeyCorporate = response.body.data.affiliateKey;
-  //     // Validate nextStepUrl
-  //     expect(data.nextStepUrl).to.be.a("string");
-  //     expect(data.nextStepUrl).to.not.be.empty;
-  //   });
-  // });
-
-  // // 4b. UPDATE INDIVIDUAL AFFILIATE
-  // it("should update the individual affiliate details", () => {
-  //   cy.request({
-  //     method: "PUT",
-  //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
-  //     body: {
-  //       transactionRef: transactionRef,
-  //       affiliateKey: affiliateKeyIndividual,
-  //       surname: "Joycee",
-  //       firstname: "Kemi",
-  //       otherName: "Kolawole",
-  //       occupation: "Senior Software Engineer",
-  //       dob: "1990-05-12",
-  //       gender: "FEMALE",
-  //       email: "joyoasis9023@gmail.com",
-  //       phoneNumber: "08033499949",
-  //       affiliateType: "DIRECTOR",
-  //       serviceAddress: {
-  //         country: "Nigeria",
-  //         state: "Lagos",
-  //         lga: "Ikeja",
-  //         city: "Ikeja",
-  //         streetInfo: "15A Allen Avenue",
-  //       },
-  //       residentialAddress: {
-  //         country: "Nigeria",
-  //         state: "Lagos",
-  //         lga: "Eti-Osa",
-  //         city: "Lekki",
-  //         streetInfo: "45B Admiralty Way",
-  //       },
-  //       meansOfId: {
-  //         idType: "NIN",
-  //         idNumber: "IND202511250842060000000099",
-  //         image:
-  //           "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-  //       },
-  //       signature:
-  //         "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-  //       isShareholder: true,
-  //       shareAllotment: {
-  //         allottedOrdinaryShares: 7500.0,
-  //         allottedPreferenceShares: 2000.0,
-  //       },
-  //     },
-  //   }).then((response) => {
-  //     expect(response.status).to.eq(200);
-  //     expect(response.body.status).to.eq("OK");
-  //     expect(response.body.message).to.eq("Affiliate Updated");
-  //   });
-  // });
-
-  // // 5b. UPDATE CORPORATE AFFILIATE
-  // it("should update the corporate affiliate details", () => {
-  //   cy.request({
-  //     method: "PUT",
-  //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
-  //     body: {
-  //       transactionRef: transactionRef,
-  //       affiliateKey: affiliateKeyCorporate,
-  //       isForeign: false,
-  //       rcNumber: "RC1234567",
-  //       companyName: "TechNova Solutions Ltd",
-  //       contactPhoneNumber: "07033443322",
-  //       contactEmail: "info@technova.com",
-  //       contactSignature: "base64encodedstring-signature",
-  //       affiliateType: "SHAREHOLDER",
-  //       serviceAddress: {
-  //         country: "Nigeria",
-  //         state: "Abuja",
-  //         lga: "AMAC",
-  //         city: "Abuja",
-  //         streetInfo: "Plot 22, Central Business District",
-  //       },
-  //       isShareholder: true,
-  //       shareAllotment: {
-  //         allottedOrdinaryShares: 20000.0,
-  //         allottedPreferenceShares: 5000.0,
-  //       },
-  //     },
-  //   }).then((response) => {
-  //     expect(response.status).to.eq(200);
-  //     expect(response.body.status).to.eq("OK");
-  //     expect(response.body.message).to.eq("Affiliate Updated");
-  //   });
-  // });
-
-  // // 7. DELETE AFFILIATE – INVALID affiliate_id / transaction_ref
-  // it("should return 400 when deleting affiliate with invalid affiliate_id or transaction_ref", () => {
-  //   cy.request({
-  //     method: "DELETE",
-  //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
-  //     failOnStatusCode: false,
-  //     body: {
-  //       affiliate_id: "IND2025120210210599190000284",
-  //       transaction_ref: "VAS202512021008297530",
-  //     },
-  //   }).then((resp) => {
-  //     expect(resp.status).to.eq(400);
-  //     expect(resp.body.status).to.eq("BAD_REQUEST");
-  //     expect(resp.body.message).to.eq(
-  //       "Invalid affiliate key or transactionRef passed",
-  //     );
-  //     expect(resp.body.data).to.be.null;
-  //     expect(resp.body.success).to.be.false;
-  //   });
-  // });
-
-  // //  DELETE AFFILIATE – SUCCESS
-  // it("should delete an affiliate successfully and return 200", function () {
-  //   cy.request({
-  //     method: "DELETE",
-  //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
-  //     failOnStatusCode: false,
-  //     body: {
-  //       affiliate_id: affiliateKeyCorporate,
-  //       transaction_ref: transactionRef,
-  //     },
-  //   }).then((deleteResp) => {
-  //     expect(deleteResp.status).to.eq(200);
-  //     expect(deleteResp.body.status).to.eq("OK");
-  //     expect(deleteResp.body.message).to.eq("Affiliate deleted");
-  //     expect(deleteResp.body.data.affiliateKey).to.eq(affiliateKeyCorporate);
-  //     expect(deleteResp.body.success).to.be.true;
-  //   });
-  // });
-
-
-
-  
 // REGISTER PSC 1
-it("should add a person with significant control (PSC) 1", () => {
+it("should add a person with significant control (PSC)1 OWNS DIRECT & INDIRECT", () => {
   cy.request({
     method: "POST",
     url: `${baseUrl}/api/vas/llc/psc`,
@@ -799,49 +616,49 @@ it("should add a person with significant control (PSC) 1", () => {
     body: {
       transactionRef: transactionRef,
       affiliateKey: affiliateKeyIndividual1,
-      // individual: {
-      //   surname: "Lekan",
-      //   firstname: "Chinedu",
-      //   otherName: "Moses",
-      //   occupation: "Civil Engineer",
-      //   nationality: "Nigerian",
-      //   dob: "1988-05-15",
-      //   gender: "MALE",
-      //   email: "chidi.adepoju@example.com",
-      //   phoneNumber: "09011223344",
-      //   affiliateType: ["PSC"],
-      //   serviceAddress: {
-      //     country: "NIGERIA",
-      //     state: "LAGOS",
-      //     lga: "IKEJA",
-      //     city: "Lagos",
-      //     streetInfo: "15 Adeola Odeku Street, Victoria Island",
-      //   },
-      //   residentialAddress: {
-      //     country: "NIGERIA",
-      //     state: "IMO",
-      //     lga: "MBAITOLI",
-      //     city: "Owerri",
-      //     streetInfo: "12 Okija Road, opposite Modern Market",
-      //   },
-      //   meansOfId: {
-      //     idType: "NIN",
-      //     idNumber: "12345678901",
-      //     image: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-      //   },
-      //   signature: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-      //   passport: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-      // },
-        ownsIndirectShares: false,
-        // indirectShareDetails: {
-        //     sharePercent: "5",
-        //     legalOwners: [
-        //         {
-        //             affiliateKey: affiliateKeyIndividual1,
-        //             sharePercent: "5"
-        //         }
-        //     ]
-        // },
+      individual: {
+        surname: "Lekan",
+        firstname: "Chinedu",
+        otherName: "Moses",
+        occupation: "Civil Engineer",
+        nationality: "Nigerian",
+        dob: "1988-05-15",
+        gender: "MALE",
+        email: "chidi.adepoju@example.com",
+        phoneNumber: "09011223344",
+        affiliateType: ["PSC"],
+        serviceAddress: {
+          country: "NIGERIA",
+          state: "LAGOS",
+          lga: "IKEJA",
+          city: "Lagos",
+          streetInfo: "15 Adeola Odeku Street, Victoria Island",
+        },
+        residentialAddress: {
+          country: "NIGERIA",
+          state: "IMO",
+          lga: "MBAITOLI",
+          city: "Owerri",
+          streetInfo: "12 Okija Road, opposite Modern Market",
+        },
+        meansOfId: {
+          idType: "NIN",
+          idNumber: "12345678901",
+          image: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+        },
+        signature: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+        passport: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+      },
+        ownsIndirectShares: true,
+        indirectShareDetails: {
+            sharePercent: "50",
+            legalOwners: [
+                {
+                    affiliateKey: affiliateKeyIndividual2,
+                    sharePercent: "50"
+                }
+            ]
+        },
         ownsDirectShares: true,
         directShareDetails: {
           sharePercent: "50",
@@ -894,299 +711,111 @@ it("should add a person with significant control (PSC) 1", () => {
 });
 
 
-  // // 6. REGISTER AFFILIATE - CORPORATE
-  // it("should register a corporate affiliate using the same transactionRef", () => {
-  //   cy.request({
-  //     method: "POST",
-  //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
-  //     body: {
-  //       transactionRef: transactionRef,
-  //       corporate: {
-  //         isForeign: false,
-  //         rcNumber: "RC1234567",
-  //         companyName: "TechNova Solutions Ltd",
-  //         contactPhoneNumber: "08098765432",
-  //         contactEmail: "info@technova.com",
-  //         contactSignature: base64Images.signature,
-  //         affiliateType: "SHAREHOLDER",
-  //         serviceAddress: {
-  //           country: "Nigeria",
-  //           state: "Abuja",
-  //           lga: "AMAC",
-  //           city: "Abuja",
-  //           streetInfo: "Plot 22, Central Business District",
-  //         },
-  //         isShareholder: true,
-  //         shareAllotment: {
-  //           allottedOrdinaryShares: 20000.0,
-  //           allottedPreferenceShares: 5000.0,
-  //         },
-  //       },
-  //     },
-  //   }).then((response) => {
-  //     expect(response.status).to.eq(200);
-  //     expect(response.body.status).to.eq("OK");
-  //     expect(response.body.message).to.eq("Affiliate created");
-
-  //     const data = response.body.data;
-
-  //     // Validate affiliate key
-  //     expect(data.affiliateKey).to.be.a("string");
-  //     expect(data.affiliateKey).to.not.be.empty;
-  //     affiliateKeyCorporate = response.body.data.affiliateKey;
-  //     // Validate nextStepUrl
-  //     expect(data.nextStepUrl).to.be.a("string");
-  //     expect(data.nextStepUrl).to.not.be.empty;
-  //   });
-  // });
-
-  // // 4b. UPDATE INDIVIDUAL AFFILIATE
-  // it("should update the individual affiliate details", () => {
-  //   cy.request({
-  //     method: "PUT",
-  //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
-  //     body: {
-  //       transactionRef: transactionRef,
-  //       affiliateKey: affiliateKeyIndividual,
-  //       surname: "Joycee",
-  //       firstname: "Kemi",
-  //       otherName: "Kolawole",
-  //       occupation: "Senior Software Engineer",
-  //       dob: "1990-05-12",
-  //       gender: "FEMALE",
-  //       email: "joyoasis9023@gmail.com",
-  //       phoneNumber: "08033499949",
-  //       affiliateType: "DIRECTOR",
-  //       serviceAddress: {
-  //         country: "Nigeria",
-  //         state: "Lagos",
-  //         lga: "Ikeja",
-  //         city: "Ikeja",
-  //         streetInfo: "15A Allen Avenue",
-  //       },
-  //       residentialAddress: {
-  //         country: "Nigeria",
-  //         state: "Lagos",
-  //         lga: "Eti-Osa",
-  //         city: "Lekki",
-  //         streetInfo: "45B Admiralty Way",
-  //       },
-  //       meansOfId: {
-  //         idType: "NIN",
-  //         idNumber: "IND202511250842060000000099",
-  //         image:
-  //           "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-  //       },
-  //       signature:
-  //         "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-  //       isShareholder: true,
-  //       shareAllotment: {
-  //         allottedOrdinaryShares: 7500.0,
-  //         allottedPreferenceShares: 2000.0,
-  //       },
-  //     },
-  //   }).then((response) => {
-  //     expect(response.status).to.eq(200);
-  //     expect(response.body.status).to.eq("OK");
-  //     expect(response.body.message).to.eq("Affiliate Updated");
-  //   });
-  // });
-
-  // // 5b. UPDATE CORPORATE AFFILIATE
-  // it("should update the corporate affiliate details", () => {
-  //   cy.request({
-  //     method: "PUT",
-  //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
-  //     body: {
-  //       transactionRef: transactionRef,
-  //       affiliateKey: affiliateKeyCorporate,
-  //       isForeign: false,
-  //       rcNumber: "RC1234567",
-  //       companyName: "TechNova Solutions Ltd",
-  //       contactPhoneNumber: "07033443322",
-  //       contactEmail: "info@technova.com",
-  //       contactSignature: "base64encodedstring-signature",
-  //       affiliateType: "SHAREHOLDER",
-  //       serviceAddress: {
-  //         country: "Nigeria",
-  //         state: "Abuja",
-  //         lga: "AMAC",
-  //         city: "Abuja",
-  //         streetInfo: "Plot 22, Central Business District",
-  //       },
-  //       isShareholder: true,
-  //       shareAllotment: {
-  //         allottedOrdinaryShares: 20000.0,
-  //         allottedPreferenceShares: 5000.0,
-  //       },
-  //     },
-  //   }).then((response) => {
-  //     expect(response.status).to.eq(200);
-  //     expect(response.body.status).to.eq("OK");
-  //     expect(response.body.message).to.eq("Affiliate Updated");
-  //   });
-  // });
-
-  // // 7. DELETE AFFILIATE – INVALID affiliate_id / transaction_ref
-  // it("should return 400 when deleting affiliate with invalid affiliate_id or transaction_ref", () => {
-  //   cy.request({
-  //     method: "DELETE",
-  //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
-  //     failOnStatusCode: false,
-  //     body: {
-  //       affiliate_id: "IND2025120210210599190000284",
-  //       transaction_ref: "VAS202512021008297530",
-  //     },
-  //   }).then((resp) => {
-  //     expect(resp.status).to.eq(400);
-  //     expect(resp.body.status).to.eq("BAD_REQUEST");
-  //     expect(resp.body.message).to.eq(
-  //       "Invalid affiliate key or transactionRef passed",
-  //     );
-  //     expect(resp.body.data).to.be.null;
-  //     expect(resp.body.success).to.be.false;
-  //   });
-  // });
-
-  // //  DELETE AFFILIATE – SUCCESS
-  // it("should delete an affiliate successfully and return 200", function () {
-  //   cy.request({
-  //     method: "DELETE",
-  //     url: "http://41.207.248.246:9088/api/vas/llc/affiliates",
-  //     headers: HEADERS.VALID_API_KEY,
-  //     failOnStatusCode: false,
-  //     body: {
-  //       affiliate_id: affiliateKeyCorporate,
-  //       transaction_ref: transactionRef,
-  //     },
-  //   }).then((deleteResp) => {
-  //     expect(deleteResp.status).to.eq(200);
-  //     expect(deleteResp.body.status).to.eq("OK");
-  //     expect(deleteResp.body.message).to.eq("Affiliate deleted");
-  //     expect(deleteResp.body.data.affiliateKey).to.eq(affiliateKeyCorporate);
-  //     expect(deleteResp.body.success).to.be.true;
-  //   });
-  // });
-
 
 // REGISTER PSC 2
-it("should add a person with significant control (PSC) 2", () => {
-  cy.log(`Stored PSC 2 Affiliate Key: ${affiliateKeyIndividual2}`),
-  cy.request({
-    method: "POST",
-    url: `${baseUrl}/api/vas/llc/psc`,
-    headers: HEADERS.VALID_API_KEY,
-    body: {
-      transactionRef: transactionRef,
-      affiliateKey: affiliateKeyIndividual2,
-      // individual: {
-      //   surname: "Lekan",
-      //   firstname: "Chinedu",
-      //   otherName: "Moses",
-      //   occupation: "Civil Engineer",
-      //   nationality: "Nigerian",
-      //   dob: "1988-05-15",
-      //   gender: "MALE",
-      //   email: "chidi.adepoju@example.com",
-      //   phoneNumber: "09011223344",
-      //   affiliateType: ["PSC"],
-      //   serviceAddress: {
-      //     country: "NIGERIA",
-      //     state: "LAGOS",
-      //     lga: "IKEJA",
-      //     city: "Lagos",
-      //     streetInfo: "15 Adeola Odeku Street, Victoria Island",
-      //   },
-      //   residentialAddress: {
-      //     country: "NIGERIA",
-      //     state: "IMO",
-      //     lga: "MBAITOLI",
-      //     city: "Owerri",
-      //     streetInfo: "12 Okija Road, opposite Modern Market",
-      //   },
-      //   meansOfId: {
-      //     idType: "NIN",
-      //     idNumber: "12345678901",
-      //     image: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-      //   },
-      //   signature: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-      //   passport: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-      // },
-        ownsIndirectShares: false,
-        // indirectShareDetails: {
-        //     sharePercent: "5",
-        //     legalOwners: [
-        //         {
-        //             affiliateKey: affiliateKeyIndividual1,
-        //             sharePercent: "5"
-        //         }
-        //     ]
-        // },
-        ownsDirectShares: true,
-        directShareDetails: {
-          sharePercent: "50",
-          legalOwners: [
-            {
-              // Using the affiliateKey from the Individual/Director registration step
-              affiliateKey: affiliateKeyIndividual2,
-              sharePercent: "50",
-            },
-          ],
-        },
-        isPep: true,
-        pepDetails: {
-          reasonForPep: "Former government official",
-          pepType: "DOMESTIC_PEP",
-          roleOfPep: "Former Minister",
-          officeOfPep: "Ministry of Finance",
-        },
-        isPscAffiliated: true,
-        pscAffiliateDetails: {
-          entityName: "Amigo and Sons Inc",
-          entityNumber: "RC9098778",
-          isAffiliatePlc: true,
-          plcDetails: {
-            stockExchangeId: "NGX",
-            identifierCode: "AMIG",
-            tickerCode: "AMIG.NG",
-          },
-          isAffiliateStateOwned: false,
-        },
-        canChangeDirectors: true,
-        hasSignificantControlOfCompany: true,
-      },
-  }).then((response) => {
-    // Asserting the success status based on your sample response
-    cy.log(`Stored PSC 2 Affiliate Key: ${affiliateKeyPSC2}`);
-    cy.log(`Stored PSC 2 Affiliate Key: ${affiliateKeyIndividual2}`);
-    expect(response.status).to.eq(200);
-    expect(response.body.status).to.eq("OK");
-    expect(response.body.message).to.eq("PSC created successfully");
-    expect(response.body.success).to.be.true;
+// it("should add a person with significant control (PSC) 2 with Indirect shares", () => {
+//   cy.log(`Stored PSC 2 Affiliate Key: ${affiliateKeyIndividual2}`),
+//   cy.request({
+//     method: "POST",
+//     url: `${baseUrl}/api/vas/llc/psc`,
+//     headers: HEADERS.VALID_API_KEY,
+//     body: {
+//       transactionRef: transactionRef,
+//       individual: {
+//         surname: "Lekan",
+//         firstname: "Chinedu",
+//         otherName: "Moses",
+//         occupation: "Civil Engineer",
+//         nationality: "Nigerian",
+//         dob: "1988-05-15",
+//         gender: "MALE",
+//         email: "chidi.adepoju@example.com",
+//         phoneNumber: "09011223344",
+//         affiliateType: ["PSC"],
+//         serviceAddress: {
+//           country: "NIGERIA",
+//           state: "LAGOS",
+//           lga: "IKEJA",
+//           city: "Lagos",
+//           streetInfo: "15 Adeola Odeku Street, Victoria Island",
+//         },
+//         residentialAddress: {
+//           country: "NIGERIA",
+//           state: "IMO",
+//           lga: "MBAITOLI",
+//           city: "Owerri",
+//           streetInfo: "12 Okija Road, opposite Modern Market",
+//         },
+//         meansOfId: {
+//           idType: "NIN",
+//           idNumber: "12345678901",
+//           image: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+//         },
+//         signature: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+//         passport: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+//       },
+//         ownsIndirectShares: true,
+//         indirectShareDetails: {
+//             sharePercent: "50",
+//             legalOwners: [
+//                 {
+//                     affiliateKey: affiliateKeyIndividual2,
+//                     sharePercent: "50"
+//                 }
+//             ]
+//         },
+//         ownsDirectShares: false,
+//         // directShareDetails: {
+//         //   sharePercent: "50",
+//         //   legalOwners: [
+//         //     {
+//         //       // Using the affiliateKey from the Individual/Director registration step
+//         //       affiliateKey: affiliateKeyIndividual2,
+//         //       sharePercent: "50",
+//         //     },
+//         //   ],
+//         // },
+//         isPep: true,
+//         pepDetails: {
+//           reasonForPep: "Former government official",
+//           pepType: "DOMESTIC_PEP",
+//           roleOfPep: "Former Minister",
+//           officeOfPep: "Ministry of Finance",
+//         },
+//         isPscAffiliated: false,
+//         canChangeDirectors: false,
+//         hasSignificantControlOfCompany: true,
+//       },
+//   }).then((response) => {
+//     // Asserting the success status based on your sample response
+//     cy.log(`Stored PSC 2 Affiliate Key: ${affiliateKeyPSC2}`);
+//     cy.log(`Stored PSC 2 Affiliate Key: ${affiliateKeyIndividual2}`);
+//     expect(response.status).to.eq(200);
+//     expect(response.body.status).to.eq("OK");
+//     expect(response.body.message).to.eq("PSC created successfully");
+//     expect(response.body.success).to.be.true;
+//
+//     // Capture the PSC affiliateKey for the final registration step
+//     const data = response.body.data;
+//     expect(data.affiliateKey).to.be.a("string").and.not.be.empty;
+//
+//     // Storing the value globally/locally for the next it block
+//     affiliateKeyPSC2 = data.affiliateKey;
+//
+//     cy.log(`Stored PSC 2 Affiliate Key: ${affiliateKeyPSC2}`);
+//   });
+// });
 
-    // Capture the PSC affiliateKey for the final registration step
-    const data = response.body.data;
-    expect(data.affiliateKey).to.be.a("string").and.not.be.empty;
-    
-    // Storing the value globally/locally for the next it block
-    affiliateKeyPSC2 = data.affiliateKey;
 
-    cy.log(`Stored PSC 2 Affiliate Key: ${affiliateKeyPSC2}`);
-  });
-});
 
 //SUBMIT REGISTRATION
 it("should successfully submit the company registration", () => {
   cy.request({
     method: "POST",
     url: `${baseUrl}/api/vas/llc/register`,
-      qs: {
-          priorityService: true
-      },
+      // qs: {
+      //     priorityService: true
+      // },
     headers: HEADERS.VALID_API_KEY,
     body: {
       transactionRef: transactionRef,
@@ -1205,11 +834,11 @@ it("should successfully submit the company registration", () => {
     expect(reg.proposedName).to.be.a("string").and.not.be.empty;
     expect(reg.reservationCode).to.eq(reservationCode);
     expect(reg.natureOfBusiness).to.not.be.empty;
-    
-    
+
+
     // Validate objectsOfMem is an array and has items
     expect(reg.objectsOfMem).to.be.an("array").and.have.length.at.least(1);
-    
+
     // Validate address array structure
     expect(reg.address).to.be.an("array").and.have.length.at.least(1);
     expect(reg.address[0]).to.have.property("type");
@@ -1223,16 +852,18 @@ it("should successfully submit the company registration", () => {
 
     // 4. Validate Affiliates (Directors, PSCs, Witnesses)
     expect(body.affiliates).to.be.an("array").and.have.length.at.least(1);
-    
+
     // Verify at least one PSC exists in the affiliates list
     const pscAffiliate = body.affiliates.find(a => a.affiliateType.includes("PSC"));
     expect(pscAffiliate).to.exist;
+
 
     // 5. Validate Statutory Payment
     const payment = body.statutoryPayment;
     expect(payment.paid).to.eq(true);
     expect(payment.statutoryFee).to.be.a("number").and.be.greaterThan(0);
     // expect(payment.paidAt).to.be.a("string");
+
     // 6. Logs for debugging
     cy.log(`Final Registration ID: ${body.id}`);
     cy.log(`Transaction Ref: ${reg.transactionRef}`);
@@ -1262,10 +893,12 @@ it("should successfully submit the company registration", () => {
             // Since it was just submitted, the status should be PENDING or similar
             expect(data.status).to.be.oneOf(["PENDING", "QUERIED", "APPROVED"]);
             expect(data.transactionRef).to.eq(transactionRef);
+
             expect(data.data.entityName).to.not.be.empty;
 
             // Log for visibility in the runner
             cy.log(`Current Status for ${transactionRef}: ${data.status}`);
         });
     });
+
 });

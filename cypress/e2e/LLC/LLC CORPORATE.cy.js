@@ -188,6 +188,9 @@ describe("LLC Registration API Flow", () => {
         cy.request({
             method: "POST",
             url: `${baseUrl}/api/vas/llc/company`,
+            qs: {
+                priorityService: true
+            },
             headers: HEADERS.VALID_API_KEY,
             body: {
                 transactionRef,

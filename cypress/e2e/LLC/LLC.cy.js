@@ -50,7 +50,7 @@ describe("LLC Registration API Flow", () => {
 
   //  SUCCESSFUL NAME RESERVATION
   it("should return 200 and reservation details when a unique proposedName is submitted", () => {
-    const proposedName = `TestCapital${Date.now()} Academy Limited`;
+    const proposedName = `TestThursday${Date.now()} Academy Limited`;
 
     cy.request({
       method: "POST",
@@ -1147,7 +1147,7 @@ it("should add a person with significant control (PSC) 2", () => {
         isPscAffiliated: true,
         pscAffiliateDetails: {
           entityName: "Amigo and Sons Inc",
-          entityNumber: "RC9098778",
+          entityNumber: "218287",
           isAffiliatePlc: true,
           plcDetails: {
             stockExchangeId: "NGX",

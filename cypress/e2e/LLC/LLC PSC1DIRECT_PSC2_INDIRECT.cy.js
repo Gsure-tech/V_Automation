@@ -50,7 +50,7 @@ describe("LLC Registration API Flow", () => {
 
   //  SUCCESSFUL NAME RESERVATION
   it("should return 200 and reservation details when a unique proposedName is submitted", () => {
-    const proposedName = `TesterAcura${Date.now()} Academy`;
+    const proposedName = `TestThursday${Date.now()} Academy Limited`;
 
     cy.request({
       method: "POST",
@@ -144,7 +144,7 @@ describe("LLC Registration API Flow", () => {
   });
 
   // REGISTER COMPANY – INVALID DATA CODE
-  it("should return 400 BAD_REQUEST with message 'Invalid Data Provided' when invalid data is used to register name", () => {
+  it("should return 400 BAD_REQUEST with message 'Invalid Data Provided'when invalid data is used to register name", () => {
     cy.request({
       method: "POST",
       url: `${baseUrl}/api/vas/llc/company`,
@@ -381,9 +381,9 @@ describe("LLC Registration API Flow", () => {
       headers: HEADERS.VALID_API_KEY,
       body: {
         transactionRef,
-        ordinaryIssuedShare: 30000000.0,
+        ordinaryIssuedShare: 2000000.0,
         // preferenceIssuedShare: 5000000.0,
-        pricePerShare: 3000000.0,
+        pricePerShare: 200000.0,
       },
     }).then((response) => {
       expect(response.status).to.eq(200);
@@ -450,7 +450,7 @@ describe("LLC Registration API Flow", () => {
           passport: base64Images.passport,
           isShareholder: true,
           shareAllotment: {
-              allottedOrdinaryShares: 15000000.0
+              allottedOrdinaryShares: 1000000.0
           }
         },
       },
@@ -515,7 +515,7 @@ describe("LLC Registration API Flow", () => {
           passport: base64Images.passport,
           isShareholder: true,
           shareAllotment: {
-            allottedOrdinaryShares: 15000000.0
+            allottedOrdinaryShares: 1000000.0
             // allottedPreferenceShares: 5000000.0
           },
         },
@@ -1074,7 +1074,7 @@ it("should add a person with significant control (PSC) 1", () => {
 
 
 // REGISTER PSC 2
-it("should add a person with significant control (PSC) 2", () => {
+it("should add a person with significant control (PSC) 2 with Indirect shares", () => {
   cy.log(`Stored PSC 2 Affiliate Key: ${affiliateKeyIndividual2}`),
   cy.request({
     method: "POST",
@@ -1082,61 +1082,60 @@ it("should add a person with significant control (PSC) 2", () => {
     headers: HEADERS.VALID_API_KEY,
     body: {
       transactionRef: transactionRef,
-      affiliateKey: affiliateKeyIndividual2,
-      // individual: {
-      //   surname: "Lekan",
-      //   firstname: "Chinedu",
-      //   otherName: "Moses",
-      //   occupation: "Civil Engineer",
-      //   nationality: "Nigerian",
-      //   dob: "1988-05-15",
-      //   gender: "MALE",
-      //   email: "chidi.adepoju@example.com",
-      //   phoneNumber: "09011223344",
-      //   affiliateType: ["PSC"],
-      //   serviceAddress: {
-      //     country: "NIGERIA",
-      //     state: "LAGOS",
-      //     lga: "IKEJA",
-      //     city: "Lagos",
-      //     streetInfo: "15 Adeola Odeku Street, Victoria Island",
-      //   },
-      //   residentialAddress: {
-      //     country: "NIGERIA",
-      //     state: "IMO",
-      //     lga: "MBAITOLI",
-      //     city: "Owerri",
-      //     streetInfo: "12 Okija Road, opposite Modern Market",
-      //   },
-      //   meansOfId: {
-      //     idType: "NIN",
-      //     idNumber: "12345678901",
-      //     image: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-      //   },
-      //   signature: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-      //   passport: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-      // },
-        ownsIndirectShares: false,
-        // indirectShareDetails: {
-        //     sharePercent: "5",
-        //     legalOwners: [
-        //         {
-        //             affiliateKey: affiliateKeyIndividual1,
-        //             sharePercent: "5"
-        //         }
-        //     ]
-        // },
-        ownsDirectShares: true,
-        directShareDetails: {
-          sharePercent: "50",
-          legalOwners: [
-            {
-              // Using the affiliateKey from the Individual/Director registration step
-              affiliateKey: affiliateKeyIndividual2,
-              sharePercent: "50",
-            },
-          ],
+      individual: {
+        surname: "Lekan",
+        firstname: "Chinedu",
+        otherName: "Moses",
+        occupation: "Civil Engineer",
+        nationality: "Nigerian",
+        dob: "1988-05-15",
+        gender: "MALE",
+        email: "chidi.adepoju@example.com",
+        phoneNumber: "09011223344",
+        affiliateType: ["PSC"],
+        serviceAddress: {
+          country: "NIGERIA",
+          state: "LAGOS",
+          lga: "IKEJA",
+          city: "Lagos",
+          streetInfo: "15 Adeola Odeku Street, Victoria Island",
         },
+        residentialAddress: {
+          country: "NIGERIA",
+          state: "IMO",
+          lga: "MBAITOLI",
+          city: "Owerri",
+          streetInfo: "12 Okija Road, opposite Modern Market",
+        },
+        meansOfId: {
+          idType: "NIN",
+          idNumber: "12345678901",
+          image: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+        },
+        signature: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+        passport: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+      },
+        ownsIndirectShares: true,
+        indirectShareDetails: {
+            sharePercent: "50",
+            legalOwners: [
+                {
+                    affiliateKey: affiliateKeyIndividual2,
+                    sharePercent: "50"
+                }
+            ]
+        },
+        ownsDirectShares: false,
+        // directShareDetails: {
+        //   sharePercent: "50",
+        //   legalOwners: [
+        //     {
+        //       // Using the affiliateKey from the Individual/Director registration step
+        //       affiliateKey: affiliateKeyIndividual2,
+        //       sharePercent: "50",
+        //     },
+        //   ],
+        // },
         isPep: true,
         pepDetails: {
           reasonForPep: "Former government official",
@@ -1144,19 +1143,8 @@ it("should add a person with significant control (PSC) 2", () => {
           roleOfPep: "Former Minister",
           officeOfPep: "Ministry of Finance",
         },
-        isPscAffiliated: true,
-        pscAffiliateDetails: {
-          entityName: "Amigo and Sons Inc",
-          entityNumber: "RC9098778",
-          isAffiliatePlc: true,
-          plcDetails: {
-            stockExchangeId: "NGX",
-            identifierCode: "AMIG",
-            tickerCode: "AMIG.NG",
-          },
-          isAffiliateStateOwned: false,
-        },
-        canChangeDirectors: true,
+        isPscAffiliated: false,
+        canChangeDirectors: false,
         hasSignificantControlOfCompany: true,
       },
   }).then((response) => {
@@ -1184,9 +1172,9 @@ it("should successfully submit the company registration", () => {
   cy.request({
     method: "POST",
     url: `${baseUrl}/api/vas/llc/register`,
-      qs: {
-          priorityService: true
-      },
+      // qs: {
+      //     priorityService: true
+      // },
     headers: HEADERS.VALID_API_KEY,
     body: {
       transactionRef: transactionRef,
@@ -1205,11 +1193,11 @@ it("should successfully submit the company registration", () => {
     expect(reg.proposedName).to.be.a("string").and.not.be.empty;
     expect(reg.reservationCode).to.eq(reservationCode);
     expect(reg.natureOfBusiness).to.not.be.empty;
-    
-    
+
+
     // Validate objectsOfMem is an array and has items
     expect(reg.objectsOfMem).to.be.an("array").and.have.length.at.least(1);
-    
+
     // Validate address array structure
     expect(reg.address).to.be.an("array").and.have.length.at.least(1);
     expect(reg.address[0]).to.have.property("type");
@@ -1223,16 +1211,18 @@ it("should successfully submit the company registration", () => {
 
     // 4. Validate Affiliates (Directors, PSCs, Witnesses)
     expect(body.affiliates).to.be.an("array").and.have.length.at.least(1);
-    
+
     // Verify at least one PSC exists in the affiliates list
     const pscAffiliate = body.affiliates.find(a => a.affiliateType.includes("PSC"));
     expect(pscAffiliate).to.exist;
+
 
     // 5. Validate Statutory Payment
     const payment = body.statutoryPayment;
     expect(payment.paid).to.eq(true);
     expect(payment.statutoryFee).to.be.a("number").and.be.greaterThan(0);
     // expect(payment.paidAt).to.be.a("string");
+
     // 6. Logs for debugging
     cy.log(`Final Registration ID: ${body.id}`);
     cy.log(`Transaction Ref: ${reg.transactionRef}`);
@@ -1262,10 +1252,12 @@ it("should successfully submit the company registration", () => {
             // Since it was just submitted, the status should be PENDING or similar
             expect(data.status).to.be.oneOf(["PENDING", "QUERIED", "APPROVED"]);
             expect(data.transactionRef).to.eq(transactionRef);
+
             expect(data.data.entityName).to.not.be.empty;
 
             // Log for visibility in the runner
             cy.log(`Current Status for ${transactionRef}: ${data.status}`);
         });
     });
+
 });
