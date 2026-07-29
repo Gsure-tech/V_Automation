@@ -418,13 +418,12 @@ describe("LLC Registration API Flow", () => {
             method: "POST",
             url: `${baseUrl}/api/vas/llc/affiliates`,
             headers: HEADERS.VALID_API_KEY,
-            timeout: 60000,
             body: {
                 transactionRef: transactionRef,
                 individual: {
-                    surname: "John",
-                    firstname: "Terry",
-                    otherName: "Senior",
+                    surname: "Adamu",
+                    firstname: "John",
+                    otherName: "Doe",
                     occupation: "Software Engineer",
                     nationality: "Nigerian",
                     dob: "1990-05-12",
@@ -488,13 +487,12 @@ describe("LLC Registration API Flow", () => {
             method: "POST",
             url: `${baseUrl}/api/vas/llc/affiliates`,
             headers: HEADERS.VALID_API_KEY,
-            timeout: 60000,
             body: {
                 transactionRef: transactionRef,
                 individual: {
-                    surname: "Emem",
-                    firstname: "Kenny",
-                    otherName: "Gimmy",
+                    surname: "Mike",
+                    firstname: "Joy",
+                    otherName: "Nike",
                     occupation: "Software Engineer",
                     nationality: "Nigerian",
                     dob: "1990-05-12",
@@ -559,13 +557,12 @@ describe("LLC Registration API Flow", () => {
       method: "POST",
       url: `${baseUrl}/api/vas/llc/affiliates`,
       headers: HEADERS.VALID_API_KEY,
-        timeout: 60000,
       body: {
         transactionRef: transactionRef,
         individual: {
-          surname: "Clara",
-          firstname: "Monica",
-          otherName: "Morgan",
+            surname: "Peace",
+            firstname: "Okeke",
+            otherName: "Eny",
           occupation: "Software Engineer",
           nationality: "Nigerian",
           dob: "1990-05-12",
@@ -616,9 +613,11 @@ describe("LLC Registration API Flow", () => {
       // Verify next step URL
       expect(data.nextStepUrl).to.be.a("string");
       expect(data.nextStepUrl).to.not.be.empty;
-      // cy.log(`2nd Affiliate Key: ${affiliateKeyIndividual3}`);
+      // cy.log(`2nd Affiliate Key: ${affiliateKeyIndividual2}`);
     });
   });
+
+
 
 // REGISTER PSC 1
     it("should add a person with significant control (PSC) 1", () => {
@@ -630,9 +629,9 @@ describe("LLC Registration API Flow", () => {
                 transactionRef: transactionRef,
                 affiliateKey: affiliateKeyIndividual1,
                 // individual: {
-                //   surname: "Lekan",
-                //   firstname: "Chinedu",
-                //   otherName: "Moses",
+                //   surname: "Sim",
+                //   firstname: "Clara",
+                //   otherName: "Henry",
                 //   occupation: "Civil Engineer",
                 //   nationality: "Nigerian",
                 //   dob: "1988-05-15",
@@ -722,6 +721,7 @@ describe("LLC Registration API Flow", () => {
         });
     });
 
+
 // REGISTER PSC 2
 it("should add a person with significant control (PSC) 2", () => {
   cy.log(`Stored PSC 2 Affiliate Key: ${affiliateKeyIndividual2}`),
@@ -733,9 +733,9 @@ it("should add a person with significant control (PSC) 2", () => {
       transactionRef: transactionRef,
       // affiliateKey: affiliateKeyIndividual2,
       individual: {
-        surname: "Lekan",
-        firstname: "Chinedu",
-        otherName: "Moses",
+          surname: "Lekan",
+          firstname: "Chinedu",
+          otherName: "Moses",
         occupation: "Civil Engineer",
         nationality: "Nigerian",
         dob: "1988-05-15",
@@ -833,9 +833,9 @@ it("should successfully submit the company registration", () => {
   cy.api({
     method: "POST",
     url: `${baseUrl}/api/vas/llc/register`,
-      // qs: {
-      //     priorityService: true
-      // },
+      qs: {
+          priorityService: true
+      },
     headers: HEADERS.VALID_API_KEY,
     body: {
       transactionRef: transactionRef,
@@ -866,9 +866,11 @@ it("should successfully submit the company registration", () => {
       expect(shares.ShareCapital).to.be.a("string");
       expect(Number(shares.ShareCapital)).to.be.at.least(0);
 
+
 // 6. Logs for debugging
       cy.log(`Final Registration ID: ${body.ID}`);
       cy.log(`Transaction Ref: ${reg.TransactionRef}`);
+      cy.log(`Statutory Fee Paid: ${payment.StatutoryFee}`);
   });
 });
 

@@ -17,19 +17,18 @@ describe("Buy Token", () => {
             cy.get('input[type="email"]', { timeout: 20000 }).should('be.visible');
 
             // Now you can finish the login
-            cy.get('input[type="email"]').type("joyoasis9023@gmail.com");
-            cy.get('input[type="password"]').type("Gsure9023@2025");
+            cy.get('input[type="email"]').type("joyoasis9023+Jul29-124003@gmail.com");
+            cy.get('input[type="password"]').type("Gsure9023@2026");
             cy.get('button').contains(/Sign\s*In/i).click({ force: true });
 
-            // cy.get("a[routerlink='/dev/payments'] p").click();
-            // cy.get('.bottom-half > ul > :nth-child(3) > a').click({ force: true });
+
 
         });
-        cy.get('.workspaces-grid > :nth-child(1)').click({force: true});
+        cy.get('.workspaces-grid > :nth-child(2)').click({force: true});
         cy.get('.bottom-half > ul > :nth-child(4) > a').click({ force: true });
         cy.contains("Buy Token").click({force: true});
         cy.get('ul > :nth-child(1) > .regular-text').click({ force: true });
-        //
+
 
         // cy.get("html > body > app-root > intranet-html-template > main > body > article > app-token-and-payments > aside:nth-of-type(1) > button > p").click({ force: true });
         cy.get("input[min='1']").clear().type("200");

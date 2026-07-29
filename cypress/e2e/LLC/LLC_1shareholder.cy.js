@@ -383,9 +383,9 @@ describe("LLC Registration API Flow", () => {
       headers: HEADERS.VALID_API_KEY,
       body: {
         transactionRef,
-        ordinaryIssuedShare: 2000000.0,
+        ordinaryIssuedShare: 20000000.0,
         // preferenceIssuedShare: 5000000.0,
-        pricePerShare: 200000.0,
+        pricePerShare: 2000000.0,
       },
     }).then((response) => {
         expect(response.status).to.eq(200);
@@ -418,16 +418,15 @@ describe("LLC Registration API Flow", () => {
             method: "POST",
             url: `${baseUrl}/api/vas/llc/affiliates`,
             headers: HEADERS.VALID_API_KEY,
-            timeout: 60000,
             body: {
                 transactionRef: transactionRef,
                 individual: {
-                    surname: "John",
-                    firstname: "Terry",
-                    otherName: "Senior",
+                    surname: "Adamu",
+                    firstname: "John",
+                    otherName: "Doe",
                     occupation: "Software Engineer",
                     nationality: "Nigerian",
-                    dob: "1990-05-12",
+                    dob: "1990-01-01",
                     gender: "MALE",
                     email: "johnterry9023@gmail.com",
                     phoneNumber: "08023456789",
@@ -449,12 +448,12 @@ describe("LLC Registration API Flow", () => {
                     meansOfId: {
                         idType: "NIN",
                         idNumber: "70123456789",
-                        image: base64Images.passport, // Matches the base64 string shape
+                        image: base64Images.passport,
                     },
-                    signature: base64Images.passport, // Matches the base64 string shape
+                    signature: base64Images.passport,
                     isShareholder: true,
                     shareAllotment: {
-                        allottedOrdinaryShares: 1000000.0 // Kept as numeric float matching Postman
+                        allottedOrdinaryShares: 20000000.0 // Kept as numeric float matching Postman
                     }
                 },
             },
@@ -488,7 +487,6 @@ describe("LLC Registration API Flow", () => {
             method: "POST",
             url: `${baseUrl}/api/vas/llc/affiliates`,
             headers: HEADERS.VALID_API_KEY,
-            timeout: 60000,
             body: {
                 transactionRef: transactionRef,
                 individual: {
@@ -501,7 +499,7 @@ describe("LLC Registration API Flow", () => {
                     gender: "MALE",
                     email: "johnterry9023@gmail.com",
                     phoneNumber: "08023456789",
-                    affiliateType: ["WITNESS", "SHAREHOLDER"],
+                    affiliateType: ["WITNESS"],
                     serviceAddress: {
                         country: "Nigeria",
                         state: "Lagos",
@@ -519,13 +517,13 @@ describe("LLC Registration API Flow", () => {
                     meansOfId: {
                         idType: "NIN",
                         idNumber: "70123456789",
-                        image: base64Images.passport, // Matches the base64 string shape
+                        image: base64Images.passport,
                     },
-                    signature: base64Images.passport, // Matches the base64 string shape
-                    isShareholder: true,
-                    shareAllotment: {
-                        allottedOrdinaryShares: 1000000.0 // Kept as numeric float matching Postman
-                    }
+                    signature: base64Images.passport,
+                    isShareholder: false,
+                    // shareAllotment: {
+                    //     allottedOrdinaryShares: 1000000.0
+                    // }
                 },
             },
         }).then((response) => {
@@ -554,173 +552,178 @@ describe("LLC Registration API Flow", () => {
 
 
    // 5. REGISTER AFFILIATE - INDIVIDUAL 3nd
-   it("should register an individual affiliate using the same transactionRef AS 3nd Affiliate DIRECTOR", () => {
-    cy.api({
-      method: "POST",
-      url: `${baseUrl}/api/vas/llc/affiliates`,
-      headers: HEADERS.VALID_API_KEY,
-        timeout: 60000,
-      body: {
-        transactionRef: transactionRef,
-        individual: {
-          surname: "Clara",
-          firstname: "Monica",
-          otherName: "Morgan",
-          occupation: "Software Engineer",
-          nationality: "Nigerian",
-          dob: "1990-05-12",
-          gender: "MALE",
-          email: "johnterry9023@gmail.com",
-          phoneNumber: "08023456789",
-          affiliateType: ["DIRECTOR",],
-          serviceAddress: {
-            country: "Nigeria",
-            state: "Lagos",
-            lga: "Ikeja",
-            city: "Ikeja",
-            streetInfo: "15A Allen Avenue",
-          },
-          residentialAddress: {
-            country: "Nigeria",
-            state: "Lagos",
-            lga: "Eti-Osa",
-            city: "Lekki",
-            streetInfo: "45B Admiralty Way",
-          },
-          meansOfId: {
-            idType: "NIN",
-            idNumber: "70123456789",
-            image: base64Images.passport,
-          },
-          signature: base64Images.passport,
-          passport: base64Images.passport,
-          isShareholder: false,
-          // shareAllotment: {
-          //   allottedOrdinaryShares: 5000000.0
-          //   // allottedPreferenceShares: 5000000.0
-          // },
-        },
-      },
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body.status).to.eq("OK");
-      expect(response.body.message).to.eq("Affiliate created");
-
-      const data = response.body.data;
-
-      // Verify affiliate key
-      expect(data.affiliateKey).to.be.a("string");
-      expect(data.affiliateKey).to.not.be.empty;
-      // affiliateKeyIndividual2 = response.body.data.affiliateKey;
-
-      // Verify next step URL
-      expect(data.nextStepUrl).to.be.a("string");
-      expect(data.nextStepUrl).to.not.be.empty;
-      // cy.log(`2nd Affiliate Key: ${affiliateKeyIndividual3}`);
-    });
-  });
-
-// REGISTER PSC 1
-    it("should add a person with significant control (PSC) 1", () => {
+    it("should register an individual affiliate using the same transactionRef AS 3nd Affiliate", () => {
         cy.api({
             method: "POST",
-            url: `${baseUrl}/api/vas/llc/psc`,
+            url: `${baseUrl}/api/vas/llc/affiliates`,
             headers: HEADERS.VALID_API_KEY,
             body: {
                 transactionRef: transactionRef,
-                affiliateKey: affiliateKeyIndividual1,
-                // individual: {
-                //   surname: "Lekan",
-                //   firstname: "Chinedu",
-                //   otherName: "Moses",
-                //   occupation: "Civil Engineer",
-                //   nationality: "Nigerian",
-                //   dob: "1988-05-15",
-                //   gender: "MALE",
-                //   email: "chidi.adepoju@example.com",
-                //   phoneNumber: "09011223344",
-                //   affiliateType: ["PSC"],
-                //   serviceAddress: {
-                //     country: "NIGERIA",
-                //     state: "LAGOS",
-                //     lga: "IKEJA",
-                //     city: "Lagos",
-                //     streetInfo: "15 Adeola Odeku Street, Victoria Island",
-                //   },
-                //   residentialAddress: {
-                //     country: "NIGERIA",
-                //     state: "IMO",
-                //     lga: "MBAITOLI",
-                //     city: "Owerri",
-                //     streetInfo: "12 Okija Road, opposite Modern Market",
-                //   },
-                //   meansOfId: {
-                //     idType: "NIN",
-                //     idNumber: "70123456789",
-                //     image: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-                //   },
-                //   signature: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-                //   passport: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
-                // },
-                ownsIndirectShares: false,
-                // indirectShareDetails: {
-                //     sharePercent: "5",
-                //     legalOwners: [
-                //         {
-                //             affiliateKey: affiliateKeyIndividual1,
-                //             sharePercent: "5"
-                //         }
-                //     ]
-                // },
-                ownsDirectShares: true,
-                directShareDetails: {
-                    sharePercent: "50",
-                    legalOwners: [
-                        {
-                            // Using the affiliateKey from the Individual/Director registration step
-                            affiliateKey: affiliateKeyIndividual1,
-                            sharePercent: "50",
-                        },
-                    ],
-                },
-                isPep: true,
-                pepDetails: {
-                    reasonForPep: "Former government official",
-                    pepType: "DOMESTIC_PEP",
-                    roleOfPep: "Former Minister",
-                    officeOfPep: "Ministry of Finance",
-                },
-                isPscAffiliated: true,
-                pscAffiliateDetails: {
-                    entityName: "Amigo and Sons Inc",
-                    entityNumber: "RC9098778",
-                    isAffiliatePlc: true,
-                    plcDetails: {
-                        stockExchangeId: "NGX",
-                        identifierCode: "AMIG",
-                        tickerCode: "AMIG.NG",
+                individual: {
+                    surname: "Musa",
+                    firstname: "Joseph",
+                    otherName: "Tems",
+                    occupation: "Software Engineer",
+                    nationality: "Nigerian",
+                    dob: "1990-05-12",
+                    gender: "MALE",
+                    email: "johnterry9023@gmail.com",
+                    phoneNumber: "08023456789",
+                    affiliateType: ["DIRECTOR"],
+                    serviceAddress: {
+                        country: "Nigeria",
+                        state: "Lagos",
+                        lga: "Ikeja",
+                        city: "Ikeja",
+                        streetInfo: "15A Allen Avenue",
                     },
-                    isAffiliateStateOwned: false,
+                    residentialAddress: {
+                        country: "Nigeria",
+                        state: "Lagos",
+                        lga: "Eti-Osa",
+                        city: "Lekki",
+                        streetInfo: "45B Admiralty Way",
+                    },
+                    meansOfId: {
+                        idType: "NIN",
+                        idNumber: "70123456789",
+                        image: base64Images.passport,
+                    },
+                    signature: base64Images.passport,
+                    isShareholder: false,
+                    // shareAllotment: {
+                    //     allottedOrdinaryShares: 1000000.0
+                    // }
                 },
-                canChangeDirectors: true,
-                hasSignificantControlOfCompany: true,
             },
         }).then((response) => {
             expect(response.status).to.eq(200);
-            expect(response.body.status).to.eq("OK");
-            expect(response.body.message).to.eq("PSC created successfully");
             expect(response.body.success).to.be.true;
+            expect(response.body.statusCode).to.eq(200);
+            expect(response.body.status).to.eq("OK");
+            expect(response.body.message).to.eq("Affiliate created");
 
-            // Capture the PSC affiliateKey safely
             const data = response.body.data;
-            expect(data.affiliateKey).to.be.a("string").and.not.be.empty;
 
-            // Assign to tracking variable
-            const affiliateKeyPSC1 = data.affiliateKey;
+            // Validate and capture Affiliate Key safely
+            expect(data.affiliateKey).to.be.a("string");
+            expect(data.affiliateKey).to.not.be.empty;
 
-            cy.log(`Stored PSC 1 Affiliate Key: ${affiliateKeyPSC1}`);
+            // Assigning the dynamic key to your tracking variable
+            affiliateKeyIndividual2 = data.affiliateKey;
+
+            // Validate Next Step URL
+            expect(data.nextStepUrl).to.be.a("string");
+            expect(data.nextStepUrl).to.not.be.empty;
+
+            cy.log(`1st Affiliate Key: ${affiliateKeyIndividual2}`);
         });
     });
+
+
+
+// REGISTER PSC 1
+//     it("should add a person with significant control (PSC) 1", () => {
+//         cy.api({
+//             method: "POST",
+//             url: `${baseUrl}/api/vas/llc/psc`,
+//             headers: HEADERS.VALID_API_KEY,
+//             body: {
+//                 transactionRef: transactionRef,
+//                 affiliateKey: affiliateKeyIndividual1,
+//                 // individual: {
+//                 //   surname: "Lekan",
+//                 //   firstname: "Chinedu",
+//                 //   otherName: "Moses",
+//                 //   occupation: "Civil Engineer",
+//                 //   nationality: "Nigerian",
+//                 //   dob: "1988-05-15",
+//                 //   gender: "MALE",
+//                 //   email: "chidi.adepoju@example.com",
+//                 //   phoneNumber: "09011223344",
+//                 //   affiliateType: ["PSC"],
+//                 //   serviceAddress: {
+//                 //     country: "NIGERIA",
+//                 //     state: "LAGOS",
+//                 //     lga: "IKEJA",
+//                 //     city: "Lagos",
+//                 //     streetInfo: "15 Adeola Odeku Street, Victoria Island",
+//                 //   },
+//                 //   residentialAddress: {
+//                 //     country: "NIGERIA",
+//                 //     state: "IMO",
+//                 //     lga: "MBAITOLI",
+//                 //     city: "Owerri",
+//                 //     streetInfo: "12 Okija Road, opposite Modern Market",
+//                 //   },
+//                 //   meansOfId: {
+//                 //     idType: "NIN",
+//                 //     idNumber: "70123456789",
+//                 //     image: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+//                 //   },
+//                 //   signature: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+//                 //   passport: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9YqTbtQAAAAASUVORK5CYII=",
+//                 // },
+//                 ownsIndirectShares: false,
+//                 // indirectShareDetails: {
+//                 //     sharePercent: "5",
+//                 //     legalOwners: [
+//                 //         {
+//                 //             affiliateKey: affiliateKeyIndividual1,
+//                 //             sharePercent: "5"
+//                 //         }
+//                 //     ]
+//                 // },
+//                 ownsDirectShares: true,
+//                 directShareDetails: {
+//                     sharePercent: "100",
+//                     legalOwners: [
+//                         {
+//                             // Using the affiliateKey from the Individual/Director registration step
+//                             affiliateKey: affiliateKeyIndividual1,
+//                             sharePercent: "100",
+//                         },
+//                     ],
+//                 },
+//                 isPep: true,
+//                 pepDetails: {
+//                     reasonForPep: "Former government official",
+//                     pepType: "DOMESTIC_PEP",
+//                     roleOfPep: "Former Minister",
+//                     officeOfPep: "Ministry of Finance",
+//                 },
+//                 isPscAffiliated: true,
+//                 pscAffiliateDetails: {
+//                     entityName: "Amigo and Sons Inc",
+//                     entityNumber: "RC9098778",
+//                     isAffiliatePlc: true,
+//                     plcDetails: {
+//                         stockExchangeId: "NGX",
+//                         identifierCode: "AMIG",
+//                         tickerCode: "AMIG.NG",
+//                     },
+//                     isAffiliateStateOwned: false,
+//                 },
+//                 canChangeDirectors: true,
+//                 hasSignificantControlOfCompany: true,
+//             },
+//         }).then((response) => {
+//             expect(response.status).to.eq(200);
+//             expect(response.body.status).to.eq("OK");
+//             expect(response.body.message).to.eq("PSC created successfully");
+//             expect(response.body.success).to.be.true;
+//
+//             // Capture the PSC affiliateKey safely
+//             const data = response.body.data;
+//             expect(data.affiliateKey).to.be.a("string").and.not.be.empty;
+//
+//             // Assign to tracking variable
+//             const affiliateKeyPSC1 = data.affiliateKey;
+//
+//             cy.log(`Stored PSC 1 Affiliate Key: ${affiliateKeyPSC1}`);
+//         });
+//     });
+
 
 // REGISTER PSC 2
 it("should add a person with significant control (PSC) 2", () => {
@@ -767,11 +770,11 @@ it("should add a person with significant control (PSC) 2", () => {
       },
         ownsIndirectShares: true,
         indirectShareDetails: {
-            sharePercent: "50",
+            sharePercent: "100",
             legalOwners: [
                 {
-                    affiliateKey: affiliateKeyIndividual2,
-                    sharePercent: "50"
+                    affiliateKey: affiliateKeyIndividual1,
+                    sharePercent: "100"
                 }
             ]
         },
@@ -820,7 +823,7 @@ it("should add a person with significant control (PSC) 2", () => {
     // Capture the PSC affiliateKey for the final registration step
     const data = response.body.data;
     expect(data.affiliateKey).to.be.a("string").and.not.be.empty;
-    
+
     // Storing the value globally/locally for the next it block
     affiliateKeyPSC2 = data.affiliateKey;
 
@@ -828,14 +831,15 @@ it("should add a person with significant control (PSC) 2", () => {
   });
 });
 
+
 //SUBMIT REGISTRATION
 it("should successfully submit the company registration", () => {
   cy.api({
     method: "POST",
     url: `${baseUrl}/api/vas/llc/register`,
-      // qs: {
-      //     priorityService: true
-      // },
+      qs: {
+          priorityService: true
+      },
     headers: HEADERS.VALID_API_KEY,
     body: {
       transactionRef: transactionRef,
@@ -866,9 +870,11 @@ it("should successfully submit the company registration", () => {
       expect(shares.ShareCapital).to.be.a("string");
       expect(Number(shares.ShareCapital)).to.be.at.least(0);
 
+
 // 6. Logs for debugging
       cy.log(`Final Registration ID: ${body.ID}`);
       cy.log(`Transaction Ref: ${reg.TransactionRef}`);
+      cy.log(`Statutory Fee Paid: ${payment.StatutoryFee}`);
   });
 });
 
